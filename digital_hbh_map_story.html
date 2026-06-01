@@ -35,9 +35,10 @@
     .city-label{font:700 22px/1 "Noto Serif SC","SimSun",serif;fill:#201a15;paint-order:stroke;stroke:#efe7d8;stroke-width:5px}
     .minor-label{font:600 15px/1 "Noto Serif SC","SimSun",serif;fill:#3b3029;paint-order:stroke;stroke:#efe7d8;stroke-width:4px}
     .visitLine{fill:none;stroke:rgba(20,16,12,.20);stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:0;vector-effect:non-scaling-stroke}
-    .visitHot{fill:none;stroke:#2d6670;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-    .routeGhost{fill:none;stroke:rgba(110,83,55,.13);stroke-width:28;stroke-linecap:round;stroke-linejoin:round}
-    .routeSeg{fill:none;stroke:#9d3c28;stroke-linecap:round;stroke-linejoin:round;filter:url(#dryBrush)}
+    .visitHot{fill:none;stroke:#2d6670;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 1px 0 rgba(239,231,216,.55))}
+    .travelDot{fill:#2d6670;stroke:#efe7d8;stroke-width:2.4;filter:drop-shadow(0 1px 0 rgba(20,16,12,.2))}
+    .routeGhost{fill:none;stroke:rgba(110,83,55,.10);stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+    .routeSeg{fill:none;stroke:#9d3c28;stroke-linecap:round;stroke-linejoin:round;filter:url(#dryBrush);transition:stroke-dashoffset 360ms linear}
     .sideTrip{fill:none;stroke:rgba(43,97,102,.36);stroke-width:3;stroke-linecap:round;stroke-dasharray:4 9}.sideTrip.hot{stroke:#2d6670;stroke-width:4;stroke-dasharray:0}
     .city-dot{fill:#17120e;stroke:#efe7d8;stroke-width:3}.city-pulse{fill:none;stroke:#a92b22;stroke-width:1.2;opacity:.0}.city-pulse.on{opacity:.62}
     #screenLines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:18;overflow:visible}
@@ -98,10 +99,10 @@ function S(n,a={},t){const e=document.createElementNS('http://www.w3.org/2000/sv
 function q(a,b,bend=.18){const[x1,y1]=a,[x2,y2]=b,mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,l=Math.hypot(dx,dy)||1;return`M${x1},${y1} Q${mx-dy/l*l*bend},${my+dx/l*l*bend} ${x2},${y2}`}
 function draw(){
   const visited=new Set();
-  scenes.forEach(sc=>{if(city[sc.place])visited.add(sc.place);const y=J.byYear[String(sc.year)]||{};(y.travels||[]).forEach(t=>{if(city[t.place])visited.add(t.place)});(y.moves||[]).forEach(m=>{if(city[m.from]&&city[m.to]){visited.add(m.from);visited.add(m.to)}})});
-  ['金华','歙县','上海','北京'].forEach((p,i)=>{const b=['歙县','上海','北京','杭州'][i],d=q(city[p],city[b],i===2?-.34:.18);routes.appendChild(S('path',{d,class:'routeGhost'}));const seg=S('path',{d,class:'routeSeg','stroke-width':[20,34,28,26][i]});routes.appendChild(seg);const l=seg.getTotalLength();seg.style.strokeDasharray=l;seg.style.strokeDashoffset=l});
+  scenes.forEach(sc=>{if(city[sc.place])visited.add(sc.place);travelItems(sc).forEach(t=>{if(city[t.place])visited.add(t.place)});const y=J.byYear[String(sc.year)]||{};(y.moves||[]).forEach(m=>{if(city[m.from]&&city[m.to]){visited.add(m.from);visited.add(m.to)}})});
+  ['金华','歙县','上海','北京'].forEach((p,i)=>{const b=['歙县','上海','北京','杭州'][i],d=q(city[p],city[b],i===2?-.34:.18);routes.appendChild(S('path',{d,class:'routeGhost'}));const seg=S('path',{d,class:'routeSeg','stroke-width':[10,16,14,13][i]});routes.appendChild(seg);const l=seg.getTotalLength();seg.style.strokeDasharray=l;seg.style.strokeDashoffset=l;seg.style.opacity=.18});
   const allTrips=new Set();
-  scenes.forEach(sc=>{const y=J.byYear[String(sc.year)]||{},home=city[sc.place]?sc.place:anchorPlace(sc.year);(y.moves||[]).forEach(m=>{const a=city[m.from]?m.from:home,b=city[m.to]?m.to:null;if(b&&a!==b)allTrips.add(`${a}|${b}`)});(y.travels||[]).forEach(t=>{if(city[t.place]&&t.place!==home)allTrips.add(`${home}|${t.place}`)})});
+  scenes.forEach(sc=>{const home=city[sc.place]?sc.place:anchorPlace(sc.year);travelItems(sc).forEach(t=>{if(city[t.place]&&t.place!==home)allTrips.add(`${home}|${t.place}`)})});
   allTrips.forEach(key=>{const [a,b]=key.split('|');routes.appendChild(S('path',{d:q(city[a],city[b],.10),class:'visitLine','data-a':a,'data-b':b}))});
   Object.entries(city).forEach(([n,p])=>{if(['北平','西湖','徽州','潭渡','栖霞山'].includes(n))return;const major=['北京','上海','杭州','金华','歙县','广州','香港','桂林','南京','苏州','黄山'].includes(n),seen=visited.has(n)||visited.has(n==='北京'?'北平':n);cityLayer.appendChild(S('circle',{cx:p[0],cy:p[1],r:major?7:4,class:'city-dot',opacity:seen?1:.24}));cityLayer.appendChild(S('circle',{cx:p[0],cy:p[1],r:8,class:'city-pulse',id:'pulse_'+n}));cityLayer.appendChild(S('text',{x:p[0]+12,y:p[1]-10,class:major?'city-label':'minor-label',opacity:seen?1:.28},n))});
   mainYears.concat([1912]).sort((a,b)=>a-b).forEach(y=>{const t=document.createElement('span');t.className='tick';t.style.left=((y-1865)/90*100)+'%';t.textContent=y;rail.appendChild(t)})
@@ -110,6 +111,38 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}let trans={tx:0,ty:0,s:1}
 function focus(place,scale){const p=city[place]||city.上海,vw=stage.clientWidth,vh=stage.clientHeight,tx=vw/2-p[0]*scale,ty=vh/2-p[1]*scale;trans={tx,ty,s:scale};world.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`}
 function worldToScreen(p){return{x:p[0]*trans.s+trans.tx,y:p[1]*trans.s+trans.ty}}
 function clean(s,n=42){return String(s||'').replace(/\s+/g,'').replace(/[□�]/g,'').slice(0,n)}
+function hasActionText(s){return /(赴|至|到|抵|往|游|登|访|来访|造访|寓|居|迁|任教|开会|展|展览|写生|过|路经|道经|下榻)/.test(String(s||''))}
+function samePlace(a,b){const g=n=>({北平:'北京',西湖:'杭州',徽州:'歙县',潭渡:'歙县',栖霞山:'南京'}[n]||n);return g(a)===g(b)}
+function isFalsePlace(t,home){
+  const p=t.place,txt=String(t.text||'');
+  if(!p||samePlace(p,home))return true;
+  if(/黄山派|黄山画派|黄山诗|黄山之丰乐溪|新安派|扬州八怪|金华老画家|上海时期|北京时期|北平时期|杭州时期|出版|出版社|书目|画论|作《.*图|《.*纪游册|《.*追忆图|属绍兴|绍兴人|栖霞岭|许不到会|虹桥烟雨|扬州画舫录|黄山产|云雾茶|沪上|清叔季|欧美人|故都名胜|天津.*画展|长沙来友|西湖二三月|嘉兴画史|华东艺术专科学校|黄山世族旧藏|先父生前|上海没有庭院|阳朔山水甲桂林|北京大学.*举办|黄山翁|求画|赐写|黄山峰峦|松公府|过去在峨嵋|黄教授主张写生|希望能够看到|看古画|故宫画|南京大屠杀|罹难.*广州|同化劫灰|上海美专旧时学生|在沪有姚虞琴|北望燕云|撰文|整理.*稿|校刊|考释|钩沉|辑佚|编.*集|编.*录|序跋/.test(txt))return true;
+  if(/(她|胡适|孔达|德里斯珂|朋友们)/.test(txt)&&!/黄宾虹|宾虹|先生|余|予|鄙人/.test(txt))return true;
+  if(new RegExp(`${p}人|属${p}|${p}画派|${p}时期|${p}诗|${p}图|${p}纪游|${p}追忆`).test(txt))return true;
+  if(new RegExp(`代由${p}转寄|在京系用${p}|曾游${p}|尝游${p}|同游北平|${p}来友|${p}画史`).test(txt))return true;
+  if(new RegExp(`返国|转${p}|${p}返|转.*返|返.*云`).test(txt))return true;
+  if(/沪港美展|家富收藏|壮岁游苏浙|东渡|八十多岁|木偶雕刻家|南京许多名画家|中央美院进修|会场推毂/.test(txt))return true;
+  if(/(画派|诗草|诗留|旧稿|书法史|史籍考|时期|朋友们|著述|画论|画史|题跋|款识)/.test(txt)&&!/(赴|至|抵|下榻|迁居|任教|参加|来访|造访|登门|游览|写生)/.test(txt))return true;
+  return !hasActionText(txt)
+}
+function homeOfYear(y){return anchorPlace(y)}
+function yearData(sc){return J.byYear[String(sc.year)]||{}}
+function travelItems(sc){
+  const y=yearData(sc),home=sc.place,seen=new Set(),items=[];
+  (y.travels||[]).forEach((t,idx)=>{if(city[t.place]&&!isFalsePlace(t,home)&&!seen.has(t.place)){seen.add(t.place);items.push({place:t.place,text:t.text||'',idx})}});
+  return items.slice(0,8)
+}
+function orderedYearItems(sc){
+  const y=yearData(sc),home=sc.place,items=[];
+  travelItems(sc).forEach((t,i)=>items.push({kind:'travel',label:'地',place:t.place,text:t.text,order:t.idx+i/10,group:1,full:t.text}));
+  const _workTypes=new Set(['作画赠予','合作','题跋鉴赏','收藏交易']);
+  (y.interactions||[]).filter(p=>p.name&&!_workTypes.has(p.type)).slice(0,5).forEach((p,i)=>items.push({kind:'friend',label:'友',place:home,name:p.name,title:`${p.name}｜${p.type||'交往'}`,text:p.text,avatar:p.name,order:20+i,group:2,full:p.text}));
+  (y.people_new||[]).filter(p=>p.name).slice(0,3).forEach((p,i)=>items.push({kind:'friend',label:'友',place:home,name:p.name,title:`${p.name}｜初见`,text:p.cat||'师友',avatar:p.name,order:24+i,group:2,full:`${p.name}｜${p.cat||'师友'}｜首见 ${sc.year}`}));
+  (y.interactions||[]).filter(p=>p.name&&_workTypes.has(p.type)).slice(0,4).forEach((p,i)=>items.push({kind:'work',label:'作',place:home,title:p.type==='作画赠予'?`为${p.name}作画`:`${p.name}｜${p.type||'创作'}`,text:p.text,order:30+i,group:3,full:p.text}));
+  (y.creations||[]).filter(c=>c.title||c.type).slice(0,4).forEach((c,i)=>items.push({kind:'work',label:'作',place:home,title:`${c.type||'创作'}｜${c.title||c.subject||'未题'}`,text:c.text,order:34+i,group:3,full:c.text}));
+  (y.era||[]).slice(0,1).forEach((e,i)=>items.push({kind:'era',label:'世',place:home,title:e.category||'同年',text:e.event.replace(/（.*?）/g,''),order:50+i,group:4,full:e.event}));
+  return items.sort((a,b)=>a.order-b.order)
+}
 function slot(n){
   const vw=stage.clientWidth,vh=stage.clientHeight,x=vw-486,top=clamp(118,86,vh-430),step=48;
   return Array.from({length:n},(_,i)=>({x,y:clamp(top+i*step,70,vh-92)}))
@@ -127,22 +160,46 @@ const sceneFacts={
 const friendLast=new Map(),friendFirst=new Map();
 Object.entries(J.byYear||{}).forEach(([yy,d])=>{const y=+yy;[...(d.people_new||[]),...(d.interactions||[])].forEach(p=>{if(!p.name)return;if(!friendFirst.has(p.name))friendFirst.set(p.name,y);friendLast.set(p.name,y)})});
 function notes(sc){
-  const y=J.byYear[String(sc.year)]||{},out=[],seen=new Set();
-  out.push({k:'年',h:`${sc.year}`,t:sceneFacts[sc.year]||sc.title,place:sc.place,group:0,full:sceneFacts[sc.year]||sc.title});
-  (y.travels||[]).filter(t=>city[t.place]||t.place===sc.place).forEach(t=>{if(out.length<4&&!seen.has('地'+t.place)){seen.add('地'+t.place);out.push({k:'地',h:t.place||sc.place,t:clean(t.text,42),place:t.place||sc.place,group:1,full:t.text})}});
-  (y.interactions||[]).filter(p=>p.name).slice(0,3).forEach(p=>out.push({k:'友',h:`${p.name}｜${p.type||'交往'}`,t:clean(p.text,38),place:sc.place,avatar:p.name,group:2,full:p.text}));
-  (y.people_new||[]).filter(p=>p.name).slice(0,2).forEach(p=>out.push({k:'新',h:p.name,t:`${p.cat||'师友'}｜首见`,place:sc.place,avatar:p.name,group:2,full:`${p.name}｜${p.cat||'师友'}｜首见 ${sc.year}`}));
-  (y.creations||[]).filter(c=>c.title||c.type).slice(0,2).forEach(c=>out.push({k:'作',h:`${c.type||'创作'}｜${c.title||c.subject||'未题'}`,t:clean(c.text,40),place:sc.place,group:3,full:c.text}));
-  (y.era||[]).slice(0,1).forEach(e=>out.push({k:'世',h:e.category||'同年',t:e.event.replace(/（.*?）/g,''),place:sc.place,group:4,full:e.event}));
-  return out.sort((a,b)=>a.group-b.group).slice(0,8)
+  return orderedYearItems(sc).filter(it=>!(it.kind==='travel'&&!travelItems(sc).some(t=>t.place===it.place))).sort((a,b)=>(a.group-b.group)||(a.order-b.order)).map(it=>({
+    k:it.label,
+    h:it.title||it.place,
+    t:clean(it.text,42),
+    place:it.place,
+    avatar:it.avatar,
+    group:it.group,
+    full:it.full||it.text,
+    kind:it.kind
+  })).slice(0,8)
 }
-function updateProgress(idx,ratio){const cur=scenes[idx]||scenes[0],year=cur.year+ratio;const seg=[...routes.querySelectorAll('.routeSeg')];seg.forEach((p,i)=>{const l=p.getTotalLength(),local=clamp(((year-1865)/90*4)-i,0,1);p.style.strokeDashoffset=l*(1-local)});progress.style.width=((year-1865)/90*100)+'%'}
-function updateVisitLines(sc){
-  const y=J.byYear[String(sc.year)]||{},home=sc.place,hot=new Set();
-  (y.moves||[]).forEach(m=>{const a=city[m.from]?m.from:home,b=city[m.to]?m.to:null;if(b)hot.add(`${a}|${b}`)});
-  (y.travels||[]).forEach(t=>{if(city[t.place]&&t.place!==home)hot.add(`${home}|${t.place}`)});
+const RED_SEGMENTS=[
+  {seg:0,start:1865,end:1865},
+  {seg:1,start:1866,end:1907},
+  {seg:2,start:1908,end:1937},
+  {seg:3,start:1938,end:1948}
+];
+function yearWeight(sc,seg){
+  const n=travelItems(sc).length;
+  return n || (sc.year===seg.end?1:0)
+}
+function redLocal(seg,currentYear,unit){
+  if(currentYear<seg.start)return 0;
+  if(currentYear>seg.end)return 1;
+  const ys=scenes.filter(s=>s.year>=seg.start&&s.year<=seg.end),weights=ys.map(s=>yearWeight(s,seg)),total=weights.reduce((a,b)=>a+b,0);
+  if(!total)return (currentYear-seg.start+unit)/(seg.end-seg.start+1);
+  let done=0;
+  ys.forEach((s,i)=>{if(s.year<currentYear)done+=weights[i];else if(s.year===currentYear)done+=weights[i]*unit});
+  return clamp(done/total,0,1)
+}
+function updateProgress(idx,unit){
+  const cur=scenes[idx]||scenes[0],segEls=[...routes.querySelectorAll('.routeSeg')];
+  RED_SEGMENTS.forEach(rs=>{const p=segEls[rs.seg];if(!p)return;const l=p.getTotalLength(),local=redLocal(rs,cur.year,unit);p.style.strokeDashoffset=l*(1-local);p.style.opacity=local>0||cur.year>=rs.start?1:.18});
+  progress.style.width=((cur.year-1865+unit)/90*100)+'%'
+}
+function updateVisitLines(sc,step=0,lineRatio=1){
+  const home=sc.place,items=travelItems(sc),active=items[step],hot=active&&lineRatio>0?[`${home}|${active.place}`]:[];
   routes.querySelectorAll('.visitHot').forEach(e=>e.remove());
-  hot.forEach(key=>{const[a,b]=key.split('|');routes.appendChild(S('path',{d:q(city[a],city[b],.10),class:'visitHot'}))})
+  routes.querySelectorAll('.travelDot').forEach(e=>e.remove());
+  hot.forEach(key=>{const[a,b]=key.split('|'),path=S('path',{d:q(city[a],city[b],.10),class:'visitHot'});routes.appendChild(path);const l=path.getTotalLength(),r=clamp(lineRatio,0,1);path.style.strokeDasharray=l;path.style.strokeDashoffset=l*(1-r);const pt=path.getPointAtLength(l*r);routes.appendChild(S('circle',{cx:pt.x,cy:pt.y,r:5,class:'travelDot'}))})
 }
 function updateFriends(year){
   const active=new Set(((J.byYear[String(year)]||{}).interactions||[]).map(p=>p.name)),newset=new Set(((J.byYear[String(year)]||{}).people_new||[]).map(p=>p.name));
@@ -154,8 +211,8 @@ function show(sc,idx,ratio){
   if(!sc)return;focus(sc.place,sc.scale);yearBadge.querySelector('.y').textContent=sc.year;yearBadge.querySelector('.p').textContent=sc.title;yearBadge.style.left=clamp(stage.clientWidth-284,760,stage.clientWidth-212)+'px';yearBadge.style.top='54px';yearBadge.classList.add('show');
   document.querySelectorAll('.city-pulse').forEach(e=>e.classList.remove('on'));const pu=document.getElementById('pulse_'+sc.place);if(pu)pu.classList.add('on');
   callouts.innerHTML='';screenLines.innerHTML='';
-  updateVisitLines(sc);updateFriends(sc.year);
-  const ns=notes(sc),ss=slot(ns.length);
+  updateVisitLines(sc,0,1);updateFriends(sc.year);
+  const all=notes(sc),visible=all.filter(n=>!(n.kind==='travel'&&n.place===sc.place)),ns=visible.slice(0,8),ss=slot(ns.length);
   ns.forEach((n,i)=>{
     const pt=worldToScreen(city[n.place]||city[sc.place]||city.上海),d=document.createElement('div');
     d.className='caption show';d.style.left=ss[i].x+'px';d.style.top=ss[i].y+'px';
@@ -168,8 +225,22 @@ function show(sc,idx,ratio){
   });
   updateProgress(idx,ratio)
 }
+function playYear(sc,idx,yearRatio){
+  if(!sc)return;focus(sc.place,sc.scale);yearBadge.querySelector('.y').textContent=sc.year;yearBadge.querySelector('.p').textContent=sc.title;yearBadge.style.left=clamp(stage.clientWidth-284,760,stage.clientWidth-212)+'px';yearBadge.style.top='54px';yearBadge.classList.add('show');
+  document.querySelectorAll('.city-pulse').forEach(e=>e.classList.remove('on'));const pu=document.getElementById('pulse_'+sc.place);if(pu)pu.classList.add('on');
+  const trips=travelItems(sc),travelCount=trips.length,travelPart=travelCount?Math.min(.92,.34+travelCount*.16):.18;
+  let step=-1,lineRatio=0;
+  if(travelCount&&yearRatio<travelPart){const u=yearRatio/travelPart*travelCount,phase=u-Math.floor(u);step=clamp(Math.floor(u),0,travelCount-1);lineRatio=phase<.55?phase/.55:(1-phase)/.45}else if(travelCount){step=travelCount-1;lineRatio=0}
+  updateVisitLines(sc,step,lineRatio);updateFriends(sc.year);
+  const all=notes(sc).filter(n=>!(n.kind==='travel'&&n.place===sc.place));
+  const reveal=travelCount&&yearRatio<travelPart?Math.max(1,Math.min(all.length,step+1)):Math.min(all.length,Math.floor((yearRatio-travelPart)/(1-travelPart)*all.length)+1);
+  const ns=all.slice(0,clamp(reveal,1,8)),ss=slot(ns.length);callouts.innerHTML='';screenLines.innerHTML='';
+  ns.forEach((n,i)=>{const pt=worldToScreen(city[n.place]||city[sc.place]||city.上海),d=document.createElement('div');d.className='caption show';d.style.left=ss[i].x+'px';d.style.top=ss[i].y+'px';d.innerHTML=`<span class="k">${n.k}</span><span class="h">${n.avatar?`<span class="avatarMark">${String(n.avatar).slice(0,1)}</span>`:''}${n.h}</span><div class="t">${n.t}</div>`;d.onclick=()=>{detailTitle.textContent=n.h.replace(/<[^>]*>/g,'');detailText.textContent=n.full||n.t;detail.classList.add('show')};callouts.appendChild(d);const tx=ss[i].x,ty=ss[i].y+15,mx=clamp((pt.x+tx)/2,pt.x,tx);screenLines.appendChild(S('path',{d:`M${pt.x},${pt.y} H${mx} V${ty} H${tx}`}));screenLines.appendChild(S('circle',{cx:pt.x,cy:pt.y,r:1.7}))});
+  updateProgress(idx,yearRatio)
+}
 detailClose.onclick=()=>detail.classList.remove('show');
-draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=1180,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;if(idx!==last){show(scenes[idx],idx,r);last=idx}else updateProgress(idx,r)}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
+window.__HBH_DEBUG={scenes,playYear,travelItems,notes,orderedYearItems,setPaused:v=>{paused=!!v}};
+draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=4200,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;playYear(scenes[idx],idx,r);last=idx}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
 })();
 </script>
 </body>
