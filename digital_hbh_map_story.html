@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>数字黄宾虹｜生命舆图</title>
+  <script src="life_journey.js"></script>
+  <script src="hbh_overview_data.js"></script>
+  <style>
+    :root{--paper:#efe7d8;--ink:#15120e;--red:#a92b22;--blue:#2d6670}
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--paper);color:var(--ink);
+      font-family:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif}
+    .stage{position:relative;width:100vw;height:100vh;overflow:hidden;background:
+      radial-gradient(circle at 18% 12%,rgba(255,255,255,.44),transparent 28%),
+      radial-gradient(circle at 76% 76%,rgba(156,109,74,.12),transparent 34%),
+      #efe7d8}
+    .stage:before{content:"";position:absolute;inset:-40px;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+      background:repeating-linear-gradient(7deg,rgba(85,62,39,.035) 0 2px,transparent 2px 8px)}
+    #world{position:absolute;left:0;top:0;width:2400px;height:1400px;transform-origin:0 0;will-change:transform;transition:transform 1550ms cubic-bezier(.25,1,.5,1)}
+    .map-image{position:absolute;inset:0;width:2400px;height:1400px;object-fit:cover;opacity:.34;filter:sepia(.52) saturate(.58) contrast(.72) brightness(.92);mix-blend-mode:multiply;pointer-events:none}
+    #world:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+      radial-gradient(circle at 53% 49%,rgba(239,231,216,.08),transparent 24%),
+      linear-gradient(90deg,rgba(239,231,216,.22),rgba(64,48,35,.10) 18%,rgba(64,48,35,.12) 75%,rgba(239,231,216,.12));mix-blend-mode:screen}
+    .reading-shade{position:absolute;inset:0;z-index:7;pointer-events:none;background:rgba(45,36,28,.18);mix-blend-mode:multiply}
+    svg.map{position:absolute;inset:0;width:2400px;height:1400px;overflow:visible}
+    .map-title{position:absolute;left:58px;top:42px;width:265px;z-index:10;letter-spacing:.08em;color:#17120d;pointer-events:none}
+    .eyebrow{font:700 12px/1.1 "Noto Serif SC","SimSun",serif;letter-spacing:.32em;color:#9d2c23;margin-bottom:12px}
+    .cn-title{font-size:48px;line-height:.96;font-weight:900;letter-spacing:.02em;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+    .cn-title b{color:#9d2c23;font-weight:900}
+    .read-note{margin-top:18px;width:222px;font-size:12px;line-height:1.72;color:#2c2721}.read-note strong{color:#9d2c23;border-bottom:1px solid rgba(157,44,35,.55)}
+    .seal{display:inline-flex;align-items:center;justify-content:center;margin-top:18px;width:44px;height:44px;border:2px solid #9d2c23;color:#9d2c23;font:700 18px/1 "KaiTi","STKaiti",serif;transform:rotate(-6deg)}
+    .city-label{font:700 22px/1 "Noto Serif SC","SimSun",serif;fill:#201a15;paint-order:stroke;stroke:#efe7d8;stroke-width:5px}
+    .minor-label{font:600 15px/1 "Noto Serif SC","SimSun",serif;fill:#3b3029;paint-order:stroke;stroke:#efe7d8;stroke-width:4px}
+    .routeGhost{fill:none;stroke:rgba(110,83,55,.13);stroke-width:28;stroke-linecap:round;stroke-linejoin:round}
+    .routeSeg{fill:none;stroke:#9d3c28;stroke-linecap:round;stroke-linejoin:round;filter:url(#dryBrush)}
+    .sideTrip{fill:none;stroke:rgba(43,97,102,.36);stroke-width:3;stroke-linecap:round;stroke-dasharray:4 9}.sideTrip.hot{stroke:#2d6670;stroke-width:4;stroke-dasharray:0}
+    .city-dot{fill:#17120e;stroke:#efe7d8;stroke-width:3}.city-pulse{fill:none;stroke:#a92b22;stroke-width:3;opacity:.0}.city-pulse.on{animation:pulse 1.35s ease-out infinite;opacity:.9}
+    @keyframes pulse{from{r:4;opacity:.9}to{r:34;opacity:0}}
+    #screenLines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:18;overflow:visible}
+    #screenLines path{fill:none;stroke:rgba(17,15,11,.58);stroke-width:1;vector-effect:non-scaling-stroke}
+    #callouts{position:absolute;inset:0;z-index:20;pointer-events:none}
+    .caption{position:absolute;width:292px;min-height:48px;opacity:0;transform:translateY(12px);color:#0d0b09;font-size:12.5px;line-height:1.62;letter-spacing:.025em;pointer-events:auto;
+      transition:opacity 700ms cubic-bezier(.25,1,.5,1),transform 700ms cubic-bezier(.25,1,.5,1);text-shadow:0 1px 0 rgba(255,255,255,.62);
+      background:radial-gradient(ellipse at 28% 45%,rgba(244,238,226,.94),rgba(244,238,226,.58) 58%,rgba(244,238,226,0) 74%);padding:6px 10px 7px 0}
+    .caption.show{opacity:1;transform:translateY(0)}.caption:before{content:"";display:block;width:86px;border-top:1px solid rgba(21,18,14,.88);margin-bottom:7px}
+    .caption .k{display:inline-block;margin-right:8px;color:#a92b22;font:900 12px/1 "Noto Serif SC","SimSun",serif;letter-spacing:.16em}
+    .caption .h{font-weight:900;font-size:15px;color:#0d0b09;margin-bottom:3px}.caption .t{color:#14110e}.caption .small{display:block;margin-top:4px;color:#36302a;font-size:11px;line-height:1.45}
+    .year-badge{position:absolute;z-index:21;left:50%;top:50%;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.96);transition:opacity 850ms cubic-bezier(.25,1,.5,1),transform 850ms cubic-bezier(.25,1,.5,1);text-shadow:0 1px 0 rgba(255,255,255,.55)}
+    .year-badge.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.year-badge .y{font:900 48px/.84 Georgia,"Times New Roman",serif;letter-spacing:-.05em;color:#a92b22}.year-badge .p{font:700 13px/1.2 "Noto Serif SC","SimSun",serif;letter-spacing:.12em;margin-left:3px;color:#1d1813}
+    .rail{position:absolute;left:34px;right:34px;bottom:24px;height:58px;z-index:30;pointer-events:none;font-family:Georgia,"Times New Roman",serif;color:#17120e}
+    .rail .bar{position:absolute;left:0;right:0;top:28px;height:2px;background:rgba(25,20,15,.18)}.rail .bar i{display:block;width:0;height:2px;background:#a92b22}
+    .tick{position:absolute;top:19px;transform:translateX(-50%);font-size:10px;color:#3e342b}.tick:before{content:"";display:block;width:1px;height:16px;background:rgba(20,17,13,.42);margin:0 auto 4px}
+    .control{position:absolute;right:38px;bottom:92px;z-index:35;border:0;background:transparent;color:#15120e;font:700 12px/1 "Noto Serif SC","SimSun",serif;letter-spacing:.18em;border-bottom:1px solid rgba(21,18,14,.75);cursor:pointer;padding:0 0 4px}
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><filter id="dryBrush"><feTurbulence baseFrequency=".028" numOctaves="4" seed="11" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/><feGaussianBlur stdDeviation=".25"/></filter></svg>
+<main class="stage" id="stage">
+  <section id="world"><img class="map-image" src="assets/china_1892_liumingjie_2560.jpg" alt="古今地舆全图"><svg class="map" viewBox="0 0 2400 1400"><g id="routes"></g><g id="cities"></g></svg></section>
+  <div class="reading-shade"></div>
+  <div class="map-title"><div class="eyebrow">年谱数字人文</div><div class="cn-title"><b>黄</b>宾虹<br>生命舆图</div><div class="read-note"><strong>读法</strong>：朱砂线带追随他的迁徙与游历；旁侧小字按年份讲清地点、朋友、作品与时代压力。</div><div class="seal">虹</div></div>
+  <svg id="screenLines"></svg><div id="callouts"></div><div class="year-badge" id="yearBadge"><div class="y">1865</div><div class="p">金华 · 出生</div></div>
+  <button class="control" id="pauseBtn">暂停</button><div class="rail" id="rail"><div class="bar"><i id="progress"></i></div></div>
+</main>
+<script>
+(function(){
+const stage=document.getElementById('stage'),world=document.getElementById('world'),routes=document.getElementById('routes'),cityLayer=document.getElementById('cities'),callouts=document.getElementById('callouts'),screenLines=document.getElementById('screenLines'),yearBadge=document.getElementById('yearBadge'),progress=document.getElementById('progress'),rail=document.getElementById('rail'),pauseBtn=document.getElementById('pauseBtn');
+const J=window.JOURNEY||{byYear:{}},O=window.HBH_OVERVIEW||{yearStats:[]},stats=new Map((O.yearStats||[]).map(d=>[+d.year,d]));
+const city={北京:[1485,250],天津:[1552,318],济南:[1515,470],南京:[1588,684],扬州:[1598,628],苏州:[1736,724],上海:[1824,720],杭州:[1700,812],绍兴:[1748,846],宁波:[1840,884],金华:[1582,908],歙县:[1490,846],黄山:[1452,805],芜湖:[1512,726],安庆:[1378,778],武汉:[1288,836],长沙:[1262,1008],桂林:[1178,1120],广州:[1354,1190],香港:[1415,1248],福建:[1652,1058],福州:[1685,1050],厦门:[1610,1168],成都:[852,878],重庆:[960,960],峨眉山:[782,936]};
+const scenes=[
+{year:1865,place:'金华',scale:.92,title:'出生 · 金华',manual:['黄宾虹生于浙江金华，祖籍徽州歙县潭渡。金华是出生地，黄山与丰乐溪成为日后“宾虹”名号的精神源头。','家族避兵、徽商迁徙、太平天国余波交织在早年叙事里。他不是从画室开始，而是从动荡的江南地方记忆里开始。']},
+{year:1873,place:'杭州',scale:1.55,title:'临画 · 西湖',manual:['少年随父到杭州、西湖一带游览写生，又临摹家藏《松菊图》。早年训练先是看山水、看古画、看江南。','金华北山、杭州西湖、徽州黄山在童年阶段反复出现，后来成为他判断笔墨、构造山水的底色。']},
+{year:1886,place:'歙县',scale:1.56,title:'徽州根基',manual:['青年时期长期扎根歙县。家族文献、金石文字、乡邦学术和书画师承在这里汇合，构成他的知识底盘。','婚姻、疾病、读书、授业、篆刻、古文字学习在这一段密集交错；出走上海之前，他已是徽州文脉里长成的人。']},
+{year:1907,place:'上海',scale:1.55,title:'星夜赴沪',manual:['1907 年离开歙县到上海，人生主轴转入报馆、国学保存会、美术教育和出版网络。','上海把他从地方文人推入公共文化场：写文章、办报、结社、教书、鉴藏、作画同时展开。']},
+{year:1928,place:'广州',scale:1.18,title:'南行远游',manual:['1928 年出现南方远游，广州、香港、桂林等地被纳入足迹。社团、展览、朋友和作品一起涌入。','这一段让人记住他的流动性：他不是守在上海的画家，而是在全国文化网络里移动。']},
+{year:1937,place:'北京',scale:1.25,title:'北上转折',manual:['1937 年局势突变，人生路线从上海转向北平。地图上的长弧线，对应的是战乱中的被迫移动。','这不是普通旅行，而是时代把一个江南画家推到华北；此后他的活动空间明显改变。']},
+{year:1948,place:'杭州',scale:1.36,title:'南返杭州',manual:['1948 年赴杭州任教，生命主轴最后一次南下。北平的压缩感与西湖的旧记忆在这里相遇。','杭州不只是终点，也是晚年黑密山水被教学、展览、收藏继续放大的地方。']},
+{year:1955,place:'杭州',scale:1.78,title:'归于西湖',manual:['1955 年在杭州辞世。作品、藏品、文稿和年谱记忆进入公共收藏与研究系统。','看完整条线，一个普通观众应记住：徽州根基、上海成网、北平困守、杭州黑密，合成黄宾虹的一生。']}];
+function S(n,a={},t){const e=document.createElementNS('http://www.w3.org/2000/svg',n);for(const k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e}
+function q(a,b,bend=.18){const[x1,y1]=a,[x2,y2]=b,mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,l=Math.hypot(dx,dy)||1;return`M${x1},${y1} Q${mx-dy/l*l*bend},${my+dx/l*l*bend} ${x2},${y2}`}
+function draw(){['金华','歙县','上海','北京'].forEach((p,i)=>{const b=['歙县','上海','北京','杭州'][i],d=q(city[p],city[b],i===2?-.34:.18);routes.appendChild(S('path',{d,class:'routeGhost'}));const seg=S('path',{d,class:'routeSeg','stroke-width':[20,34,28,26][i]});routes.appendChild(seg);const l=seg.getTotalLength();seg.style.strokeDasharray=l;seg.style.strokeDashoffset=l});[['上海','广州'],['广州','香港'],['广州','桂林'],['上海','南京'],['上海','苏州'],['杭州','上海']].forEach(t=>routes.appendChild(S('path',{d:q(city[t[0]],city[t[1]],.22),class:'sideTrip'})));Object.entries(city).forEach(([n,p])=>{const major=['北京','上海','杭州','金华','歙县','广州','香港','桂林','南京','苏州','黄山'].includes(n);cityLayer.appendChild(S('circle',{cx:p[0],cy:p[1],r:major?7:4,class:'city-dot'}));cityLayer.appendChild(S('circle',{cx:p[0],cy:p[1],r:8,class:'city-pulse',id:'pulse_'+n}));cityLayer.appendChild(S('text',{x:p[0]+12,y:p[1]-10,class:major?'city-label':'minor-label'},n))});[1865,1873,1886,1907,1912,1928,1937,1948,1955].forEach(y=>{const t=document.createElement('span');t.className='tick';t.style.left=((y-1865)/90*100)+'%';t.textContent=y;rail.appendChild(t)})}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}let trans={tx:0,ty:0,s:1};
+function focus(place,scale){const p=city[place]||city.上海,vw=stage.clientWidth,vh=stage.clientHeight,tx=vw/2-p[0]*scale,ty=vh/2-p[1]*scale;trans={tx,ty,s:scale};world.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`}
+function slot(n){const vw=stage.clientWidth,vh=stage.clientHeight;return[{x:clamp(vw-390,380,vw-320),y:96},{x:clamp(vw-390,380,vw-320),y:238},{x:clamp(vw-390,380,vw-320),y:382},{x:365,y:560},{x:365,y:704},{x:clamp(vw*.52,430,vw-410),y:736}].slice(0,n)}
+function notes(sc){const st=stats.get(sc.year)||{},out=[];sc.manual.forEach((t,i)=>out.push({k:i?'背景':'篇章',h:i?'这一段要记住':sc.title,t}));if(st.events)out.push({k:'年谱',h:'留下的痕迹',t:`这一年留下 ${st.events} 条年谱记录，涉及交往 ${st.interactions||0} 次、创作 ${st.creations||0} 件。数字只用来提示节奏：哪里热闹，哪里沉潜。`});const y=J.byYear[String(sc.year)]||{};(y.people_new||[]).slice(0,1).forEach(p=>out.push({k:'人物',h:p.name,t:`这一年进入黄宾虹的关系网。身份归入“${p.cat||'师友'}”，说明他的世界由家族、学人、画友和出版人共同组成。`}));(y.creations||[]).filter(c=>c.title||c.type).slice(0,1).forEach(c=>out.push({k:'作品',h:`${c.type||'创作'} · ${c.title||c.subject||'未题'}`,t:'这类创作把行旅、古画、金石与师友关系压入笔墨。观众无需记住每一件作品，只要看见创作与人生阶段同步变化。'}));const tr=(y.travels||[])[0];if(tr)out.push({k:'地点',h:tr.place||sc.place,t:'地点在这里是生活场景：居住、拜访、写生、任教、展览与通信都围绕它展开。'});return out.slice(0,6)}
+function updateProgress(idx,ratio){const seg=[...routes.querySelectorAll('.routeSeg')];seg.forEach((p,i)=>{const l=p.getTotalLength(),local=clamp(((idx+ratio)/scenes.length*16.4)-i*4.1,0,4.1)/4.1;p.style.strokeDashoffset=l*(1-local)});progress.style.width=((idx+ratio)/scenes.length*100)+'%'}
+function show(sc,idx,ratio){if(!sc)return;focus(sc.place,sc.scale);yearBadge.querySelector('.y').textContent=sc.year;yearBadge.querySelector('.p').textContent=sc.title;yearBadge.style.left=clamp(stage.clientWidth-118,170,stage.clientWidth-96)+'px';yearBadge.style.top='88px';yearBadge.classList.add('show');document.querySelectorAll('.city-pulse').forEach(e=>e.classList.remove('on'));const pu=document.getElementById('pulse_'+sc.place);if(pu)pu.classList.add('on');callouts.innerHTML='';screenLines.innerHTML='';const ss=slot(6),ns=notes(sc);ns.forEach((n,i)=>{const d=document.createElement('div');d.className='caption show';d.style.left=ss[i].x+'px';d.style.top=ss[i].y+'px';d.innerHTML=`<span class="k">${n.k}</span><div class="h">${n.h}</div><div class="t">${n.t}</div>`;callouts.appendChild(d);screenLines.appendChild(S('path',{d:`M${ss[i].x-18},${ss[i].y+10} v${34+i%2*16}`}))});updateProgress(idx,ratio)}
+draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=4050,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;if(idx!==last){show(scenes[idx],idx,r);last=idx}else updateProgress(idx,r)}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
