@@ -6,6 +6,7 @@
   <title>数字黄宾虹｜生命舆图</title>
   <script src="life_journey.js"></script>
   <script src="hbh_overview_data.js"></script>
+  <script src="hbh_custom_labels.js"></script>
   <style>
     :root{--paper:#efe7d8;--ink:#15120e;--red:#a92b22;--blue:#2d6670;--side:340px;--bottom:92px}
     *{box-sizing:border-box}
@@ -147,23 +148,30 @@ function clean(s,n=42){return String(s||'').replace(/\s+/g,'').replace(/[□�]
 function ageOf(y){return y-1865}
 function chapterOf(y){return eraBands.find(b=>y>=b.start&&y<=b.end)||eraBands[0]}
 function travelVerb(n){return n?`往返 ${n}`:'停留'}
-function shortText(s,n=28){return String(s||'').replace(/《[^》]{1,18}》/g,m=>m).replace(/[“”"「」『』]/g,'').replace(/\s+/g,'').replace(/[□�]/g,'').slice(0,n)}
-function actionSummary(it,sc){
-  if(it.kind==='travel')return `到${it.place}${/展|展览|会/.test(it.text)?'参加活动':/游|登|写生/.test(it.text)?'游历写生':/访|晤|会/.test(it.text)?'访友会面':'短暂停留'}。`;
-  if(it.kind==='friend')return `${it.name||String(it.title||'友人').split('｜')[0]}：${it.title&&it.title.includes('初见')?'初见':(String(it.title||'').split('｜')[1]||'往来')}。`;
-  if(it.kind==='work')return `${String(it.title||'创作').replace(/^作画赠予$/,'作画').replace(/｜/g,'：')}。`;
-  if(it.kind==='era')return `同年：${shortText(it.text,24)}。`;
-  return shortText(it.text,28)
-}
-function storyFor(sc){
-  const trips=travelItems(sc),ch=chapterOf(sc.year),base=sc.place;
-  if(storyByYear[sc.year])return storyByYear[sc.year];
-  if(trips.length)return [`${sc.year} 年，去了${trips.map(t=>t.place).slice(0,3).join('、')}，主要是${/展|展览|会/.test(trips.map(t=>t.text).join(''))?'参加展会与社交':/写生|游|登/.test(trips.map(t=>t.text).join(''))?'游历写生':'会友办事'}。`,`行动 ${travelVerb(trips[0].place)}｜${ageOf(sc.year)} 岁`];
-  const y=yearData(sc),p=(y.interactions||[]).find(x=>x.name),c=(y.creations||[]).find(x=>x.title||x.type);
-  if(p)return [`${sc.year} 年，主要记录与${p.name}的${p.type||'往来'}。`,`人物 ${p.name}｜${ageOf(sc.year)} 岁`];
-  if(c)return [`${sc.year} 年，年谱留下${c.type||'创作'}记录。`,`创作 ${c.title||c.type||''}｜${ageOf(sc.year)} 岁`];
-  return [`${sc.year} 年，活动记录较少。`,`阶段 ${ch.name}｜${ageOf(sc.year)} 岁`]
-}
+		function shortText(s,n=28){return String(s||'').replace(/《[^》]{1,18}》/g,m=>m).replace(/[""""「」『』]/g,'').replace(/\s+/g,'').replace(/[□�]/g,'').slice(0,n)}
+	var _customYear=null,_customPos={};
+	function actionSummary(it,sc){
+	  var year=String(sc.year);
+	  var custom=window.HBH_CUSTOM&&window.HBH_CUSTOM[year];
+	  if(!custom||!custom.items)return (it.title||it.place||"")+"。";
+	  if(_customYear!==year){_customYear=year;_customPos={};}
+	  var h=it.title||it.place||"";
+	  var key=year+"|"+h;
+	  var matches=custom.items.filter(function(item){return item.h===h});
+	  if(!matches.length)return h+"。";
+	  var idx=_customPos[key]||0;
+	  if(idx>=matches.length){_customPos={};idx=0;}
+	  _customPos[key]=idx+1;
+	  return matches[idx].t;
+	}
+	function storyFor(sc){
+	  var custom=window.HBH_CUSTOM&&window.HBH_CUSTOM[String(sc.year)];
+	  if(custom&&custom.story)return custom.story;
+	  const trips=travelItems(sc),ch=chapterOf(sc.year);
+	  if(storyByYear[sc.year])return storyByYear[sc.year];
+	  if(trips.length)return [sc.year+" 年，"+trips.map(t=>t.place).slice(0,3).join("、")+"等地有活动记录。","行动 "+travelVerb(trips[0].place)+"｜"+ageOf(sc.year)+" 岁"];
+	  return [sc.year+" 年，年谱记录较少。","阶段 "+ch.name+"｜"+ageOf(sc.year)+" 岁"]
+	}
 function updateStory(sc){
   const [line,sub]=storyFor(sc);
   storyLine.textContent=line;storySub.innerHTML=sub.replace(/^(行动|迁居|阶段|人物|创作)/,'<b>$1</b>').replace(/｜(往返|人物|创作|停留)/g,'｜<b>$1</b>').replace(/｜(\d+ 岁)/, '｜$1');
@@ -304,7 +312,7 @@ function playYear(sc,idx,yearRatio){
   document.querySelectorAll('.city-pulse').forEach(e=>e.classList.remove('on'));const pu=document.getElementById('pulse_'+sc.place);if(pu)pu.classList.add('on');
   const trips=travelItems(sc),travelCount=trips.length,travelPart=travelCount?Math.min(.76,.28+travelCount*.12):.18;
   let step=-1,lineRatio=0;
-  if(travelCount&&yearRatio<travelPart){const u=yearRatio/travelPart*travelCount,phase=u-Math.floor(u);step=clamp(Math.floor(u),0,travelCount-1);lineRatio=phase<.62?phase/.62:1}else if(travelCount){step=travelCount-1;lineRatio=.28}
+  if(travelCount&&yearRatio<travelPart){const home=city[sc.place]||city[anchorPlace(sc.year)]||city.上海;const tripDists=trips.map(t=>city[t.place]?Math.hypot(city[t.place][0]-home[0],city[t.place][1]-home[1]):1);const totalDist=tripDists.reduce((a,b)=>a+b,0)||travelCount;const uDist=yearRatio/travelPart*totalDist;let cumDist=0;step=-1;let localPhase=0;for(let i=0;i<trips.length;i++){if(cumDist+tripDists[i]>=uDist||i===trips.length-1){step=i;localPhase=tripDists[i]>0?(uDist-cumDist)/tripDists[i]:0;break}cumDist+=tripDists[i]}lineRatio=localPhase<.62?localPhase/.62:1}else if(travelCount){step=travelCount-1;lineRatio=.28}
   focusForTravel(sc,step,lineRatio);
   updateVisitLines(sc,step,lineRatio);updateFriends(sc.year);
   const all=notes(sc).filter(n=>!(n.kind==='travel'&&n.place===sc.place));
@@ -315,7 +323,7 @@ function playYear(sc,idx,yearRatio){
 }
 detailClose.onclick=()=>detail.classList.remove('show');
 window.__HBH_DEBUG={scenes,playYear,travelItems,notes,orderedYearItems,setPaused:v=>{paused=!!v}};
-draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=7600,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;playYear(scenes[idx],idx,r);last=idx}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
+draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=14000,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;playYear(scenes[idx],idx,r);last=idx}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
 })();
 </script>
 </body>
