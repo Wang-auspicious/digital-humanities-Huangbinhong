@@ -7,7 +7,7 @@
   <script src="life_journey.js"></script>
   <script src="hbh_overview_data.js"></script>
   <style>
-    :root{--paper:#efe7d8;--ink:#15120e;--red:#a92b22;--blue:#2d6670}
+    :root{--paper:#efe7d8;--ink:#15120e;--red:#a92b22;--blue:#2d6670;--side:340px;--bottom:92px}
     *{box-sizing:border-box}
     html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--paper);color:var(--ink);
       font-family:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif}
@@ -22,8 +22,8 @@
     #world:after{content:"";position:absolute;inset:0;pointer-events:none;background:
       radial-gradient(circle at 53% 49%,rgba(239,231,216,.08),transparent 24%),
       linear-gradient(90deg,rgba(239,231,216,.22),rgba(64,48,35,.10) 18%,rgba(64,48,35,.12) 75%,rgba(239,231,216,.12));mix-blend-mode:screen}
-    .reading-shade{position:absolute;inset:0;z-index:7;pointer-events:none;background:
-      linear-gradient(90deg,rgba(35,27,19,.08),rgba(35,27,19,.16) 52%,rgba(239,231,216,.42) 72%,rgba(239,231,216,.70)),
+    .reading-shade{position:absolute;left:0;right:var(--side);top:0;bottom:var(--bottom);z-index:7;pointer-events:none;background:
+      linear-gradient(90deg,rgba(35,27,19,.08),rgba(35,27,19,.13) 58%,rgba(239,231,216,.20)),
       rgba(45,36,28,.12);mix-blend-mode:multiply}
     svg.map{position:absolute;inset:0;width:2400px;height:1400px;overflow:visible}
     .map-title{position:absolute;left:58px;top:42px;width:265px;z-index:10;letter-spacing:.08em;color:#17120d;pointer-events:none}
@@ -45,16 +45,16 @@
     .routeSeg{fill:none;stroke:#9d3c28;stroke-linecap:round;stroke-linejoin:round;filter:url(#dryBrush);transition:stroke-dashoffset 360ms linear;vector-effect:non-scaling-stroke}
     .sideTrip{fill:none;stroke:rgba(43,97,102,.36);stroke-width:3;stroke-linecap:round;stroke-dasharray:4 9}.sideTrip.hot{stroke:#2d6670;stroke-width:4;stroke-dasharray:0}
     .city-dot{fill:#17120e;stroke:#efe7d8;stroke-width:3}.city-pulse{fill:none;stroke:#a92b22;stroke-width:1.2;opacity:.0}.city-pulse.on{opacity:.62}
-    #screenLines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:18;overflow:visible}
+    #screenLines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:29;overflow:visible}
     #screenLines path{fill:none;stroke:rgba(17,15,11,.68);stroke-width:.72;vector-effect:non-scaling-stroke;shape-rendering:geometricPrecision}
     #screenLines circle{fill:#15120e;opacity:.86}
-    #callouts{position:absolute;inset:0;z-index:20;pointer-events:none}
-    .caption{position:absolute;width:282px;min-height:24px;opacity:0;transform:translateY(4px);color:#0d0b09;font-size:11px;line-height:1.34;letter-spacing:.012em;pointer-events:auto;
+    #callouts{position:absolute;inset:0;z-index:30;pointer-events:none}
+    .caption{position:absolute;width:292px;min-height:34px;opacity:0;transform:translateY(4px);color:#0d0b09;font-size:13px;line-height:1.42;letter-spacing:.012em;pointer-events:auto;
       transition:opacity 420ms cubic-bezier(.25,1,.5,1),transform 420ms cubic-bezier(.25,1,.5,1);text-shadow:0 1px 0 rgba(246,239,226,.96);
-      padding:2px 0 3px 0;background:transparent;border:0;box-shadow:none}
+      padding:0 0 10px 0;background:transparent;border-bottom:1px solid rgba(21,18,14,.18);box-shadow:none}
     .caption.show{opacity:1;transform:translateY(0)}
-    .caption .k{display:inline-block;width:22px;margin-right:6px;color:#a92b22;font:900 9px/1 "Noto Serif SC","SimSun",serif;letter-spacing:.08em;border-bottom:1px solid rgba(169,43,34,.45)}
-    .caption .h{display:inline;font-weight:900;font-size:11.2px;color:#0d0b09}.caption .t{display:block;margin-left:30px;color:#17130f}.caption .small{display:block;margin-top:2px;color:#36302a;font-size:9px;line-height:1.35}
+    .caption .k{display:inline-block;width:28px;margin-right:8px;color:#a92b22;font:900 10px/1 "Noto Serif SC","SimSun",serif;letter-spacing:.08em;border-bottom:1px solid rgba(169,43,34,.45)}
+    .caption .h{display:inline;font-weight:900;font-size:13px;color:#0d0b09}.caption .t{display:block;margin:5px 0 0 36px;color:#17130f}.caption .small{display:block;margin-top:2px;color:#36302a;font-size:10px;line-height:1.35}
     .avatarMark{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#17120e;color:#efe7d8;font:700 9px/1 Georgia,"Noto Serif SC",serif;vertical-align:-4px;margin-right:5px;box-shadow:inset 0 0 0 1px rgba(239,231,216,.9)}
     .friendPanel{display:none;position:absolute;right:22px;top:112px;bottom:104px;width:152px;z-index:22;padding:10px 8px 8px 10px;pointer-events:auto;overflow:hidden;background:
       repeating-linear-gradient(90deg,rgba(91,67,42,.045) 0 1px,transparent 1px 7px),
@@ -66,15 +66,20 @@
     .friendAvatar.new{opacity:1;border:2px solid #a92b22;background:#efe7d8;color:#a92b22;transform:scale(1.08)}
     .friendAvatar.active{opacity:.95;background:#15120e;color:#efe7d8}
     .friendAvatar.gone{opacity:.18;background:transparent;color:#15120e;border-color:rgba(21,18,14,.42)}
-    .year-badge{position:absolute;z-index:21;left:auto;right:34px;top:38px;opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity 520ms cubic-bezier(.25,1,.5,1),transform 520ms cubic-bezier(.25,1,.5,1);text-shadow:0 1px 0 rgba(255,255,255,.72);text-align:right}
-    .year-badge.show{opacity:1;transform:translateY(0)}.year-badge .y{font:900 112px/.74 Georgia,"Times New Roman",serif;letter-spacing:-.075em;color:#a92b22}.year-badge .p{font:900 16px/1.2 "Noto Serif SC","SimSun",serif;letter-spacing:.18em;margin-top:5px;color:#1d1813}.year-badge .meta{font:700 11px/1.6 "Noto Serif SC","SimSun",serif;letter-spacing:.12em;color:#362c24;margin-top:8px}
-    .storyPanel{position:absolute;left:344px;top:42px;width:390px;z-index:24;pointer-events:none;color:#15120e;text-shadow:0 1px 0 rgba(246,239,226,.92)}
-    .storyPanel .label{font:900 10px/1 "Noto Serif SC","SimSun",serif;color:#a92b22;letter-spacing:.28em;margin-bottom:11px}.storyPanel .line{font:900 22px/1.14 "Noto Serif SC","SimSun",serif;letter-spacing:.08em}.storyPanel .sub{margin-top:9px;font:700 12px/1.65 "Noto Serif SC","SimSun",serif;letter-spacing:.08em;color:#2c241d}.storyPanel .sub b{color:#a92b22}
-    .rail{position:absolute;left:34px;right:34px;bottom:24px;height:76px;z-index:30;pointer-events:none;font-family:Georgia,"Times New Roman",serif;color:#17120e}
-    .rail .bar{position:absolute;left:0;right:0;top:28px;height:2px;background:rgba(25,20,15,.18)}.rail .bar i{display:block;width:0;height:2px;background:#a92b22}
-    .eraSeg{position:absolute;top:47px;height:18px;border-top:1px solid rgba(21,18,14,.34);font:800 10px/18px "Noto Serif SC","SimSun",serif;letter-spacing:.12em;color:#2f261f;text-align:center}.eraSeg.active{color:#a92b22;border-top-color:#a92b22}
-    .tick{position:absolute;top:19px;transform:translateX(-50%);font-size:10px;color:#3e342b}.tick:before{content:"";display:block;width:1px;height:16px;background:rgba(20,17,13,.42);margin:0 auto 4px}
-    .control{position:absolute;right:38px;bottom:92px;z-index:35;border:0;background:transparent;color:#15120e;font:700 12px/1 "Noto Serif SC","SimSun",serif;letter-spacing:.18em;border-bottom:1px solid rgba(21,18,14,.75);cursor:pointer;padding:0 0 4px}
+    .sidePanel{position:absolute;right:0;top:0;bottom:var(--bottom);width:var(--side);z-index:25;background:
+      linear-gradient(90deg,rgba(239,231,216,.82),rgba(239,231,216,.96) 18%,rgba(239,231,216,.98)),
+      repeating-linear-gradient(90deg,rgba(91,67,42,.045) 0 1px,transparent 1px 7px);border-left:1px solid rgba(21,18,14,.32);box-shadow:-16px 0 42px rgba(44,30,18,.12);pointer-events:none}
+    .sidePanel .panelHead{position:absolute;left:22px;top:214px;font:900 11px/1 "Noto Serif SC","SimSun",serif;color:#a92b22;letter-spacing:.28em}
+    .year-badge{position:absolute;z-index:31;left:auto;right:22px;top:34px;width:300px;opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity 520ms cubic-bezier(.25,1,.5,1),transform 520ms cubic-bezier(.25,1,.5,1);text-shadow:0 1px 0 rgba(255,255,255,.72);text-align:right}
+    .year-badge.show{opacity:1;transform:translateY(0)}.year-badge .y{font:900 102px/.74 Georgia,"Times New Roman",serif;letter-spacing:-.075em;color:#a92b22}.year-badge .p{font:900 16px/1.2 "Noto Serif SC","SimSun",serif;letter-spacing:.18em;margin-top:5px;color:#1d1813}.year-badge .meta{font:700 12px/1.6 "Noto Serif SC","SimSun",serif;letter-spacing:.12em;color:#362c24;margin-top:8px}
+    .storyPanel{position:absolute;left:344px;top:42px;width:420px;z-index:24;pointer-events:none;color:#15120e;text-shadow:0 1px 0 rgba(246,239,226,.92)}
+    .storyPanel .label{font:900 10px/1 "Noto Serif SC","SimSun",serif;color:#a92b22;letter-spacing:.28em;margin-bottom:11px}.storyPanel .line{font:900 23px/1.16 "Noto Serif SC","SimSun",serif;letter-spacing:.08em}.storyPanel .sub{margin-top:9px;font:700 12px/1.65 "Noto Serif SC","SimSun",serif;letter-spacing:.08em;color:#2c241d}.storyPanel .sub b{color:#a92b22}
+    .bottomPanel{position:absolute;left:0;right:0;bottom:0;height:var(--bottom);z-index:24;background:rgba(239,231,216,.94);border-top:1px solid rgba(21,18,14,.32);box-shadow:0 -10px 28px rgba(49,34,20,.10);pointer-events:none}
+    .rail{position:absolute;left:34px;right:calc(var(--side) + 26px);bottom:8px;height:74px;z-index:30;pointer-events:none;font-family:Georgia,"Times New Roman",serif;color:#17120e}
+    .rail .bar{position:absolute;left:0;right:0;top:30px;height:3px;background:rgba(25,20,15,.20)}.rail .bar i{display:block;width:0;height:3px;background:#a92b22}
+    .eraSeg{position:absolute;top:50px;height:22px;border-top:1px solid rgba(21,18,14,.34);font:900 12px/22px "Noto Serif SC","SimSun",serif;letter-spacing:.12em;color:#2f261f;text-align:center}.eraSeg.active{color:#a92b22;border-top-color:#a92b22}
+    .tick{position:absolute;top:15px;transform:translateX(-50%);font-size:13px;color:#2f261f}.tick:before{content:"";display:block;width:1px;height:18px;background:rgba(20,17,13,.50);margin:0 auto 5px}
+    .control{position:absolute;right:calc(var(--side) + 38px);bottom:104px;z-index:35;border:0;background:transparent;color:#15120e;font:700 12px/1 "Noto Serif SC","SimSun",serif;letter-spacing:.18em;border-bottom:1px solid rgba(21,18,14,.75);cursor:pointer;padding:0 0 4px}
     .detail{position:absolute;right:36px;bottom:148px;width:340px;max-height:230px;overflow:auto;z-index:40;display:none;background:rgba(240,232,218,.94);box-shadow:0 18px 48px rgba(30,20,12,.18);border-left:2px solid var(--red);padding:12px 14px;color:#15110d;font-size:11px;line-height:1.62}
     .detail.show{display:block}.detail b{color:var(--red);font-size:12px}.detail button{float:right;border:0;background:transparent;color:#15110d;font-weight:900;cursor:pointer}
   </style>
@@ -85,7 +90,8 @@
   <section id="world"><img class="map-image" src="assets/china_1892_liumingjie_2560.jpg" alt="古今地舆全图"><svg class="map" viewBox="0 0 2400 1400"><g id="routes"></g><g id="cities"></g></svg></section>
   <div class="reading-shade"></div>
   <div class="map-title"><div class="eyebrow">年谱数字人文</div><div class="cn-title"><b>黄</b>宾虹<br>生命舆图</div><div class="read-note"><strong>1865—1955</strong><br>一条朱砂线标出四次居所转换；青线标出当年的往返游历。</div><div class="map-legend"><div><i></i><b>迁居主线</b>　走过后留痕</div><div class="blue"><i></i><b>当年往返</b>　只在该年点亮</div></div><div class="seal">虹</div></div>
-  <div class="storyPanel" id="storyPanel"><div class="label">当前阅读</div><div class="line" id="storyLine">金华出生，祖籍徽州。</div><div class="sub" id="storySub"><b>基地</b> 金华　<b>动作</b> 出生</div></div>
+  <div class="storyPanel" id="storyPanel"><div class="label">当前阅读</div><div class="line" id="storyLine">金华出生，祖籍徽州。</div><div class="sub" id="storySub"><b>行动</b> 出生</div></div>
+  <aside class="sidePanel"><div class="panelHead">本年记录</div></aside><div class="bottomPanel"></div>
   <svg id="screenLines"></svg><div id="callouts"></div><aside class="friendPanel" id="friendPanel"><div class="fh">结交</div><div class="hint">逐年累加／离去转淡</div><div class="friendGrid" id="friendGrid"></div></aside><div class="year-badge" id="yearBadge"><div class="y">1865</div><div class="p">金华 · 出生</div><div class="meta">基地 金华｜0 岁</div></div>
   <aside class="detail" id="detail"><button id="detailClose">×</button><b id="detailTitle"></b><div id="detailText"></div></aside>
   <button class="control" id="pauseBtn">暂停</button><div class="rail" id="rail"><div class="bar"><i id="progress"></i></div></div>
@@ -100,14 +106,14 @@ function anchorPlace(y){const r=J.byYear[String(y)]||{};let p=r.anchor&&r.anchor
 function scaleFor(y,p){if(y<1907)return 1.50;if(y<1937)return ['广州','香港','桂林'].includes(p)?1.18:1.48;if(y<1948)return 1.25;return 1.44}
 const titleByYear={1865:'出生 · 金华',1873:'临画 · 西湖',1886:'徽州根基',1907:'星夜赴沪',1928:'南行远游',1937:'北上转折',1948:'南返杭州',1955:'归于西湖'};
 const storyByYear={
-  1865:['金华出生，祖籍徽州。','基地 金华｜出生'],
-  1873:['随父到杭州，临摹与写生开始进入年谱。','基地 歙县｜往返 杭州'],
-  1886:['居歙县，家学、婚姻、金石文字并入生活。','基地 歙县｜居住与家学'],
+  1865:['金华出生，祖籍徽州。','行动 出生'],
+  1873:['随父到杭州，开始临摹与写生。','行动 往返杭州'],
+  1886:['居歙县，家学、婚姻、金石文字并入生活。','行动 居住与家学'],
   1907:['从徽州赴上海，人生主线转入海上。','迁居 歙县 → 上海｜四十二岁'],
-  1928:['以上海为基地，南行广州、香港、桂林。','基地 上海｜南行远游'],
+  1928:['南行广州、香港、桂林，展览和画友记录变密。','行动 南行远游'],
   1937:['离开上海，转入北平任教。','迁居 上海 → 北平｜七十二岁'],
   1948:['南返杭州，晚年居所固定在西湖一带。','迁居 北平 → 杭州｜八十三岁'],
-  1955:['杭州辞世，文稿与作品进入公共收藏。','基地 杭州｜逝世']
+  1955:['杭州辞世，文稿与作品进入公共收藏。','行动 逝世']
 };
 const eraBands=[
   {start:1865,end:1906,name:'徽州／金华'},
@@ -131,25 +137,37 @@ function draw(){
   eraBands.forEach(b=>{const e=document.createElement('span');e.className='eraSeg';e.dataset.start=b.start;e.dataset.end=b.end;e.style.left=((b.start-1865)/90*100)+'%';e.style.width=((b.end-b.start+1)/90*100)+'%';e.textContent=b.name;rail.appendChild(e)})
 }
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}let trans={tx:0,ty:0,s:1};
-function focus(place,scale){const p=city[place]||city.上海,vw=stage.clientWidth,vh=stage.clientHeight,tx=vw/2-p[0]*scale,ty=vh/2-p[1]*scale;trans={tx,ty,s:scale};world.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`}
+function focus(place,scale,opts={}){
+  const p=Array.isArray(place)?place:(city[place]||city.上海),vw=stage.clientWidth,vh=stage.clientHeight,side=340,bottom=92,mapW=vw-side,mapH=vh-bottom;
+  const cx=(opts.cx!=null?opts.cx:mapW*.54),cy=(opts.cy!=null?opts.cy:mapH*.54),tx=cx-p[0]*scale,ty=cy-p[1]*scale;
+  trans={tx,ty,s:scale};world.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`
+}
 function worldToScreen(p){return{x:p[0]*trans.s+trans.tx,y:p[1]*trans.s+trans.ty}}
 function clean(s,n=42){return String(s||'').replace(/\s+/g,'').replace(/[□�]/g,'').slice(0,n)}
 function ageOf(y){return y-1865}
 function chapterOf(y){return eraBands.find(b=>y>=b.start&&y<=b.end)||eraBands[0]}
 function travelVerb(n){return n?`往返 ${n}`:'停留'}
+function shortText(s,n=28){return String(s||'').replace(/《[^》]{1,18}》/g,m=>m).replace(/[“”"「」『』]/g,'').replace(/\s+/g,'').replace(/[□�]/g,'').slice(0,n)}
+function actionSummary(it,sc){
+  if(it.kind==='travel')return `到${it.place}${/展|展览|会/.test(it.text)?'参加活动':/游|登|写生/.test(it.text)?'游历写生':/访|晤|会/.test(it.text)?'访友会面':'短暂停留'}。`;
+  if(it.kind==='friend')return `${it.name||String(it.title||'友人').split('｜')[0]}：${it.title&&it.title.includes('初见')?'初见':(String(it.title||'').split('｜')[1]||'往来')}。`;
+  if(it.kind==='work')return `${String(it.title||'创作').replace(/^作画赠予$/,'作画').replace(/｜/g,'：')}。`;
+  if(it.kind==='era')return `同年：${shortText(it.text,24)}。`;
+  return shortText(it.text,28)
+}
 function storyFor(sc){
   const trips=travelItems(sc),ch=chapterOf(sc.year),base=sc.place;
   if(storyByYear[sc.year])return storyByYear[sc.year];
-  if(trips.length)return [`${sc.year} 年，以${base}为基地，短途到 ${trips.map(t=>t.place).slice(0,3).join('、')}。`,`基地 ${base}｜${travelVerb(trips[0].place)}｜${ageOf(sc.year)} 岁`];
+  if(trips.length)return [`${sc.year} 年，去了${trips.map(t=>t.place).slice(0,3).join('、')}，主要是${/展|展览|会/.test(trips.map(t=>t.text).join(''))?'参加展会与社交':/写生|游|登/.test(trips.map(t=>t.text).join(''))?'游历写生':'会友办事'}。`,`行动 ${travelVerb(trips[0].place)}｜${ageOf(sc.year)} 岁`];
   const y=yearData(sc),p=(y.interactions||[]).find(x=>x.name),c=(y.creations||[]).find(x=>x.title||x.type);
-  if(p)return [`${sc.year} 年，仍在${base}，年谱记录与${p.name}的${p.type||'往来'}。`,`基地 ${base}｜人物 ${p.name}｜${ageOf(sc.year)} 岁`];
-  if(c)return [`${sc.year} 年，仍在${base}，年谱留下${c.type||'创作'}记录。`,`基地 ${base}｜${c.type||'创作'}｜${ageOf(sc.year)} 岁`];
-  return [`${sc.year} 年，主居所仍在${base}。`,`阶段 ${ch.name}｜基地 ${base}｜${ageOf(sc.year)} 岁`]
+  if(p)return [`${sc.year} 年，主要记录与${p.name}的${p.type||'往来'}。`,`人物 ${p.name}｜${ageOf(sc.year)} 岁`];
+  if(c)return [`${sc.year} 年，年谱留下${c.type||'创作'}记录。`,`创作 ${c.title||c.type||''}｜${ageOf(sc.year)} 岁`];
+  return [`${sc.year} 年，活动记录较少。`,`阶段 ${ch.name}｜${ageOf(sc.year)} 岁`]
 }
 function updateStory(sc){
   const [line,sub]=storyFor(sc);
-  storyLine.textContent=line;storySub.innerHTML=sub.replace(/^(基地|迁居|阶段)/,'<b>$1</b>').replace(/｜(往返|人物|创作|停留)/g,'｜<b>$1</b>').replace(/｜(\d+ 岁)/, '｜$1');
-  yearBadge.querySelector('.y').textContent=sc.year;yearBadge.querySelector('.p').textContent=sc.title;yearBadge.querySelector('.meta').textContent=`基地 ${sc.place}｜${ageOf(sc.year)} 岁`;
+  storyLine.textContent=line;storySub.innerHTML=sub.replace(/^(行动|迁居|阶段|人物|创作)/,'<b>$1</b>').replace(/｜(往返|人物|创作|停留)/g,'｜<b>$1</b>').replace(/｜(\d+ 岁)/, '｜$1');
+  yearBadge.querySelector('.y').textContent=sc.year;yearBadge.querySelector('.p').textContent=sc.title;yearBadge.querySelector('.meta').textContent=`定居 ${sc.place}｜${ageOf(sc.year)} 岁`;
   document.querySelectorAll('.eraSeg').forEach(e=>e.classList.toggle('active',sc.year>=+e.dataset.start&&sc.year<=+e.dataset.end))
 }
 function hasActionText(s){return /(赴|至|到|抵|往|游|登|访|来访|造访|寓|居|迁|任教|开会|展|展览|写生|过|路经|道经|下榻)/.test(String(s||''))}
@@ -185,7 +203,7 @@ function orderedYearItems(sc){
   return items.sort((a,b)=>a.order-b.order)
 }
 function slot(n){
-  const vw=stage.clientWidth,vh=stage.clientHeight,x=vw-396,top=clamp(214,170,vh-430),step=48;
+  const vw=stage.clientWidth,vh=stage.clientHeight,x=vw-318,top=clamp(254,230,vh-430),step=76;
   return Array.from({length:n},(_,i)=>({x,y:clamp(top+i*step,70,vh-92)}))
 }
 const sceneFacts={
@@ -204,7 +222,7 @@ function notes(sc){
   return orderedYearItems(sc).filter(it=>!(it.kind==='travel'&&!travelItems(sc).some(t=>t.place===it.place))).sort((a,b)=>(a.group-b.group)||(a.order-b.order)).map(it=>({
     k:it.label,
     h:it.title||it.place,
-    t:clean(it.text,42),
+    t:actionSummary(it,sc),
     place:it.place,
     avatar:it.avatar,
     group:it.group,
@@ -245,46 +263,59 @@ function updateVisitLines(sc,step=0,lineRatio=1){
   items.forEach(t=>{const path=S('path',{d:q(city[home],city[t.place],.10),class:'visitHot yearTrace'});routes.appendChild(path)});
   hot.forEach(key=>{const[a,b]=key.split('|'),path=S('path',{d:q(city[a],city[b],.10),class:'visitHot'});routes.appendChild(path);const l=path.getTotalLength(),r=clamp(lineRatio,0,1);path.style.strokeDasharray=l;path.style.strokeDashoffset=l*(1-r);const pt=path.getPointAtLength(l*r);routes.appendChild(S('circle',{cx:pt.x,cy:pt.y,r:5,class:'travelDot'}))})
 }
+function focusForTravel(sc,step,lineRatio){
+  const trips=travelItems(sc),active=trips[step],home=city[sc.place]||city[anchorPlace(sc.year)]||city.上海;
+  if(!active||!city[active.place]){focus(sc.place,sc.scale);return}
+  const dest=city[active.place],r=clamp(lineRatio,0,1),p=[home[0]*(1-r)+dest[0]*r,home[1]*(1-r)+dest[1]*r];
+  const dist=Math.hypot(dest[0]-home[0],dest[1]-home[1]),s=clamp(sc.scale*(dist>520?.72:dist>360?.82:.95),.82,1.42);
+  focus(p,s,{cx:(stage.clientWidth-340)*.50,cy:(stage.clientHeight-92)*.55})
+}
 function updateFriends(year){
   const active=new Set(((J.byYear[String(year)]||{}).interactions||[]).map(p=>p.name)),newset=new Set(((J.byYear[String(year)]||{}).people_new||[]).map(p=>p.name));
   const names=[...friendFirst.entries()].filter(([n,fy])=>fy<=year).sort((a,b)=>a[1]-b[1]).slice(-80).map(x=>x[0]);
   friendGrid.innerHTML='';
   names.forEach(n=>{const d=document.createElement('div'),last=friendLast.get(n)||year;d.className='friendAvatar '+(newset.has(n)?'new':active.has(n)?'active':last<year-10?'gone':'');d.title=`${n}｜${friendFirst.get(n)}—${last}`;d.textContent=n.slice(0,1);friendGrid.appendChild(d)})
 }
+let lastCaptionKey='';
+function drawLines(ns,ss,sc){
+  screenLines.innerHTML='';
+  ns.forEach((n,i)=>{const pt=worldToScreen(city[n.place]||city[sc.place]||city.上海),tx=ss[i].x,ty=ss[i].y+17,mx=clamp((pt.x+tx)/2,Math.min(pt.x,tx),Math.max(pt.x,tx));screenLines.appendChild(S('path',{d:`M${pt.x},${pt.y} H${mx} V${ty} H${tx}`}));screenLines.appendChild(S('circle',{cx:pt.x,cy:pt.y,r:1.7}))})
+}
+function renderCaptions(ns,ss,sc,force=false){
+  const key=ns.map(n=>`${n.k}:${n.h}:${n.t}`).join('|');
+  if(force||key!==lastCaptionKey){
+    callouts.innerHTML='';
+    ns.forEach((n,i)=>{const d=document.createElement('div');d.className='caption show';d.style.left=ss[i].x+'px';d.style.top=ss[i].y+'px';d.innerHTML=`<span class="k">${n.k}</span><span class="h">${n.h}</span><div class="t">${n.t}</div>`;d.onclick=()=>{detailTitle.textContent=n.h.replace(/<[^>]*>/g,'');detailText.textContent=n.full||n.t;detail.classList.add('show')};callouts.appendChild(d)});
+    lastCaptionKey=key
+  }
+  drawLines(ns,ss,sc)
+}
 function show(sc,idx,ratio){
   if(!sc)return;focus(sc.place,sc.scale);updateStory(sc);yearBadge.classList.add('show');
   document.querySelectorAll('.city-pulse').forEach(e=>e.classList.remove('on'));const pu=document.getElementById('pulse_'+sc.place);if(pu)pu.classList.add('on');
-  callouts.innerHTML='';screenLines.innerHTML='';
+  lastCaptionKey='';callouts.innerHTML='';screenLines.innerHTML='';
   updateVisitLines(sc,0,1);updateFriends(sc.year);
   const all=notes(sc),visible=all.filter(n=>!(n.kind==='travel'&&n.place===sc.place)),ns=visible.slice(0,5),ss=slot(ns.length);
-  ns.forEach((n,i)=>{
-    const pt=worldToScreen(city[n.place]||city[sc.place]||city.上海),d=document.createElement('div');
-    d.className='caption show';d.style.left=ss[i].x+'px';d.style.top=ss[i].y+'px';
-    d.innerHTML=`<span class="k">${n.k}</span><span class="h">${n.avatar?`<span class="avatarMark">${String(n.avatar).slice(0,1)}</span>`:''}${n.h}</span><div class="t">${n.t}</div>`;
-    d.onclick=()=>{detailTitle.textContent=n.h.replace(/<[^>]*>/g,'');detailText.textContent=n.full||n.t;detail.classList.add('show')};
-    callouts.appendChild(d);
-    const tx=ss[i].x,ty=ss[i].y+15,mx=clamp((pt.x+tx)/2,pt.x,tx);
-    screenLines.appendChild(S('path',{d:`M${pt.x},${pt.y} H${mx} V${ty} H${tx}`}));
-    screenLines.appendChild(S('circle',{cx:pt.x,cy:pt.y,r:1.7}));
-  });
+  renderCaptions(ns,ss,sc,true);
   updateProgress(idx,ratio)
 }
 function playYear(sc,idx,yearRatio){
-  if(!sc)return;focus(sc.place,sc.scale);updateStory(sc);yearBadge.classList.add('show');
+  if(!sc)return;updateStory(sc);yearBadge.classList.add('show');
   document.querySelectorAll('.city-pulse').forEach(e=>e.classList.remove('on'));const pu=document.getElementById('pulse_'+sc.place);if(pu)pu.classList.add('on');
   const trips=travelItems(sc),travelCount=trips.length,travelPart=travelCount?Math.min(.76,.28+travelCount*.12):.18;
   let step=-1,lineRatio=0;
   if(travelCount&&yearRatio<travelPart){const u=yearRatio/travelPart*travelCount,phase=u-Math.floor(u);step=clamp(Math.floor(u),0,travelCount-1);lineRatio=phase<.62?phase/.62:1}else if(travelCount){step=travelCount-1;lineRatio=.28}
+  focusForTravel(sc,step,lineRatio);
   updateVisitLines(sc,step,lineRatio);updateFriends(sc.year);
   const all=notes(sc).filter(n=>!(n.kind==='travel'&&n.place===sc.place));
-  const reveal=travelCount&&yearRatio<travelPart?Math.max(1,Math.min(all.length,step+1)):Math.min(all.length,Math.floor((yearRatio-travelPart)/(1-travelPart)*all.length)+1);
-  const ns=all.slice(0,clamp(reveal,1,5)),ss=slot(ns.length);callouts.innerHTML='';screenLines.innerHTML='';
-  ns.forEach((n,i)=>{const pt=worldToScreen(city[n.place]||city[sc.place]||city.上海),d=document.createElement('div');d.className='caption show';d.style.left=ss[i].x+'px';d.style.top=ss[i].y+'px';d.innerHTML=`<span class="k">${n.k}</span><span class="h">${n.avatar?`<span class="avatarMark">${String(n.avatar).slice(0,1)}</span>`:''}${n.h}</span><div class="t">${n.t}</div>`;d.onclick=()=>{detailTitle.textContent=n.h.replace(/<[^>]*>/g,'');detailText.textContent=n.full||n.t;detail.classList.add('show')};callouts.appendChild(d);const tx=ss[i].x,ty=ss[i].y+15,mx=clamp((pt.x+tx)/2,pt.x,tx);screenLines.appendChild(S('path',{d:`M${pt.x},${pt.y} H${mx} V${ty} H${tx}`}));screenLines.appendChild(S('circle',{cx:pt.x,cy:pt.y,r:1.7}))});
+  const reveal=travelCount&&yearRatio<travelPart?Math.max(1,Math.min(all.length,step+1)):Math.min(all.length,Math.floor((yearRatio-travelPart)/(1-travelPart)*all.length*.55)+1);
+  const ns=all.slice(0,clamp(reveal,1,5)),ss=slot(ns.length);
+  renderCaptions(ns,ss,sc);
   updateProgress(idx,yearRatio)
 }
 detailClose.onclick=()=>detail.classList.remove('show');
 window.__HBH_DEBUG={scenes,playYear,travelItems,notes,orderedYearItems,setPaused:v=>{paused=!!v}};
-draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=4200,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;playYear(scenes[idx],idx,r);last=idx}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
+draw();let start=performance.now(),paused=false,last=-1;function loop(now){if(!paused){const dur=7600,total=dur*scenes.length,raw=Math.max(0,now-start),el=raw%total,idx=clamp(Math.floor(el/dur),0,scenes.length-1),r=(el%dur)/dur;playYear(scenes[idx],idx,r);last=idx}requestAnimationFrame(loop)}pauseBtn.onclick=()=>{paused=!paused;pauseBtn.textContent=paused?'继续':'暂停'};show(scenes[0],0,0);requestAnimationFrame(loop);
 })();
 </script>
 </body>
