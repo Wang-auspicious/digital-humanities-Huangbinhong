@@ -229,6 +229,39 @@
   background:rgba(38,20,8,.62);
   box-shadow:0 1px 0 rgba(255,226,160,.22);
 }#hbh-atlas .label .name::before{top:3px;}#hbh-atlas .label .name::after{bottom:3px;}
+/* ===== 交游长河 → #hbh-river（纸本 ThemeRiver + 气泡卡片）===== */
+#hbh-river{--bgTop:#E8DFCD;--bgBot:#DDD2BC;--ink:#2B2622;--grey:#6B6258;--red:#7A1F1A;--lead:#9A8F7E;--eraBg:#C9BCA4;--fontSerif:"Noto Serif SC","Songti SC","SimSun",serif}#hbh-river *{box-sizing:border-box}#hbh-river,#hbh-river{width:100%;height:100%;margin:0;overflow:hidden;background:linear-gradient(180deg,#E8DFCD 0%,#DDD2BC 100%);color:var(--ink);font-family:var(--fontSerif);user-select:none;-webkit-user-select:none}
+#hbh-river canvas{position:absolute;inset:0;z-index:1}
+#hbh-river .river-title{position:absolute;top:24px;left:28px;z-index:10;pointer-events:none}
+#hbh-river .river-title h1{font-size:clamp(24px,3.8vw,42px);font-weight:900;color:var(--ink);letter-spacing:.08em;margin:0;line-height:1.15}
+#hbh-river .river-title .sub{font-size:clamp(13px,1.8vw,18px);color:var(--grey);margin:4px 0 0;letter-spacing:.12em}
+#hbh-river .river-title .inkdots{display:flex;gap:8px;margin-top:10px}
+#hbh-river .river-title .inkdots i{display:block;border-radius:50%}
+#hbh-river .river-title .inkdots i:nth-child(1){width:10px;height:10px;background:rgba(43,38,34,.85)}
+#hbh-river .river-title .inkdots i:nth-child(2){width:7px;height:7px;background:rgba(43,38,34,.55)}
+#hbh-river .river-title .inkdots i:nth-child(3){width:5px;height:5px;background:rgba(43,38,34,.3)}
+#hbh-river .river-note-tr{position:absolute;top:28px;right:28px;z-index:10;width:clamp(180px,20vw,240px);font-size:11px;line-height:1.65;color:var(--grey);pointer-events:none;text-align:right}
+#hbh-river .river-note-bl{position:absolute;bottom:88px;left:28px;z-index:10;width:clamp(200px,24vw,280px);font-size:10.5px;line-height:1.7;color:var(--grey);pointer-events:none}
+#hbh-river .bubbles{position:absolute;inset:0;z-index:5;pointer-events:none}
+#hbh-river .bubble{position:absolute;pointer-events:auto;cursor:pointer;transition:transform .2s,opacity .2s}
+#hbh-river .bubble:hover{transform:translate(-50%,-50%) scale(1.06)!important;z-index:15}
+#hbh-river .bubble.dim{opacity:.25;pointer-events:none}
+#hbh-river .bubble .b-frame{position:relative;background:rgba(248,243,232,.92);border:1px solid rgba(155,143,126,.35);border-radius:6px;padding:6px;width:72px;text-align:center;box-shadow:0 1px 4px rgba(43,38,34,.08)}
+#hbh-river .bubble .b-avatar{width:56px;height:56px;margin:0 auto;border:1px solid rgba(43,38,34,.25);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--grey);background:rgba(201,188,164,.35);font-family:var(--fontSerif)}
+#hbh-river .bubble .b-tag{display:inline-block;margin-top:5px;background:var(--red);color:#f5efe0;font-size:9.5px;padding:2px 8px;border-radius:3px;letter-spacing:.04em;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis}
+#hbh-river .bubble .b-row{font-size:9px;color:var(--grey);margin-top:3px;line-height:1.3}
+#hbh-river .river-legend{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+#hbh-river .river-legend span{font-size:10px;color:var(--grey);display:inline-flex;align-items:center;gap:5px}
+#hbh-river .river-legend span i{display:inline-block;width:7px;height:7px;border-radius:50%}
+#hbh-river .river-detail{position:absolute;z-index:20;background:rgba(248,243,232,.97);border:1px solid rgba(122,31,26,.25);border-radius:10px;padding:18px 20px;width:260px;display:none;box-shadow:0 2px 16px rgba(43,38,34,.12);font-size:12px;line-height:1.7}
+#hbh-river .river-detail.open{display:block}
+#hbh-river .river-detail .rd-name{font-size:17px;font-weight:700;color:var(--red);margin-bottom:2px;letter-spacing:.04em}
+#hbh-river .river-detail .rd-cat{font-size:10.5px;color:var(--grey);margin-bottom:8px}
+#hbh-river .river-detail .rd-row{color:var(--ink)}
+#hbh-river .river-detail .rd-close{position:absolute;top:6px;right:10px;cursor:pointer;font-size:17px;color:var(--grey);background:none;border:none;font-family:inherit;line-height:1}
+#hbh-river .river-detail .rd-close:hover{color:var(--red)}
+#hbh-river .river-detail .rd-jump{display:inline-block;margin-top:8px;font-size:10.5px;color:var(--red);cursor:pointer;border:1px solid rgba(122,31,26,.3);border-radius:8px;padding:3px 10px;background:transparent;font-family:inherit;transition:all .2s;letter-spacing:.03em}
+#hbh-river .river-detail .rd-jump:hover{background:rgba(122,31,26,.06);border-color:var(--red)}
 </style>
 </head>
 <body>
@@ -239,12 +272,14 @@
     <span class="brand">数字黄宾虹</span>
     <button class="hbh-tab" data-go="map">生命舆图</button>
     <button class="hbh-tab" data-go="atlas">实景山水</button>
+    <button class="hbh-tab" data-go="river">交游长河</button>
 </nav>
 
 <!-- ============ map_story 所需的本地数据脚本（全局，先于初始化加载）============ -->
 <script src="life_journey.js"></script>
 <script src="hbh_overview_data.js"></script>
 <script src="hbh_custom_labels.js"></script>
+<script src="hbh_river_data.js"></script>
 
 <!-- ============ 各页面（原文件 DOM，CSS 已作用域隔离）============ -->
 <section id="hbh-map" class="hbh-page" data-page="map">
@@ -299,6 +334,17 @@
 
 
 
+</section>
+
+<!-- ============ 第三屏：交游长河（纸本 ThemeRiver + 气泡卡片）============ -->
+<section id="hbh-river" class="hbh-page" data-page="river">
+<div class="river-title"><h1>黄宾虹<br>的交友圈</h1><div class="sub">水墨之交 · 一生的往还</div><div class="inkdots"><i></i><i></i><i></i></div></div>
+<div class="river-note-tr">黄宾虹一生交游广阔，以画会友、以学结缘。其晚年「黑、密、厚、重」画风，正是师友往还、金石考据、笔墨论辩共同滋养的结晶。</div>
+<div class="river-note-bl">「画学之兴，赖师友之益。<br>非独学所能至也。」<br>— 黄宾虹论画语</div>
+<canvas id="riverCanvas"></canvas>
+<div class="bubbles" id="riverBubbles"></div>
+<div class="river-legend" id="riverLegend"></div>
+<div class="river-detail" id="riverDetail"><button class="rd-close">&times;</button><div class="rd-name"></div><div class="rd-cat"></div><div class="rd-row"></div><button class="rd-jump">→ 跳转生命舆图查看行迹</button></div>
 </section>
 
 <!-- ============ 路由 + 惰性初始化 ============ -->
@@ -939,6 +985,337 @@ var bi=document.getElementById('bottomIndex');
 for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='tick';if((y-1899)%9===0)t.innerHTML='<span>'+y+'</span>';bi.appendChild(t)}
 
 
+  };
+
+  HBH.init.river = function(){
+/* ---- 交游长河（纸本ThemeRiver+气泡卡片, per设计规范）---- */
+(function(){
+var R = window.HBH_RIVER || {years:[],themeRiver:{years:[],layers:[]},streams:[],cards:[],anchors:[],eras:[],layers:[],yearRange:[1865,1955]};
+var canvas = document.getElementById('riverCanvas');
+var ctx = canvas.getContext('2d');
+var bubblesEl = document.getElementById('riverBubbles');
+var detail = document.getElementById('riverDetail');
+var legend = document.getElementById('riverLegend');
+var dpr = Math.min(window.devicePixelRatio||1,2);
+
+// ── Layout constants ──
+var M = {top:0, bottom:0, left:40, right:40};
+var W=0, H=0;
+var RIVER_TOP_RATIO = 0.42;
+var RIVER_BOT_RATIO = 0.82;
+var AXIS_Y_RATIO = 0.88;
+
+var cardPositions = [];
+var hoveredCard = null;
+
+// ── Catmull-Rom → cubic bezier ──
+function crToBezier(p0,p1,p2,p3,tension){
+  tension=tension||0.5;
+  return {cp1:p1+(p2-p0)*tension/6, cp2:p2-(p3-p1)*tension/6};
+}
+
+// ── Year ↔ X ──
+function yrX(y){ return M.left + ((y-1865)/90) * (W-M.left-M.right); }
+function xYr(x){ return 1865 + ((x-M.left)/(W-M.left-M.right))*90; }
+
+// ── Resize ──
+function resize(){
+  var rect=canvas.parentElement.getBoundingClientRect();
+  W=rect.width; H=rect.height;
+  canvas.width=W*dpr; canvas.height=H*dpr;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  computeCardPositions();
+  draw();
+}
+
+// ── Compute bubble card positions (3-row staggered) ──
+function computeCardPositions(){
+  cardPositions=[];
+  var cards=R.cards||[];
+  if(!cards.length) return;
+  var riverTop=H*RIVER_TOP_RATIO;
+  var areaTop=H*0.04, areaBot=riverTop-10, availH=areaBot-areaTop;
+  var placed=[];
+  cards.forEach(function(c,i){
+    var peakYr=c.peakYear||c.first;
+    var x=yrX(peakYr);
+    var row=i%3;
+    var y=areaTop + (availH/3)*row + availH/6;
+    x=Math.max(M.left+40, Math.min(W-M.right-80, x));
+    placed.push({card:c, x:x, y:y, row:row});
+  });
+  // Collision push
+  for(var pass=0;pass<3;pass++){
+    for(var i=0;i<placed.length;i++){
+      for(var j=i+1;j<placed.length;j++){
+        var dx=placed[i].x-placed[j].x;
+        if(Math.abs(dx)<85){
+          if(pass===0) placed[j].x+=85-Math.abs(dx);
+          else{ placed[i].x-=(85-Math.abs(dx))/2; placed[j].x+=(85-Math.abs(dx))/2; }
+        }
+      }
+    }
+  }
+  placed.forEach(function(p){ p.x=Math.max(M.left+8, Math.min(W-M.right-80, p.x)); });
+  cardPositions=placed;
+}
+
+// ── Build bubble DOM ──
+function buildBubbles(){
+  bubblesEl.innerHTML='';
+  cardPositions.forEach(function(p){
+    var c=p.card;
+    var div=document.createElement('div');
+    div.className='bubble';
+    div.style.left=p.x+'px'; div.style.top=p.y+'px';
+    div.style.transform='translate(-50%,-50%)';
+    div.dataset.person=c.person;
+    div.innerHTML=
+      '<div class="b-frame">'+
+        '<div class="b-avatar">'+c.person[0]+'</div>'+
+        '<div class="b-tag">'+c.person+'</div>'+
+        '<div class="b-row">'+(c.layer||'')+' · '+(c.first||'?')+(c.last!==c.first?'–'+(c.last||''):'')+'</div>'+
+      '</div>';
+    div.addEventListener('click',function(ev){ ev.stopPropagation(); showDetail(c,ev); });
+    div.addEventListener('mouseenter',function(){ highlightCard(c.person); });
+    div.addEventListener('mouseleave',function(){ highlightCard(null); });
+    bubblesEl.appendChild(div);
+  });
+}
+
+function highlightCard(name){
+  hoveredCard=name;
+  bubblesEl.querySelectorAll('.bubble').forEach(function(b){
+    if(name && b.dataset.person!==name) b.classList.add('dim');
+    else b.classList.remove('dim');
+  });
+  draw();
+}
+
+function showDetail(c,ev){
+  detail.querySelector('.rd-name').textContent=c.person;
+  detail.querySelector('.rd-cat').textContent=(c.layer||'')+' · 活跃 '+c.first+'–'+c.last+' · 互动'+c.total+'次';
+  detail.querySelector('.rd-row').innerHTML='主要关系: '+(c.primaryType||'其他');
+  detail.querySelector('.rd-jump').onclick=function(){ if(window.HBH&&HBH.show) HBH.show('map'); };
+  detail.classList.add('open');
+  var dx=Math.min(ev.clientX+10, window.innerWidth-276);
+  var dy=Math.min(ev.clientY-60, window.innerHeight-220);
+  detail.style.left=Math.max(8,dx)+'px'; detail.style.top=Math.max(8,dy)+'px';
+}
+detail.querySelector('.rd-close').addEventListener('click',function(ev){
+  ev.stopPropagation(); detail.classList.remove('open'); highlightCard(null);
+});
+document.addEventListener('click',function(ev){
+  if(!ev.target.closest('.bubble')&&!ev.target.closest('.river-detail')){ detail.classList.remove('open'); highlightCard(null); }
+});
+
+// ── Draw: paper background with vignette ──
+function drawBg(){
+  var grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'#E8DFCD'); grad.addColorStop(0.5,'#E2D7C7'); grad.addColorStop(1,'#DDD2BC');
+  ctx.fillStyle=grad; ctx.fillRect(0,0,W,H);
+  var vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.55, W/2,H/2,Math.max(W,H)*0.75);
+  vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.06)');
+  ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+}
+
+// ── Draw: ThemeRiver (top-to-bottom stacking, Catmull-Rom smoothed) ──
+function drawRiver(){
+  var layers=R.themeRiver.layers||[];
+  if(!layers.length) return;
+  var yrs=R.themeRiver.years||[];
+  var nYrs=yrs.length;
+  var riverTop=H*RIVER_TOP_RATIO;
+  var riverH=(RIVER_BOT_RATIO-RIVER_TOP_RATIO)*H;
+
+  var layerData=layers.map(function(l){ return l.values.slice(); });
+  var maxTotal=0;
+  for(var i=0;i<nYrs;i++){
+    var sum=0; layerData.forEach(function(ld){ sum+=ld[i]; });
+    if(sum>maxTotal) maxTotal=sum;
+  }
+  maxTotal=Math.max(maxTotal,1);
+
+  function scaleV(v){ return Math.sqrt(Math.max(v,0.2)/maxTotal)*riverH*0.88; }
+
+  // Compute per-layer thickness, then stack from baseline (bottom of river) upward
+  // Each layer[i][year] = y-bottom of that layer at that year
+  // Start from riverTop+riverH as bottom baseline, stack upward
+  var stackBot=[];
+  for(var i=0;i<nYrs;i++) stackBot.push(riverTop+riverH);
+  var layerCurves=[];
+
+  layers.forEach(function(l,li){
+    var thicknesses=[];
+    for(var i=0;i<nYrs;i++){
+      var h=scaleV(layerData[li][i]);
+      thicknesses.push(h);
+    }
+    var topPts=[], botPts=[];
+    for(var i=0;i<nYrs;i++){
+      var x=yrX(yrs[i].year);
+      var bot=stackBot[i];
+      var top=bot-thicknesses[i];
+      // Ensure minimum visibility
+      if(top>bot-0.5) top=bot-0.5;
+      topPts.push({x:x, y:top});
+      botPts.push({x:x, y:bot});
+      stackBot[i]=top; // next layer starts from this layer's top
+    }
+    layerCurves.push({layer:l, topPts:topPts, botPts:botPts});
+  });
+
+  // Draw each layer
+  layerCurves.forEach(function(lc,li){
+    var allPts=lc.topPts.concat(lc.botPts.slice().reverse());
+    if(allPts.length<4) return;
+    ctx.beginPath();
+    ctx.moveTo(allPts[0].x, allPts[0].y);
+    for(var i=1;i<allPts.length;i++){
+      var i0=Math.max(0,i-2), i1=i-1, i2=i, i3=Math.min(allPts.length-1,i+1);
+      var bx=crToBezier(allPts[i0].x,allPts[i2].x,allPts[i1].x,allPts[i3].x,0.5);
+      var by=crToBezier(allPts[i0].y,allPts[i2].y,allPts[i1].y,allPts[i3].y,0.5);
+      ctx.bezierCurveTo(bx.cp1,by.cp1,bx.cp2,by.cp2,allPts[i2].x,allPts[i2].y);
+    }
+    ctx.closePath();
+    ctx.fillStyle=lc.layer.color;
+    ctx.globalAlpha=0.88;
+    ctx.fill();
+    ctx.globalAlpha=1;
+
+    // Hatch on layers 1 (金石考古) and 4 (教育弟子)
+    if(lc.layer.name==='金石考古'||lc.layer.name==='教育弟子'){
+      ctx.save(); ctx.clip();
+      ctx.strokeStyle='rgba(155,143,126,0.22)'; ctx.lineWidth=0.7;
+      for(var hx=-H;hx<W+H;hx+=5){
+        ctx.beginPath(); ctx.moveTo(hx,0); ctx.lineTo(hx+H,H); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  });
+
+  return {riverTop:riverTop, riverH:riverH};
+}
+
+// ── Draw: timeline axis + era bands ──
+function drawAxis(){
+  var axY=H*AXIS_Y_RATIO;
+  ctx.strokeStyle='rgba(107,98,88,0.3)'; ctx.lineWidth=0.75;
+  ctx.beginPath(); ctx.moveTo(M.left,axY); ctx.lineTo(W-M.right,axY); ctx.stroke();
+
+  for(var y=1870;y<=1950;y+=10){
+    var x=yrX(y);
+    ctx.fillStyle='rgba(107,98,88,0.55)';
+    ctx.font='11px "Noto Serif SC","Songti SC",serif';
+    ctx.textAlign='center';
+    ctx.fillText(String(y),x,axY+16);
+    ctx.fillStyle='rgba(122,31,26,0.5)';
+    ctx.beginPath(); ctx.moveTo(x,axY-4); ctx.lineTo(x-3,axY-8); ctx.lineTo(x+3,axY-8); ctx.closePath(); ctx.fill();
+  }
+  ctx.textAlign='start';
+
+  var eraY=axY+22;
+  (R.eras||[]).forEach(function(er){
+    var ex1=yrX(er.start), ex2=yrX(er.end);
+    ctx.fillStyle='rgba(201,188,164,0.45)';
+    ctx.fillRect(ex1,eraY,ex2-ex1,16);
+    ctx.fillStyle='rgba(107,98,88,0.5)';
+    ctx.font='10px "Noto Serif SC","Songti SC",serif';
+    ctx.textAlign='center';
+    ctx.fillText(er.label,(ex1+ex2)/2,eraY+12);
+    if(er.start>1865){
+      ctx.strokeStyle='rgba(154,143,126,0.25)';
+      ctx.setLineDash([3,5]);
+      ctx.beginPath(); ctx.moveTo(ex1,eraY-8); ctx.lineTo(ex1,H*RIVER_TOP_RATIO);
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+  });
+  ctx.textAlign='start';
+}
+
+// ── Draw: dashed leader lines from cards to river nodes ──
+function drawLeaderLines(riverInfo){
+  if(!riverInfo) return;
+  cardPositions.forEach(function(p){
+    var c=p.card;
+    var peakX=yrX(c.peakYear||c.first);
+    var surfaceY=riverInfo.riverTop+riverInfo.riverH*0.08;
+    var cardBottom=p.y+36;
+    var nodeY=surfaceY+4;
+    var alpha=(hoveredCard && hoveredCard!==c.person)?0.12:0.65;
+    ctx.strokeStyle='rgba(154,143,126,'+alpha+')'; ctx.lineWidth=0.75;
+    ctx.setLineDash([3,4]);
+    ctx.beginPath();
+    ctx.moveTo(p.x, cardBottom);
+    ctx.lineTo(p.x, nodeY-10);
+    ctx.lineTo(peakX, nodeY-10);
+    ctx.lineTo(peakX, nodeY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(122,31,26,'+alpha+')';
+    ctx.beginPath(); ctx.arc(peakX, nodeY, 2.8, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(232,223,205,'+alpha+')';
+    ctx.lineWidth=1;
+    ctx.beginPath(); ctx.arc(peakX, nodeY, 2.8, 0, Math.PI*2); ctx.stroke();
+  });
+}
+
+function drawAnchors(riverInfo){
+  if(!riverInfo) return;
+  var rt=riverInfo.riverTop, rb=rt+riverInfo.riverH;
+  (R.anchors||[]).forEach(function(a){
+    var x=yrX(a.year);
+    ctx.strokeStyle='rgba(154,143,126,0.3)'; ctx.lineWidth=0.75;
+    ctx.setLineDash([4,6]);
+    ctx.beginPath(); ctx.moveTo(x,rt); ctx.lineTo(x,rb); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(107,98,88,0.6)';
+    ctx.font='italic 10px "Georgia","Noto Serif SC",serif';
+    ctx.textAlign='center';
+    ctx.fillText(a.label, x, rt-8);
+    ctx.textAlign='start';
+  });
+}
+
+function buildLegend(){
+  var types=[
+    {label:'作画赠予',color:'#B87850'},
+    {label:'书信往还',color:'#7A9A8A'},
+    {label:'师授受业',color:'#6A8AAA'},
+    {label:'合作编书',color:'#B89060'},
+    {label:'雅集同游',color:'#C8A898'},
+    {label:'题跋评鉴',color:'#8A7AAA'}
+  ];
+  legend.innerHTML=types.map(function(t){
+    return '<span><i style="background:'+t.color+'"></i>'+t.label+'</span>';
+  }).join('');
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  drawBg();
+  var riverInfo=drawRiver();
+  drawAxis();
+  drawAnchors(riverInfo);
+  drawLeaderLines(riverInfo);
+}
+
+canvas.addEventListener('click',function(ev){
+  var rect=canvas.getBoundingClientRect();
+  var mx=ev.clientX-rect.left, my=ev.clientY-rect.top;
+  for(var i=0;i<cardPositions.length;i++){
+    var p=cardPositions[i];
+    if(Math.abs(mx-p.x)<45 && Math.abs(my-p.y)<40){ showDetail(p.card, ev); return; }
+  }
+});
+
+window.addEventListener('resize',function(){ resize(); buildBubbles(); });
+
+resize();
+buildBubbles();
+buildLegend();
+})();
   };
 
 (function(){
