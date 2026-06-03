@@ -1,0 +1,252 @@
+{
+  "radius_changes": [
+    {
+      "type": "活动半径骤变",
+      "year": 1866,
+      "from_count": 7,
+      "to_count": 1,
+      "drop_pct": 86,
+      "note": "1865→1866 地点从7降至1（骤降86%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1872,
+      "from_count": 5,
+      "to_count": 1,
+      "drop_pct": 80,
+      "note": "1871→1872 地点从5降至1（骤降80%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1875,
+      "from_count": 5,
+      "to_count": 1,
+      "drop_pct": 80,
+      "note": "1874→1875 地点从5降至1（骤降80%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1881,
+      "from_count": 5,
+      "to_count": 1,
+      "drop_pct": 80,
+      "note": "1880→1881 地点从5降至1（骤降80%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1892,
+      "from_count": 8,
+      "to_count": 3,
+      "drop_pct": 62,
+      "note": "1891→1892 地点从8降至3（骤降62%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1901,
+      "from_count": 6,
+      "to_count": 1,
+      "drop_pct": 83,
+      "note": "1900→1901 地点从6降至1（骤降83%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1911,
+      "from_count": 18,
+      "to_count": 7,
+      "drop_pct": 61,
+      "note": "1910→1911 地点从18降至7（骤降61%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1913,
+      "from_count": 23,
+      "to_count": 8,
+      "drop_pct": 65,
+      "note": "1912→1913 地点从23降至8（骤降65%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1915,
+      "from_count": 14,
+      "to_count": 4,
+      "drop_pct": 71,
+      "note": "1914→1915 地点从14降至4（骤降71%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1920,
+      "from_count": 10,
+      "to_count": 4,
+      "drop_pct": 60,
+      "note": "1919→1920 地点从10降至4（骤降60%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1927,
+      "from_count": 13,
+      "to_count": 4,
+      "drop_pct": 69,
+      "note": "1926→1927 地点从13降至4（骤降69%）"
+    },
+    {
+      "type": "活动半径骤变",
+      "year": 1945,
+      "from_count": 16,
+      "to_count": 2,
+      "drop_pct": 88,
+      "note": "1944→1945 地点从16降至2（骤降88%）"
+    },
+    {
+      "type": "沉默期",
+      "year": 1872,
+      "place_count": 1,
+      "note": "1872年地点仅1处"
+    },
+    {
+      "type": "沉默期",
+      "year": 1875,
+      "place_count": 1,
+      "note": "1875年地点仅1处"
+    },
+    {
+      "type": "沉默期",
+      "year": 1881,
+      "place_count": 1,
+      "note": "1881年地点仅1处"
+    },
+    {
+      "type": "沉默期",
+      "year": 1897,
+      "place_count": 1,
+      "note": "1897年地点仅1处"
+    },
+    {
+      "type": "沉默期",
+      "year": 1901,
+      "place_count": 1,
+      "note": "1901年地点仅1处"
+    }
+  ],
+  "travel_art_delay": [
+    {
+      "travel_year": 1865,
+      "earliest_art_year": 1874,
+      "delay_years": 9
+    },
+    {
+      "travel_year": 1883,
+      "earliest_art_year": 1883,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1884,
+      "earliest_art_year": 1884,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1900,
+      "earliest_art_year": 1900,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1901,
+      "earliest_art_year": 1901,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1902,
+      "earliest_art_year": 1902,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1909,
+      "earliest_art_year": 1909,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1913,
+      "earliest_art_year": 1913,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1918,
+      "earliest_art_year": 1918,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1921,
+      "earliest_art_year": 1921,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1924,
+      "earliest_art_year": 1924,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1928,
+      "earliest_art_year": 1928,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1930,
+      "earliest_art_year": 1930,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1931,
+      "earliest_art_year": 1931,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1933,
+      "earliest_art_year": 1933,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1934,
+      "earliest_art_year": 1934,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1935,
+      "earliest_art_year": 1935,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1936,
+      "earliest_art_year": 1936,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1937,
+      "earliest_art_year": 1937,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1939,
+      "earliest_art_year": 1939,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1941,
+      "earliest_art_year": 1941,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1943,
+      "earliest_art_year": 1943,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1946,
+      "earliest_art_year": 1946,
+      "delay_years": 0
+    },
+    {
+      "travel_year": 1949,
+      "earliest_art_year": 1949,
+      "delay_years": 0
+    }
+  ]
+}

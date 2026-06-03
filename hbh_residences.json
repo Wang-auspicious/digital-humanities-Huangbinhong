@@ -1,0 +1,46 @@
+[
+  {
+    "place": "歙县",
+    "standard_name": "歙县",
+    "lat": 29.8634,
+    "lng": 118.4152,
+    "start_year": 1865,
+    "end_year": 1907,
+    "duration_years": 43,
+    "event_count": 47,
+    "notes": "祖籍潭渡村，幼年至青壮年主居徽州歙县；1907年星夜出逃上海"
+  },
+  {
+    "place": "上海",
+    "standard_name": "上海",
+    "lat": 31.2304,
+    "lng": 121.4737,
+    "start_year": 1907,
+    "end_year": 1937,
+    "duration_years": 31,
+    "event_count": 470,
+    "notes": "自1907年逃沪起长居上海，从事国学保存会、《神州日报》、美专教学等；1937年七七事变后因局势迁北平"
+  },
+  {
+    "place": "北平",
+    "standard_name": "北京",
+    "lat": 39.9042,
+    "lng": 116.4074,
+    "start_year": 1937,
+    "end_year": 1948,
+    "duration_years": 12,
+    "event_count": 128,
+    "notes": "1937年迁北平，任北平艺专教授；1948年应邀赴杭任国立艺专之职"
+  },
+  {
+    "place": "杭州",
+    "standard_name": "杭州",
+    "lat": 30.2741,
+    "lng": 120.1551,
+    "start_year": 1948,
+    "end_year": 1955,
+    "duration_years": 8,
+    "event_count": 82,
+    "notes": "1948年迁杭州，任国立艺专（后改浙江美术学院）教授，直至1955年逝世"
+  }
+]
