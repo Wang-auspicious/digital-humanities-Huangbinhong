@@ -345,6 +345,114 @@
   #hbh-river .as-essay{font-size:12.5px;line-height:1.8}
   #hbh-river .as-scroll{max-height:34vh}
 }
+
+/* ===== 笔墨课徒 → #hbh-brush（五笔七墨语法谱 · 矿物国画色 · 宣纸纹理）===== */
+#hbh-brush{
+  --paper-top:#E9DFC9;--paper-mid:#E2D6BD;--paper-bot:#D5C8AC;
+  --ink:#241D15;--ink-soft:#5A4F40;--accent:#9A4A2C;--bi:#3F5E6E;
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  position:relative;width:100%;height:100%;margin:0;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 22% 18%,rgba(255,250,236,.5),transparent 42%),
+    radial-gradient(ellipse at 82% 86%,rgba(120,96,62,.12),transparent 46%),
+    linear-gradient(164deg,var(--paper-top) 0%,var(--paper-mid) 52%,var(--paper-bot) 100%);
+  color:var(--ink);font-family:var(--serif);user-select:none;-webkit-user-select:none;
+}
+#hbh-brush *{box-sizing:border-box}
+#hbh-brush:before{content:"";position:absolute;inset:-20px;z-index:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E") 0 0/150px 150px,
+    repeating-linear-gradient(7deg,rgba(80,60,38,.05) 0 1px,transparent 1px 9px);}
+#hbh-brush .b-wrap{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;padding:26px 34px 22px}
+
+/* 顶栏：题头 + 模式切换 */
+#hbh-brush .b-mast{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1px solid rgba(60,45,32,.28);padding-bottom:12px;flex:0 0 auto}
+#hbh-brush .b-mast .seal{width:46px;height:46px;flex:0 0 auto;display:grid;place-items:center;border:2px solid var(--accent);color:var(--accent);font:900 19px/1 "KaiTi","STKaiti",var(--serif);transform:rotate(-5deg);margin-right:16px}
+#hbh-brush .b-mast .mt{display:flex;align-items:flex-end;gap:14px;flex:1 1 auto;min-width:0}
+#hbh-brush .b-kicker{font-size:11px;letter-spacing:.26em;color:var(--accent);font-weight:900;margin-bottom:6px}
+#hbh-brush .b-h1{font-size:30px;font-weight:900;letter-spacing:.1em;line-height:1}
+#hbh-brush .b-quote{font-size:13px;color:var(--ink-soft);line-height:1.6;max-width:520px;margin-bottom:2px}
+#hbh-brush .b-quote b{color:var(--ink);font-weight:700}
+#hbh-brush .b-quote .qs{display:block;font-size:10.5px;color:var(--accent);letter-spacing:.08em;margin-top:2px}
+#hbh-brush .b-toggle{flex:0 0 auto;display:flex;border:1px solid rgba(60,45,32,.4);border-radius:999px;overflow:hidden}
+#hbh-brush .b-toggle button{border:0;background:transparent;color:var(--ink-soft);font:700 13px/1 var(--serif);letter-spacing:.14em;padding:9px 17px;cursor:pointer}
+#hbh-brush .b-toggle button.on{background:var(--accent);color:#fff6e6}
+
+/* ===== 进一·识字 · 课徒册页 ===== */
+#hbh-brush .b-body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-top:10px}
+#hbh-brush .kp-plain{flex:0 0 auto;font-size:12px;line-height:1.66;color:var(--ink-soft);max-width:980px;margin-bottom:8px}
+#hbh-brush .kp-paper{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:row-reverse;align-items:stretch;
+  background:linear-gradient(180deg,rgba(255,251,240,.14),transparent 26%)}
+
+/* 谱列（右） */
+#hbh-brush .kp-spectrum{flex:0 0 auto;display:flex;flex-direction:row-reverse;gap:14px;padding:4px 6px 4px 22px;border-left:1px solid rgba(60,45,32,.2)}
+#hbh-brush .kp-col{display:flex;flex-direction:column;align-items:center;gap:1px}
+#hbh-brush .kp-col .ch{writing-mode:vertical-rl;font:900 12px/1 var(--serif);letter-spacing:.14em;margin-bottom:7px}
+#hbh-brush .kp-col.bi .ch{color:var(--bi)} #hbh-brush .kp-col.mo .ch{color:var(--accent)}
+#hbh-brush .kpc{position:relative;display:flex;align-items:center;gap:2px;padding:2px 3px;cursor:pointer}
+#hbh-brush .kpc .kc{font-size:29px;font-weight:900;line-height:1;color:var(--ink);transition:color .15s}
+#hbh-brush .kpc .km{writing-mode:vertical-rl;font-size:8.5px;color:var(--ink-soft);letter-spacing:.04em;max-height:52px;overflow:hidden}
+#hbh-brush .kpc .ring{position:absolute;left:-6px;top:50%;width:48px;height:48px;transform:translateY(-50%);opacity:0;transition:opacity .22s;pointer-events:none}
+#hbh-brush .kpc.on .ring{opacity:.95}
+#hbh-brush .kp-col.bi .kpc.on .kc{color:var(--bi)} #hbh-brush .kp-col.mo .kpc.on .kc{color:var(--accent)}
+
+/* 示范（中） */
+#hbh-brush .kp-demo{flex:1 1 auto;position:relative;display:flex;align-items:center;justify-content:center;margin-top:2.5%;min-width:0}
+#hbh-brush .kp-demo .stage{position:relative;width:90%;height:80%;display:grid;place-items:center}
+#hbh-brush .kp-demo svg,#hbh-brush .kp-demo canvas{width:100%;height:100%;display:block}
+#hbh-brush .kp-demo .dlabel{position:absolute;left:1%;bottom:0;font-size:9px;letter-spacing:.1em;color:var(--ink-soft);opacity:.72}
+#hbh-brush .kp-demo .dbig{position:absolute;right:2%;top:2%;text-align:right;pointer-events:none}
+#hbh-brush .kp-demo .dbig .bc{font-size:64px;font-weight:900;line-height:.86;color:rgba(60,45,32,.12)}
+#hbh-brush .kp-demo .dbig .bm{font-size:13px;letter-spacing:.12em;color:var(--accent);margin-top:2px}
+#hbh-brush .kp-demo .dcount{position:absolute;right:3%;top:46%;font:900 13px/1.4 var(--serif);letter-spacing:.08em;color:var(--accent);text-align:right}
+
+/* 题跋（左 · 直书） */
+#hbh-brush .kp-colophon{flex:0 0 auto;width:248px;margin-top:1%;display:flex;flex-direction:column;min-height:0}
+#hbh-brush .kp-script{flex:1 1 auto;min-height:0;display:flex;flex-direction:row-reverse;justify-content:flex-start;gap:13px;padding:2px 14px 2px 2px;overflow:hidden}
+#hbh-brush .kp-def{writing-mode:vertical-rl;font-size:18px;line-height:1.62;font-weight:700;color:var(--ink);letter-spacing:.05em}
+#hbh-brush .kp-def .ds{font-size:10.5px;font-weight:400;color:var(--accent);letter-spacing:.08em}
+#hbh-brush .kp-note{writing-mode:vertical-rl;font-size:11.5px;line-height:1.92;color:var(--ink-soft);letter-spacing:.02em}
+#hbh-brush .kp-jin{writing-mode:vertical-rl;font-size:11px;line-height:1.88;color:var(--bi);letter-spacing:.02em}
+#hbh-brush .kp-foot{flex:0 0 auto;display:flex;align-items:flex-end;gap:9px;padding:6px 2px 26px}
+#hbh-brush .kp-foot .rfig{margin:0}
+#hbh-brush .kp-foot .rfig img{display:block;width:84px;height:100px;object-fit:cover;border:1px solid rgba(60,45,32,.34);box-shadow:2px 3px 0 rgba(60,45,32,.12);filter:saturate(.92)}
+#hbh-brush .kp-foot .rfig figcaption{font-size:8px;color:var(--ink-soft);letter-spacing:.08em;margin-top:3px;text-align:center}
+#hbh-brush .kp-foot .jset{display:flex;gap:3px}
+#hbh-brush .kp-foot .jset img{width:34px;height:46px;object-fit:cover;border:1px solid rgba(60,45,32,.3);filter:sepia(.2) saturate(.85)}
+#hbh-brush .kp-seal{position:absolute;left:6px;bottom:2px;width:40px;height:40px;display:grid;place-items:center;border:2px solid var(--accent);color:var(--accent);font:900 11px/1.04 "KaiTi","STKaiti",var(--serif);text-align:center;transform:rotate(-5deg);opacity:.9}
+
+/* ===== 进二·读画 · 白→黑三联 ===== */
+#hbh-brush .b-read{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-top:10px}
+#hbh-brush .ev-head{flex:0 0 auto;display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+#hbh-brush .ev-head .et{font:900 15px/1 var(--serif);letter-spacing:.1em;color:var(--accent)}
+#hbh-brush .ev-head .eh{font-size:11.5px;color:var(--ink-soft)}
+#hbh-brush .ev-strip{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+#hbh-brush .ev-stage{position:relative;display:flex;flex-direction:column;min-height:0}
+#hbh-brush .ev-stage .sl{flex:0 0 auto;display:flex;align-items:baseline;gap:7px;margin-bottom:6px}
+#hbh-brush .ev-stage .sl b{font-size:15px;font-weight:900}
+#hbh-brush .ev-stage.bai .sl b{color:#8a7448}#hbh-brush .ev-stage.shu .sl b{color:var(--accent)}#hbh-brush .ev-stage.hei .sl b{color:var(--ink)}
+#hbh-brush .ev-stage .sl span{font-size:10px;color:var(--ink-soft);letter-spacing:.04em}
+#hbh-brush .ev-pic{flex:1 1 auto;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#hbh-brush .ev-pic img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 26px rgba(40,28,14,.24);filter:saturate(.95);transition:filter .3s,opacity .3s}
+#hbh-brush .ev-pic.dim img{filter:saturate(.55) brightness(.94);opacity:.4}
+#hbh-brush .ev-pic .badge{position:absolute;right:6px;bottom:6px;font:900 11px/1 var(--serif);letter-spacing:.12em;padding:5px 9px;color:#fff6e6;opacity:0;transition:opacity .25s}
+#hbh-brush .ev-pic .badge.show{opacity:1}
+#hbh-brush .ev-note{flex:0 0 auto;font-size:11px;line-height:1.66;color:var(--ink-soft);margin-top:7px;min-height:52px}
+#hbh-brush .ev-note .qs{color:var(--accent);font-size:10px;display:block;margin-top:3px}
+#hbh-brush .ev-bar{flex:0 0 auto;margin-top:9px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(60,45,32,.22);padding-top:9px}
+#hbh-brush .ev-tags{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:5px;max-width:330px}
+#hbh-brush .ev-tags button{border:1px solid rgba(60,45,32,.4);background:rgba(255,250,236,.4);font:700 15px/1 var(--serif);width:31px;height:31px;cursor:pointer;color:var(--ink)}
+#hbh-brush .ev-tags button.bi{color:var(--bi)}#hbh-brush .ev-tags button.mo{color:var(--accent)}
+#hbh-brush .ev-tags button.on{background:var(--accent);border-color:var(--accent);color:#fff6e6}
+#hbh-brush .ev-tags button.on.bi{background:var(--bi);border-color:var(--bi)}
+#hbh-brush .ev-read{flex:1 1 auto;font-size:12.5px;line-height:1.7;color:var(--ink);min-width:0}
+#hbh-brush .ev-read b{color:var(--accent)}
+#hbh-brush .ev-honest{flex:0 0 auto;font-size:9.5px;color:var(--ink-soft);max-width:210px;line-height:1.5;border-left:2px solid rgba(60,45,32,.3);padding-left:8px}
+
+#hbh-brush .b-cap{flex:0 0 auto;text-align:center;font-size:11px;color:var(--ink-soft);letter-spacing:.04em;padding-top:9px;border-top:1px solid rgba(60,45,32,.22);margin-top:8px}
+#hbh-brush .b-cap b{color:var(--accent)}
+#hbh-brush[data-bmode="read"] .b-body{display:none}
+#hbh-brush[data-bmode="learn"] .b-read{display:none}
 </style>
 </head>
 <body>
@@ -356,6 +464,7 @@
     <button class="hbh-tab" data-go="map">生命舆图</button>
     <button class="hbh-tab" data-go="atlas">实景山水</button>
     <button class="hbh-tab" data-go="river">交游长河</button>
+    <button class="hbh-tab" data-go="brush">笔墨课徒</button>
 </nav>
 
 <!-- ============ map_story 所需的本地数据脚本（全局，先于初始化加载）============ -->
@@ -363,6 +472,7 @@
 <script src="hbh_overview_data.js"></script>
 <script src="hbh_custom_labels.js"></script>
 <script src="hbh_river_data.js"></script>
+<script src="hbh_brush_data.js"></script>
 
 <!-- ============ 各页面（原文件 DOM，CSS 已作用域隔离）============ -->
 <section id="hbh-map" class="hbh-page" data-page="map">
@@ -440,6 +550,48 @@
   </div>
   <aside class="river-aside" id="riverAside"></aside>
 </div>
+</section>
+
+<!-- ============ 第四屏：笔墨课徒（五笔七墨语法谱）============ -->
+<section id="hbh-brush" class="hbh-page" data-page="brush" data-bmode="learn">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="bInk" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.022" numOctaves="3" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6.5"/></filter>
+    <filter id="bZhu" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/></filter>
+  </defs></svg>
+  <div class="b-wrap">
+    <header class="b-mast">
+      <div class="seal">笔墨</div>
+      <div class="mt"><div>
+        <div class="b-kicker" id="bKicker"></div>
+        <div class="b-h1" id="bH1"></div>
+      </div></div>
+      <div class="b-quote" id="bQuote"></div>
+      <div class="b-toggle">
+        <button data-bm="learn" class="on">识字</button>
+        <button data-bm="read">读画</button>
+      </div>
+    </header>
+    <!-- 进一·识字 · 课徒册页 -->
+    <div class="b-body">
+      <div class="kp-plain" id="bPlain"></div>
+      <div class="kp-paper">
+        <div class="kp-spectrum" id="bSpectrum"></div>
+        <div class="kp-demo" id="bDemo"></div>
+        <div class="kp-colophon">
+          <div class="kp-script" id="bScript"></div>
+          <div class="kp-foot" id="bFoot"></div>
+        </div>
+        <div class="kp-seal">宾虹<br>课徒</div>
+      </div>
+    </div>
+    <!-- 进二·读画 · 白→黑三联 -->
+    <div class="b-read">
+      <div class="ev-head"><span class="et">读一幅画 · 白宾虹到黑宾虹</span><span class="eh">同是写山，墨色却走了一辈子。点下方一个笔墨字，看它在三阶里的消长。</span></div>
+      <div class="ev-strip" id="bEvStrip"></div>
+      <div class="ev-bar" id="bEvBar"></div>
+    </div>
+    <div class="b-cap" id="bCap"></div>
+  </div>
 </section>
 
 <!-- ============ 路由 + 惰性初始化 ============ -->
@@ -1390,6 +1542,180 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
   window.addEventListener('resize',onResize);
   build(); renderGlobal();
 })();
+  };
+
+  // ===== 第四屏：笔墨课徒（五笔七墨语法谱）=====
+  HBH.init.brush = function(){
+    var D = window.HBH_BRUSH; if(!D){ console.error('[HBH] HBH_BRUSH 数据缺失'); return; }
+    var root = document.getElementById('hbh-brush');
+    var $ = function(id){ return document.getElementById(id); };
+
+    $('bKicker').textContent = D.intro.kicker;
+    $('bH1').textContent     = D.intro.title;
+    $('bQuote').innerHTML    = '<b>“'+D.intro.quote+'”</b><span class="qs">—— '+D.intro.quoteSrc+'</span>';
+    $('bPlain').textContent  = D.intro.plain;
+    $('bCap').innerHTML      = '<b>“'+D.intro.capstone+'”</b>　—— 黄宾虹 '+D.intro.capstoneSrc;
+
+    var marks = D.marks, byKey = {};
+    marks.forEach(function(m){ byKey[m.key] = m; });
+    var bi = marks.filter(function(m){ return m.cat==='笔'; });
+    var mo = marks.filter(function(m){ return m.cat==='墨'; });
+
+    // —— 谱列（课徒册页·朱砂圈点）——
+    function colHtml(cls,label,arr){
+      var zhu = (cls==='bi') ? '#3F5E6E' : '#9A4A2C';
+      var ring = '<svg class="ring" viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="50" rx="40" ry="43" fill="none" stroke="'+zhu+'" stroke-width="3.4" stroke-linecap="round" filter="url(#bZhu)" stroke-dasharray="250" stroke-dashoffset="14"/></svg>';
+      var items = arr.map(function(m){
+        return '<div class="kpc" data-k="'+m.key+'">'+ring+'<span class="kc">'+m.char+'</span><span class="km">'+m.metaphor+'</span></div>';
+      }).join('');
+      return '<div class="kp-col '+cls+'"><div class="ch">'+label+'</div>'+items+'</div>';
+    }
+    $('bSpectrum').innerHTML = colHtml('bi','五笔', bi) + colHtml('mo','七墨', mo);
+
+    var curKey = null, animTimers = [];
+    function clearAnim(){ animTimers.forEach(clearTimeout); animTimers = []; }
+
+    function render(key){
+      if(key===curKey) return; curKey = key; clearAnim();
+      var m = byKey[key], isBi = (m.cat==='笔');
+      root.querySelectorAll('.kpc').forEach(function(c){ c.classList.toggle('on', c.dataset.k===key); });
+      // 中央示范
+      var demo = $('bDemo');
+      demo.innerHTML = '<div class="dbig"><div class="bc">'+m.char+'</div><div class="bm">'+m.metaphor+'</div></div>'
+        + '<div class="stage"></div>'
+        + '<div class="dlabel">'+(isBi?'笔法':'墨法')+'示意 · 教学图示（非原作分层）</div>';
+      var stage = demo.querySelector('.stage');
+      if(m.demo.kind==='stroke') drawStroke(stage, m.demo.style);
+      else drawInk(stage, m.demo.style, demo);
+      // 左侧题跋（直书）
+      $('bScript').innerHTML =
+        '<div class="kp-def">'+m.def+'<span class="ds">　—— 黄宾虹 '+m.src+'</span></div>'
+        + '<div class="kp-note">'+m.note+'</div>'
+        + (isBi ? '<div class="kp-jin">金石为骨：'+D.jinshi.text+'</div>' : '');
+      // 真迹 + 金石图（钤贴）
+      var foot = '<figure class="rfig"><img src="'+D.samples[key]+'" alt=""><figcaption>真迹可参</figcaption></figure>';
+      if(isBi){ foot += '<div class="jset">'+D.jinshi.imgs.map(function(g){ return '<img src="'+g.src+'" alt="" title="'+g.cap+'">'; }).join('')+'</div>'; }
+      $('bFoot').innerHTML = foot;
+    }
+
+    // —— 五笔：手绘动态笔触（SVG 描边动画 · 厚墨有浓淡）——
+    function strokeSpec(s){
+      if(s==='ping')  return { paths:[{d:'M40,150 C120,142 280,158 360,150', w:27}] };
+      if(s==='yuan')  return { paths:[{d:'M118,50 C118,178 138,246 200,246 C262,246 282,178 282,54', w:27}] };
+      if(s==='liu')   return { paths:[{d:'M200,30 q-26,36 4,74 q30,40 -6,80 q-26,38 10,82', w:23}] };
+      if(s==='zhong') return { paths:[{d:'M150,98 C150,152 166,216 218,258', w:25}], blobs:[{cx:150,cy:72,r:31}] };
+      return { paths:[ {d:'M58,102 C118,90 152,118 198,100', w:13},{d:'M204,150 C254,136 302,166 344,150', w:27},{d:'M84,216 C144,240 208,200 264,230', w:10} ] };
+    }
+    function drawStroke(box, style){
+      var sp = strokeSpec(style);
+      var blobs = (sp.blobs||[]).map(function(b){ return '<circle cx="'+b.cx+'" cy="'+b.cy+'" r="'+b.r+'" fill="#26201a"/>'; }).join('');
+      var paths = sp.paths.map(function(p){
+        return '<path class="sp" d="'+p.d+'" fill="none" stroke="#26201a" stroke-width="'+p.w+'" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>'
+          + '<path class="sp" d="'+p.d+'" fill="none" stroke="#0d0b08" stroke-width="'+(p.w*0.46)+'" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>';
+      }).join('');
+      box.insertAdjacentHTML('afterbegin','<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"><g filter="url(#bInk)">'+blobs+paths+'</g></svg>');
+      box.querySelectorAll('path.sp').forEach(function(p,i){
+        var len = p.getTotalLength();
+        p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.style.transition = 'none';
+        animTimers.push(setTimeout(function(){
+          p.style.transition = 'stroke-dashoffset 1.0s cubic-bezier(.4,.55,.3,1)'; p.style.strokeDashoffset = 0;
+        }, 80 + Math.floor(i/2)*420));
+      });
+    }
+
+    // —— 七墨：手绘渍墨（canvas）——
+    function blob(ctx,cx,cy,rad,alpha,jit){
+      jit = (jit==null?0.16:jit);
+      var n=30, pts=[];
+      for(var i=0;i<n;i++){ var a=i/n*Math.PI*2; var rr=rad*(1+jit*(Math.sin(a*3+cx*0.03)*0.5+Math.sin(a*5+1.7)*0.3+Math.cos(a*2)*0.2)); pts.push([cx+Math.cos(a)*rr, cy+Math.sin(a)*rr]); }
+      ctx.save(); ctx.fillStyle='rgba(36,29,21,'+alpha+')'; ctx.shadowColor='rgba(36,29,21,'+(alpha*0.45)+')'; ctx.shadowBlur=rad*0.2;
+      ctx.beginPath(); ctx.moveTo((pts[0][0]+pts[n-1][0])/2,(pts[0][1]+pts[n-1][1])/2);
+      for(var j=0;j<n;j++){ var p=pts[j], q=pts[(j+1)%n]; ctx.quadraticCurveTo(p[0],p[1],(p[0]+q[0])/2,(p[1]+q[1])/2); }
+      ctx.closePath(); ctx.fill(); ctx.restore();
+    }
+    function drawInk(box, style, demoEl){
+      var cv=document.createElement('canvas'); box.insertBefore(cv, box.firstChild);
+      var rect=box.getBoundingClientRect(), dpr=Math.min(2, window.devicePixelRatio||1);
+      var W=Math.max(180, rect.width-28), H=Math.max(130, rect.height-28);
+      cv.style.width=W+'px'; cv.style.height=H+'px'; cv.width=W*dpr; cv.height=H*dpr;
+      var ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+      var cx=W/2, cy=H/2;
+      function clr(){ ctx.clearRect(0,0,W,H); }
+      if(style==='nong'){ blob(ctx,cx,cy,Math.min(W,H)*0.32,0.92); ctx.save();ctx.fillStyle='rgba(255,250,238,.18)';ctx.beginPath();ctx.ellipse(cx-12,cy-14,16,9,-0.5,0,7);ctx.fill();ctx.restore(); }
+      else if(style==='dan'){ blob(ctx,cx,cy,Math.min(W,H)*0.36,0.16,0.22); blob(ctx,cx,cy,Math.min(W,H)*0.24,0.12,0.22); }
+      else if(style==='po'){ blob(ctx,cx-6,cy+4,Math.min(W,H)*0.33,0.22,0.2); animTimers.push(setTimeout(function(){ blob(ctx,cx+10,cy-6,Math.min(W,H)*0.26,0.6,0.26); blob(ctx,cx+34,cy+10,Math.min(W,H)*0.07,0.4,0.5); blob(ctx,cx-20,cy+26,Math.min(W,H)*0.05,0.35,0.5); },560)); }
+      else if(style==='po2'){ blob(ctx,cx,cy,Math.min(W,H)*0.34,0.62,0.34); for(var i=0;i<7;i++){ var a=i/7*6.28; blob(ctx,cx+Math.cos(a)*W*0.26,cy+Math.sin(a)*H*0.26,(3+i%3*4),0.5,0.6); } }
+      else if(style==='jiao'){ ctx.save(); ctx.strokeStyle='rgba(28,22,16,.9)'; ctx.lineWidth=5; ctx.lineCap='round'; for(var k=0;k<22;k++){ var yy=cy-46+k*4.4+(Math.random()*3-1.5); var x0=cx-70+Math.random()*20, x1=cx+70-Math.random()*20; if(Math.random()<0.32) continue; ctx.globalAlpha=0.5+Math.random()*0.5; ctx.beginPath(); ctx.moveTo(x0,yy); ctx.lineTo(x1,yy); ctx.stroke(); } ctx.restore(); }
+      else if(style==='su'){ ctx.save();ctx.strokeStyle='rgba(63,94,110,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.3,0,6.3);ctx.stroke();ctx.restore(); blob(ctx,cx,cy,Math.min(W,H)*0.27,0.85,0.2); ctx.save();ctx.fillStyle='rgba(63,94,110,.16)';ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.34,0,6.3);ctx.fill();ctx.restore(); }
+      else if(style==='ji'){ // 积墨：叠加遍数微动画
+        var cnt=document.createElement('div'); cnt.className='dcount';
+        (demoEl||box).appendChild(cnt);
+        var base=Math.min(W,H)*0.3;
+        function run(){ clr(); var n=0;
+          function step(){ n++; blob(ctx,cx+(Math.random()*8-4),cy+(Math.random()*8-4),base*(0.7+Math.random()*0.35),0.13,0.22); cnt.textContent='第 '+n+' 遍 · 层层染之';
+            if(n<20){ animTimers.push(setTimeout(step, n<6?460:300)); }
+            else { animTimers.push(setTimeout(function(){ cnt.textContent='二十遍 · 浑厚华滋'; },200)); animTimers.push(setTimeout(run, 2400)); } }
+          animTimers.push(setTimeout(step, 360));
+        }
+        run();
+      }
+    }
+
+    // —— 谱列交互 ——
+    var spec = $('bSpectrum');
+    spec.addEventListener('click', function(e){ var t=e.target.closest('.kpc'); if(t) render(t.dataset.k); });
+    spec.addEventListener('mouseover', function(e){ var t=e.target.closest('.kpc'); if(t) render(t.dataset.k); });
+
+    // ===== 进二·读画 · 白→黑三联消长 =====
+    var evBuilt=false, evActive=null;
+    function buildEvolution(){
+      var E=D.evolution;
+      $('bEvStrip').innerHTML = E.stages.map(function(s){
+        return '<div class="ev-stage '+s.key+'" data-st="'+s.key+'">'
+          + '<div class="sl"><b>'+s.label+'</b><span>'+s.sub+'</span></div>'
+          + '<div class="ev-pic"><img src="'+s.work+'" alt="'+s.label+'"><span class="badge"></span></div>'
+          + '<div class="ev-note">'+s.note+(s.noteSrc?'<span class="qs">—— '+s.noteSrc+'</span>':'')+'</div>'
+          + '</div>';
+      }).join('');
+      var tagHtml = marks.map(function(m){ return '<button data-k="'+m.key+'" class="'+(m.cat==='笔'?'bi':'mo')+'" title="'+m.metaphor+'">'+m.char+'</button>'; }).join('');
+      $('bEvBar').innerHTML = '<div class="ev-tags">'+tagHtml+'</div>'
+        + '<div class="ev-read" id="bEvRead"><b>点一个笔墨字</b>　看它从白宾虹到黑宾虹的消长——笔贯穿一生，墨由淡转黑。</div>'
+        + '<div class="ev-honest">'+E.honest+'</div>';
+      $('bEvBar').querySelectorAll('.ev-tags button').forEach(function(b){ b.addEventListener('click', function(){ toggleEv(b.dataset.k); }); });
+    }
+    function toggleEv(k){
+      var same=(evActive===k); evActive = same?null:k;
+      var E=D.evolution, pres=E.presence[k]||[0,0,0], m=byKey[k];
+      $('bEvBar').querySelectorAll('.ev-tags button').forEach(function(x){ x.classList.toggle('on', !same && x.dataset.k===k); });
+      $('bEvStrip').querySelectorAll('.ev-stage').forEach(function(st,i){
+        var pic=st.querySelector('.ev-pic'), badge=st.querySelector('.badge');
+        if(same){ pic.classList.remove('dim'); badge.classList.remove('show'); return; }
+        var lv=pres[i];
+        badge.textContent=E.levelName[lv]; badge.classList.add('show');
+        badge.style.background = lv===0?'rgba(90,79,64,.85)':(lv===1?'rgba(154,74,44,.92)':'rgba(36,29,21,.92)');
+        pic.classList.toggle('dim', lv===0);
+      });
+      var rd=$('bEvRead');
+      if(same){ rd.innerHTML='<b>点一个笔墨字</b>　看它从白宾虹到黑宾虹的消长——笔贯穿一生，墨由淡转黑。'; return; }
+      var story;
+      if(pres[0]===2&&pres[1]===2&&pres[2]===2){ story='此<b>笔</b>贯穿一生、未尝大变——变的是墨，不是笔。'; }
+      else { story='由「'+E.levelName[pres[0]]+'」到「'+E.levelName[pres[2]]+'」：'+(pres[0]===0?'白宾虹时尚无，':'白宾虹已具，')+'入蜀青城后'+(pres[1]>=2?'大盛':'始现')+'，晚岁黑宾虹'+(pres[2]===2?'层层登峰':'仍用')+'。'; }
+      rd.innerHTML='<b>'+m.char+' · '+m.metaphor+'</b>　'+story+'　'+m.note;
+    }
+    function ensureEv(){ if(!evBuilt){ buildEvolution(); evBuilt=true; } }
+
+    // —— 模式切换 ——
+    root.querySelectorAll('.b-toggle button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var mode=b.dataset.bm;
+        root.querySelectorAll('.b-toggle button').forEach(function(x){ x.classList.toggle('on', x===b); });
+        root.setAttribute('data-bmode', mode);
+        if(mode==='read') ensureEv();
+      });
+    });
+
+    // —— 默认进入 ——
+    render(marks[0].key);
   };
 
 (function(){
