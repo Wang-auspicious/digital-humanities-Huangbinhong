@@ -504,23 +504,28 @@
 #hbh-prologue .pro-eyebrow{font-size:12.5px;letter-spacing:.42em;color:var(--red);margin:0 0 16px;
   animation:prologue_rise .85s .14s both}
 #hbh-prologue .pro-name{
-  font-size:98px;line-height:.96;font-weight:900;letter-spacing:.08em;color:var(--ink);margin:0;
+  font-size:88px;line-height:.96;font-weight:900;letter-spacing:.08em;color:var(--ink);margin:0;
   text-shadow:0 2px 0 rgba(255,255,255,.3);animation:prologue_rise .9s .2s both}
 #hbh-prologue .pro-name .x{color:var(--red)}
-#hbh-prologue .pro-meta{display:flex;align-items:center;gap:16px;margin:18px 0 0;
+#hbh-prologue .pro-meta{display:flex;align-items:center;gap:14px;margin:16px 0 0;flex-wrap:wrap;
   animation:prologue_rise .9s .28s both}
 #hbh-prologue .pro-meta .yrs{font-size:18px;font-weight:700;letter-spacing:.18em;color:var(--ink-soft)}
-#hbh-prologue .pro-meta .ln{flex:0 0 52px;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-#hbh-prologue .pro-role{font-size:14px;letter-spacing:.16em;color:var(--ink-soft);margin:11px 0 0;
+#hbh-prologue .pro-meta .ln{flex:0 0 40px;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+#hbh-prologue .pro-meta .dyn{font-size:12.5px;letter-spacing:.08em;color:#8a7757}
+#hbh-prologue .pro-role{font-size:14px;letter-spacing:.16em;color:var(--ink-soft);margin:10px 0 0;
   animation:prologue_rise .9s .34s both}
-#hbh-prologue .pro-quote{
-  margin:26px 0 0;padding:6px 0 6px 17px;border-left:3px solid var(--red);
-  font-size:19px;line-height:1.72;font-weight:700;color:#2a2014;animation:prologue_rise .95s .42s both}
-#hbh-prologue .pro-quote .by{display:block;margin-top:7px;font-size:13px;font-weight:500;
-  color:var(--ink-soft);letter-spacing:.12em}
-#hbh-prologue .pro-lead{margin:22px 0 0;font-size:13.5px;line-height:1.98;color:#3a2d1e;
-  text-align:justify;max-width:516px;animation:prologue_rise .95s .5s both}
+#hbh-prologue .pro-facts{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;margin:15px 0 0;
+  font-size:11.8px;line-height:1.45;color:#4a3b28;letter-spacing:.03em;animation:prologue_rise .9s .4s both}
+#hbh-prologue .pro-facts div{border-left:2px solid rgba(154,59,37,.5);padding-left:9px}
+#hbh-prologue .pro-facts b{color:var(--red);font-weight:800;margin-right:5px;font-size:11px;letter-spacing:.05em}
+#hbh-prologue .pro-lead{margin:18px 0 0;font-size:13.5px;line-height:1.95;color:#3a2d1e;
+  text-align:justify;max-width:520px;animation:prologue_rise .95s .48s both}
 #hbh-prologue .pro-lead b{color:var(--red);font-weight:700}
+#hbh-prologue .pro-quote{
+  margin:20px 0 0;padding:5px 0 5px 16px;border-left:3px solid var(--red);
+  font-size:18px;line-height:1.7;font-weight:700;color:#2a2014;animation:prologue_rise .95s .54s both}
+#hbh-prologue .pro-quote .by{display:block;margin-top:6px;font-size:12.5px;font-weight:500;
+  color:var(--ink-soft);letter-spacing:.12em}
 #hbh-prologue .pro-enter{display:flex;align-items:center;gap:18px;margin:30px 0 0;flex-wrap:wrap;
   animation:prologue_rise .95s .6s both}
 #hbh-prologue .pro-btn{
@@ -580,10 +585,16 @@
     <div class="pro-text">
       <p class="pro-eyebrow">年谱数字人文 · 卷首</p>
       <h1 class="pro-name"><span class="x">黄</span>宾虹</h1>
-      <div class="pro-meta"><span class="yrs">一八六五 — 一九五五</span><span class="ln"></span></div>
+      <div class="pro-meta"><span class="yrs">一八六五 — 一九五五</span><span class="ln"></span><span class="dyn">浙江金华生 · 安徽歙县籍</span></div>
       <p class="pro-role">山水画家 · 金石学者 · 美术史家 · 鉴藏家</p>
+      <div class="pro-facts">
+        <div><b>本名</b>质，字朴存</div>
+        <div><b>号</b>宾虹，别署予向 · 虹叟</div>
+        <div><b>画论</b>五笔七墨</div>
+        <div><b>并称</b>南黄北齐（与齐白石）</div>
+      </div>
+      <p class="pro-lead">中国近现代<b>山水画一代宗师</b>，兼擅花鸟，精金石文字、篆刻书法，富于收藏，通画史画论。早岁植根徽州，中年居沪三十载入海上画坛，晚岁北上北平任教，复南返杭州终老。画风浑厚华滋、黑密厚重，自成一家。本卷以年谱为经、足迹与交往为纬，重绘其一生，凡分<b>四卷</b>：生命舆图 · 实景山水 · 交游长河 · 笔墨课徒。</p>
       <blockquote class="pro-quote">中华大地，无山不美，无水不秀。<span class="by">—— 黄宾虹</span></blockquote>
-      <p class="pro-lead">九十载行旅，四度迁居，万千交游，皆化入笔墨。本卷以年谱为经、以足迹与交往为纬，重绘其一生，凡分<b>四卷</b>：生命舆图、实景山水、交游长河、笔墨课徒。</p>
       <div class="pro-enter">
         <button class="pro-btn" id="proEnter">启卷　入「生命舆图」<span class="ar">▸</span></button>
         <span class="pro-hint">或移鼠标至屏幕顶端，择卷而读</span>
@@ -804,6 +815,8 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}let trans={tx:0,ty:0,s:1}
 function focus(place,scale,opts={}){
   const p=Array.isArray(place)?place:(city[place]||city.上海),vw=stage.clientWidth,vh=stage.clientHeight,side=340,bottom=92,mapW=vw-side,mapH=vh-bottom;
   const cx=(opts.cx!=null?opts.cx:mapW*.54),cy=(opts.cy!=null?opts.cy:mapH*.54),tx=cx-p[0]*scale,ty=cy-p[1]*scale;
+  if(opts.instant){if(world.style.transition!=='none')world.style.transition='none'}      // 行程跟拍：相机即时贴住圆点，无 620ms 后摇
+  else if(world.style.transition==='none'&&!paused){world.style.transition=''}             // 换年/静止：恢复缓动建立镜头
   trans={tx,ty,s:scale};world.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`
 }
 function worldToScreen(p){return{x:p[0]*trans.s+trans.tx,y:p[1]*trans.s+trans.ty}}
@@ -939,7 +952,7 @@ function focusForTravel(sc,step,lineRatio){
   if(!active||!city[active.place]){focus(sc.place,sc.scale);return}
   const dest=city[active.place],r=clamp(lineRatio,0,1),p=[home[0]*(1-r)+dest[0]*r,home[1]*(1-r)+dest[1]*r];
   const dist=Math.hypot(dest[0]-home[0],dest[1]-home[1]),s=clamp(sc.scale*(dist>520 ? .72 : dist>360 ? .82 : .95),.82,1.42);
-  focus(p,s,{cx:(stage.clientWidth-340)*.50,cy:(stage.clientHeight-92)*.55})
+  focus(p,s,{cx:(stage.clientWidth-340)*.50,cy:(stage.clientHeight-92)*.55,instant:true})
 }
 function htmlEscape(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function clearPlaceMode(){
@@ -1020,7 +1033,7 @@ function playYear(sc,idx,yearRatio){
   const trips=travelItems(sc),travelCount=trips.length;
   const dur=(sc._travelMs||0)+(sc._readMs||620),travelPart=(travelCount&&sc._travelMs)?sc._travelMs/dur:0;  // 行进占比=线长时间/总时长→像素速度恒定
   let step=-1,lineRatio=0,hotOpacity=1;
-  if(travelCount&&travelPart>0&&yearRatio<travelPart){const home=city[sc.place]||city[anchorPlace(sc.year)]||city.上海;const tripDists=trips.map(t=>city[t.place]?Math.hypot(city[t.place][0]-home[0],city[t.place][1]-home[1]):1);const totalDist=tripDists.reduce((a,b)=>a+b,0)||travelCount;const uDist=yearRatio/travelPart*totalDist;let cumDist=0;step=-1;let localPhase=0;for(let i=0;i<trips.length;i++){if(cumDist+tripDists[i]>=uDist||i===trips.length-1){step=i;localPhase=tripDists[i]>0?(uDist-cumDist)/tripDists[i]:0;break}cumDist+=tripDists[i]}lineRatio=clamp(localPhase,0,1);const seam=.16;hotOpacity=clamp(localPhase/seam,0,1)*clamp((1-localPhase)/seam,0,1)}else if(travelCount){step=travelCount-1;lineRatio=1;hotOpacity=0}
+  if(travelCount&&travelPart>0&&yearRatio<travelPart){const home=city[sc.place]||city[anchorPlace(sc.year)]||city.上海;const legMs=trips.map(t=>city[t.place]?Math.max(LEG_MIN_MS,Math.hypot(city[t.place][0]-home[0],city[t.place][1]-home[1])*SPEED_MS_PER_UNIT):LEG_MIN_MS);const totalLeg=legMs.reduce((a,b)=>a+b,0)||1;const uTime=yearRatio/travelPart*totalLeg;let accT=0;step=-1;let localPhase=0;for(let i=0;i<trips.length;i++){if(accT+legMs[i]>=uTime||i===trips.length-1){step=i;localPhase=legMs[i]>0?(uTime-accT)/legMs[i]:0;break}accT+=legMs[i]}lineRatio=clamp(localPhase,0,1);const seam=.16;hotOpacity=clamp(localPhase/seam,0,1)*clamp((1-localPhase)/seam,0,1)}else if(travelCount){step=travelCount-1;lineRatio=1;hotOpacity=0}
   focusForTravel(sc,step,lineRatio);
   updateVisitLines(sc,step,lineRatio,hotOpacity);updateFriends(sc.year);
   const all=notes(sc).filter(n=>!(n.kind==='travel'&&n.place===sc.place));
@@ -1031,23 +1044,24 @@ function playYear(sc,idx,yearRatio){
 }
 detailClose.onclick=()=>detail.classList.remove('show');
 // —— 蓝线全程严格匀速：时长 ∝ 线长，长线只是更久，绝不加速；落点后留阅读停留 ——
-const SPEED_MS_PER_UNIT=4.7;                    // 蓝线匀速基准：每像素毫秒（全屏统一）
+const SPEED_MS_PER_UNIT=4.7;                    // 长途匀速基准：每像素毫秒
+const LEG_MIN_MS=1300;                          // 每段最短铺展时长：短途不至于一闪而过
 function sceneDuration(sc){
   const home=city[sc.place]||city[anchorPlace(sc.year)]||city.上海;
-  const trips=travelItems(sc);let dist=0;
-  trips.forEach(t=>{const c=city[t.place];if(c)dist+=Math.hypot(c[0]-home[0],c[1]-home[1])});
-  const travelMs=dist>0?Math.max(600,dist*SPEED_MS_PER_UNIT):0;     // 严格∝线长，无上限封顶→匀速
+  const trips=travelItems(sc);let travelMs=0;
+  trips.forEach(t=>{const c=city[t.place];if(c)travelMs+=Math.max(LEG_MIN_MS,Math.hypot(c[0]-home[0],c[1]-home[1])*SPEED_MS_PER_UNIT)});  // 逐段计时：长途∝线长(匀速)、短途给最短时长
   const all=notes(sc).filter(n=>!(n.kind==='travel'&&n.place===sc.place));
   const noteN=clamp(all.length,0,5);
   const readMs=620+noteN*430;                                       // 落点后的阅读停留
-  sc._travelMs=travelMs;sc._readMs=readMs;                          // 供 playYear 推匀速进度
+  sc._travelMs=travelMs;sc._readMs=readMs;                          // 供 playYear 推进度
   return Math.round(travelMs+readMs);
 }
 const DURS=scenes.map(sceneDuration),OFFS=[];let _acc=0;
 for(let i=0;i<DURS.length;i++){OFFS.push(_acc);_acc+=DURS[i]}
 const TOTAL_MS=_acc,TOTAL=()=>TOTAL_MS;
 function sceneAt(el){let lo=0,hi=scenes.length-1;while(lo<hi){const m=(lo+hi+1)>>1;if(OFFS[m]<=el)lo=m;else hi=m-1}return lo}
-let start=performance.now(),playhead=0,paused=false,last=-1,dragging=false,lastPt=null;
+const INTRO_HOLD_MS=3000;                        // 进入地图后先静止 3 秒，给人反应时间再开始迁徙
+let start=performance.now()+INTRO_HOLD_MS,playhead=0,paused=false,last=-1,dragging=false,lastPt=null;
 function renderAt(ms){
   const total=TOTAL_MS,el=((ms%total)+total)%total,idx=sceneAt(el),r=DURS[idx]?clamp((el-OFFS[idx])/DURS[idx],0,1):0;
   playYear(scenes[idx],idx,r);last=idx
