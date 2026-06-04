@@ -453,6 +453,96 @@
 #hbh-brush .b-cap b{color:var(--accent)}
 #hbh-brush[data-bmode="read"] .b-body{display:none}
 #hbh-brush[data-bmode="learn"] .b-read{display:none}
+
+/* ===== 序幕 · 卷首 → #hbh-prologue ===== */
+#hbh-prologue{
+  --paper:#e7d9bc;--paper2:#efe6d2;--ink:#1c150d;--ink-soft:#5a4b38;
+  --red:#9a3b25;--red2:#b8543a;
+  width:100%;height:100%;overflow:hidden;color:var(--ink);
+  font-family:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
+  background:
+    radial-gradient(120% 92% at 15% 6%,rgba(255,251,240,.58),transparent 44%),
+    radial-gradient(96% 84% at 92% 98%,rgba(150,104,66,.18),transparent 48%),
+    linear-gradient(168deg,var(--paper2) 0%,var(--paper) 56%,#dfcaa1 100%);
+}
+#hbh-prologue::before{          /* 宣纸纹理 */
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.55;
+  background:
+    repeating-linear-gradient(8deg,rgba(80,60,38,.045) 0 1px,transparent 1px 9px),
+    repeating-linear-gradient(98deg,rgba(255,255,255,.05) 0 1px,transparent 1px 13px);
+}
+#hbh-prologue .pro-wrap{
+  position:relative;z-index:2;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;gap:66px;padding:0 60px;
+}
+/* 左 · 肖像贴片 */
+#hbh-prologue .pro-photo{
+  position:relative;flex:0 0 auto;width:392px;height:524px;margin:0;
+  padding:14px;background:linear-gradient(160deg,#f4eddc,#e4d3b0);
+  border:1px solid rgba(40,30,18,.32);
+  box-shadow:0 26px 62px rgba(40,26,12,.32),inset 0 2px 0 rgba(255,255,255,.4);
+  animation:prologue_rise 1s .05s both cubic-bezier(.2,.7,.25,1);
+}
+#hbh-prologue .pro-photo .frame{position:relative;width:100%;height:100%;overflow:hidden;border:1px solid rgba(40,30,18,.5)}
+#hbh-prologue .pro-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block;
+  filter:grayscale(1) sepia(.42) contrast(1.07) brightness(1.02);
+}
+#hbh-prologue .pro-photo .tone{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;
+  background:linear-gradient(180deg,rgba(120,78,40,.10),rgba(40,26,12,.20))}
+#hbh-prologue .pro-photo .vig{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 64px 16px rgba(58,40,20,.46)}
+#hbh-prologue .pro-photo .seal{
+  position:absolute;right:-13px;bottom:34px;width:52px;height:64px;display:grid;place-items:center;
+  background:var(--red);color:#f6e7cf;border-radius:5px;writing-mode:vertical-rl;
+  font-weight:900;font-size:21px;letter-spacing:.06em;line-height:1.08;
+  box-shadow:0 6px 16px rgba(120,30,12,.42);transform:rotate(-3deg);
+}
+#hbh-prologue .pro-cap{position:absolute;left:0;right:0;bottom:-25px;text-align:center;
+  font-size:11px;color:var(--ink-soft);letter-spacing:.2em}
+/* 右 · 题识 */
+#hbh-prologue .pro-text{position:relative;flex:0 1 540px;max-width:560px}
+#hbh-prologue .pro-eyebrow{font-size:12.5px;letter-spacing:.42em;color:var(--red);margin:0 0 16px;
+  animation:prologue_rise .85s .14s both}
+#hbh-prologue .pro-name{
+  font-size:98px;line-height:.96;font-weight:900;letter-spacing:.08em;color:var(--ink);margin:0;
+  text-shadow:0 2px 0 rgba(255,255,255,.3);animation:prologue_rise .9s .2s both}
+#hbh-prologue .pro-name .x{color:var(--red)}
+#hbh-prologue .pro-meta{display:flex;align-items:center;gap:16px;margin:18px 0 0;
+  animation:prologue_rise .9s .28s both}
+#hbh-prologue .pro-meta .yrs{font-size:18px;font-weight:700;letter-spacing:.18em;color:var(--ink-soft)}
+#hbh-prologue .pro-meta .ln{flex:0 0 52px;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+#hbh-prologue .pro-role{font-size:14px;letter-spacing:.16em;color:var(--ink-soft);margin:11px 0 0;
+  animation:prologue_rise .9s .34s both}
+#hbh-prologue .pro-quote{
+  margin:26px 0 0;padding:6px 0 6px 17px;border-left:3px solid var(--red);
+  font-size:19px;line-height:1.72;font-weight:700;color:#2a2014;animation:prologue_rise .95s .42s both}
+#hbh-prologue .pro-quote .by{display:block;margin-top:7px;font-size:13px;font-weight:500;
+  color:var(--ink-soft);letter-spacing:.12em}
+#hbh-prologue .pro-lead{margin:22px 0 0;font-size:13.5px;line-height:1.98;color:#3a2d1e;
+  text-align:justify;max-width:516px;animation:prologue_rise .95s .5s both}
+#hbh-prologue .pro-lead b{color:var(--red);font-weight:700}
+#hbh-prologue .pro-enter{display:flex;align-items:center;gap:18px;margin:30px 0 0;flex-wrap:wrap;
+  animation:prologue_rise .95s .6s both}
+#hbh-prologue .pro-btn{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+  background:var(--red);color:#f7ecd6;border:0;border-radius:3px;
+  font:800 15px/1 "Noto Serif SC","Songti SC",serif;letter-spacing:.18em;padding:14px 26px;
+  box-shadow:0 8px 22px rgba(120,40,18,.32);transition:transform .18s,box-shadow .18s,background .18s}
+#hbh-prologue .pro-btn:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 12px 30px rgba(120,40,18,.44)}
+#hbh-prologue .pro-btn .ar{font-size:16px}
+#hbh-prologue .pro-hint{font-size:11.5px;color:#8a7757;letter-spacing:.1em}
+#hbh-prologue .pro-stamp{position:absolute;right:42px;top:44px;z-index:3;width:58px;height:58px;
+  border:2px solid rgba(154,59,37,.58);border-radius:4px;color:rgba(154,59,37,.74);
+  display:grid;place-items:center;writing-mode:vertical-rl;
+  font-size:14px;font-weight:800;letter-spacing:.06em;line-height:1.2;text-align:center;
+  transform:rotate(2deg);opacity:.92}
+@keyframes prologue_rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@media (max-width:900px){
+  #hbh-prologue .pro-wrap{flex-direction:column;gap:30px;padding:42px 26px;overflow:auto;align-items:center}
+  #hbh-prologue .pro-name{font-size:62px}
+  #hbh-prologue .pro-photo{width:264px;height:352px}
+  #hbh-prologue .pro-text{flex-basis:auto}
+}
 </style>
 </head>
 <body>
@@ -461,6 +551,7 @@
 <div id="hbh-hot"></div>
 <nav id="hbh-nav">
     <span class="brand">数字黄宾虹</span>
+    <button class="hbh-tab" data-go="prologue">卷首</button>
     <button class="hbh-tab" data-go="map">生命舆图</button>
     <button class="hbh-tab" data-go="atlas">实景山水</button>
     <button class="hbh-tab" data-go="river">交游长河</button>
@@ -475,6 +566,32 @@
 <script src="hbh_brush_data.js"></script>
 
 <!-- ============ 各页面（原文件 DOM，CSS 已作用域隔离）============ -->
+<section id="hbh-prologue" class="hbh-page" data-page="prologue">
+  <div class="pro-stamp">浑厚<br>华滋</div>
+  <div class="pro-wrap">
+    <figure class="pro-photo">
+      <div class="frame">
+        <img src="assets/hbh_portrait.png" alt="黄宾虹晚年留影">
+        <span class="tone"></span><span class="vig"></span>
+      </div>
+      <span class="seal">宾虹</span>
+      <figcaption class="pro-cap">黄宾虹晚年留影</figcaption>
+    </figure>
+    <div class="pro-text">
+      <p class="pro-eyebrow">年谱数字人文 · 卷首</p>
+      <h1 class="pro-name"><span class="x">黄</span>宾虹</h1>
+      <div class="pro-meta"><span class="yrs">一八六五 — 一九五五</span><span class="ln"></span></div>
+      <p class="pro-role">山水画家 · 金石学者 · 美术史家 · 鉴藏家</p>
+      <blockquote class="pro-quote">中华大地，无山不美，无水不秀。<span class="by">—— 黄宾虹</span></blockquote>
+      <p class="pro-lead">九十载行旅，四度迁居，万千交游，皆化入笔墨。本卷以年谱为经、以足迹与交往为纬，重绘其一生，凡分<b>四卷</b>：生命舆图、实景山水、交游长河、笔墨课徒。</p>
+      <div class="pro-enter">
+        <button class="pro-btn" id="proEnter">启卷　入「生命舆图」<span class="ar">▸</span></button>
+        <span class="pro-hint">或移鼠标至屏幕顶端，择卷而读</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="hbh-map" class="hbh-page" data-page="map">
 
 <svg width="0" height="0" style="position:absolute"><filter id="dryBrush"><feTurbulence baseFrequency=".028" numOctaves="4" seed="11" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/><feGaussianBlur stdDeviation=".25"/></filter></svg>
@@ -1729,6 +1846,16 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
     render(marks[0].key);
   };
 
+  HBH.init.prologue = function(){
+/* ---- 序幕 · 卷首 ---- */
+    var btn = document.getElementById('proEnter');
+    if (btn) btn.addEventListener('click', function(){ window.HBH.show('map'); });
+    document.addEventListener('keydown', function(e){
+      var sec = document.getElementById('hbh-prologue');
+      if (e.key === 'Enter' && sec && sec.classList.contains('active')) { window.HBH.show('map'); }
+    });
+  };
+
 (function(){
   var nav = document.getElementById('hbh-nav');
   var hot = document.getElementById('hbh-hot');
@@ -1763,7 +1890,7 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
 
   // —— 默认页 ——
   var initial = (location.hash||'').replace('#','');
-  if (!HBH.init[initial]) initial = 'map';
+  if (!HBH.init[initial]) initial = 'prologue';
   showPage(initial);
   reveal();   // 进场提示一次
 })();

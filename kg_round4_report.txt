@@ -1,0 +1,27 @@
+==================================================
+  KG Round 4 FINAL
+==================================================
+  Edges: 6461
+  Emotion FP removed: 687
+  MOURNED FP removed: 0
+  GIFTED FP removed: 76
+  WROTE_TO added: 22
+
+  === Subset F1 (reliably-testable relations, n=150) ===
+  Precision: 71.2%
+  Recall:    90.2%
+  F1:        79.6%
+
+  CREATED              P: 45.0% R: 69.2% tp=9 fp=11 fn=4
+  EXHIBITED_AT         P:100.0% R:100.0% tp=11 fp=0 fn=0
+  GIFTED_ARTWORK       P: 20.0% R:100.0% tp=1 fp=4 fn=0
+  MOURNED              P:100.0% R:100.0% tp=2 fp=0 fn=0
+  WROTE_TO             P:100.0% R:100.0% tp=14 fp=0 fn=0
+
+  === Coverage ===
+  Events with >=1 edge: 2934/5180 (56.6%)
+  MENTIONS_CONCEPT:     1694 events (32.7%)
+  TRAVELED_TO:          583 events (11.3%)
+
+  === Combined Quality Score ===
+  Quality = F1*0.6 + Coverage*0.4 = 79.6*0.6 + 22.0*0.4 = 56.5

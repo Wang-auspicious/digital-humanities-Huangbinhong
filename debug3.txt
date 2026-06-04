@@ -1,0 +1,5 @@
+井上哲次郎 in alias_map keys: True
+alias_map["井上哲次郎"]: []
+井上哲次郎 in raw text: True
+text count: 2
+events containing 井上哲次郎: 0
