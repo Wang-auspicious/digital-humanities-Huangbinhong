@@ -229,131 +229,121 @@
   background:rgba(38,20,8,.62);
   box-shadow:0 1px 0 rgba(255,226,160,.22);
 }#hbh-atlas .label .name::before{top:3px;}#hbh-atlas .label .name::after{bottom:3px;}
-/* ===== 交游长河 → #hbh-river（总览河流 + 详细丝线）===== */
+/* ===== 交游长河 → #hbh-river（纸本 ThemeRiver + 墨点 + 引线卡片 + 右侧深读栏 · 矿物国画色 · 宣纸纹理）===== */
 #hbh-river{
-  --bgTop:#E8DFCD;
-  --bgBot:#DDD2BC;
-  --ink:#2B2622;
-  --muted:#5B5147;
-  --red:#7A1F1A;
-  --line:#9A8F7E;
-  --panel:#E9DDC7;
-  --fontSerif:"Noto Serif SC","Songti SC","SimSun","Source Han Serif SC",serif;
+  --paper-top:#E9DFC9;--paper-mid:#E2D6BD;--paper-bot:#D5C8AC;
+  --ink:#241D15;--ink-soft:#5A4F40;--accent:#9A4A2C;
+  --c0:#B06A3A;--c1:#3F5E6E;--c2:#9C4B43;--c3:#5E7E61;--c4:#45748A;--c5:#A0823F;
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
   position:relative;width:100%;height:100%;margin:0;overflow:hidden;
-  background:linear-gradient(180deg,var(--bgTop) 0%,#E3D8C5 48%,var(--bgBot) 100%);
-  color:var(--ink);font-family:var(--fontSerif);letter-spacing:0;
+  background:
+    radial-gradient(ellipse at 22% 18%,rgba(255,250,236,.5),transparent 42%),
+    radial-gradient(ellipse at 82% 86%,rgba(120,96,62,.12),transparent 46%),
+    linear-gradient(164deg,var(--paper-top) 0%,var(--paper-mid) 52%,var(--paper-bot) 100%);
+  color:var(--ink);font-family:var(--serif);letter-spacing:0;
   user-select:none;-webkit-user-select:none;
 }
-#hbh-river *{box-sizing:border-box;letter-spacing:0}
+#hbh-river *{box-sizing:border-box}
+/* 宣纸/绢颗粒 + 纤维纹 */
 #hbh-river:before{
-  content:"";position:absolute;inset:-28px;z-index:0;pointer-events:none;opacity:.18;mix-blend-mode:multiply;
+  content:"";position:absolute;inset:-20px;z-index:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
   background:
-    radial-gradient(circle at 86% 8%,rgba(89,70,50,.18),transparent 28%),
-    radial-gradient(circle at 8% 92%,rgba(255,255,255,.32),transparent 28%),
-    repeating-linear-gradient(8deg,rgba(73,57,39,.045) 0 1px,transparent 1px 7px),
-    repeating-linear-gradient(96deg,rgba(255,255,255,.16) 0 1px,transparent 1px 11px);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E") 0 0/150px 150px,
+    repeating-linear-gradient(7deg,rgba(80,60,38,.05) 0 1px,transparent 1px 9px),
+    repeating-linear-gradient(95deg,rgba(255,255,255,.06) 0 1px,transparent 1px 13px);
 }
-#hbh-river:after{
-  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:radial-gradient(ellipse at center,transparent 52%,rgba(70,52,32,.08) 100%);
-  mix-blend-mode:multiply;
-}
-#hbh-river canvas{position:absolute;inset:0;z-index:1}
-#hbh-river .network-shell{position:absolute;inset:0;z-index:3;display:grid;grid-template-rows:128px minmax(0,1fr) 38px;padding:70px 28px 16px;gap:10px}
-#hbh-river .network-head{display:grid;grid-template-columns:minmax(430px,1fr) minmax(480px,52vw);gap:22px;align-items:start;min-height:0}
-#hbh-river .river-title h1{margin:0;color:#111;font-size:30px;line-height:1.08;font-weight:900}
-#hbh-river .river-title .eyebrow{font:900 11px/1 "Noto Serif SC","Songti SC",serif;color:var(--red);letter-spacing:.18em;margin-bottom:8px}
-#hbh-river .river-title .sub{margin-top:7px;color:#111;font-size:13px;line-height:1.45;font-weight:700}
-#hbh-river .network-controls{padding-top:4px}
-#hbh-river .filter-row{display:flex;justify-content:flex-end;gap:10px;align-items:flex-start;margin-bottom:9px}
-#hbh-river .filter-row .label{min-width:54px;padding-top:6px;color:#111;font-size:11px;font-weight:900;letter-spacing:.08em;text-align:right}
-#hbh-river .seg{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-#hbh-river .seg button{border:1px solid rgba(43,38,34,.36);background:rgba(239,229,205,.66);color:#111;border-radius:3px;padding:6px 10px;font:900 12px/1 var(--fontSerif);cursor:pointer}
-#hbh-river .seg button:hover{border-color:rgba(122,31,26,.52);background:rgba(248,239,220,.88)}
-#hbh-river .seg button.active{background:var(--red);border-color:var(--red);color:#F7ECD7}
-#hbh-river .network-main{display:grid;grid-template-columns:minmax(0,70fr) minmax(340px,30fr);gap:18px;min-height:0}
-#hbh-river .thread-pane{position:relative;min-width:0;min-height:0;border-top:1px solid rgba(43,38,34,.22);border-bottom:1px solid rgba(43,38,34,.24);overflow:hidden}
-#hbh-river #riverBaseCanvas,#hbh-river #riverHoverCanvas{position:absolute;inset:0;width:100%;height:100%}
-#hbh-river #riverBaseCanvas{z-index:1}
-#hbh-river #riverHoverCanvas{z-index:2}
-#hbh-river .river-bubbles{position:absolute;inset:0;z-index:4;pointer-events:none}
-#hbh-river .thread-pane.detail .river-bubbles{display:none}
-#hbh-river .bubble{position:absolute;width:96px;pointer-events:auto;cursor:pointer;transition:opacity .16s ease,filter .16s ease,transform .16s ease;transform:translate(-50%,-50%);contain:layout paint}
-#hbh-river .bubble:hover{filter:saturate(1.05) contrast(1.02);z-index:18}
-#hbh-river .bubble.dim{opacity:.22;pointer-events:none}
-#hbh-river .bubble .b-frame{position:relative;width:96px;color:#111}
-#hbh-river .bubble .b-type{font-size:9px;line-height:1.1;color:#111;font-weight:800;margin:0 0 4px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#hbh-river .bubble .b-avatar{width:50px;height:62px;display:grid;place-items:center;background:rgba(239,229,205,.88);border:1px solid rgba(43,38,34,.36);box-shadow:0 6px 18px rgba(43,38,34,.13);font-size:20px;font-weight:900;color:#111;overflow:hidden}
-#hbh-river .bubble .b-avatar img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) sepia(.2) contrast(1.06);transform:scale(1.04)}
-#hbh-river .bubble .b-avatar[data-kind="event"]{height:58px;border-radius:50%;background:radial-gradient(circle,rgba(122,31,26,.72) 0 4px,rgba(122,31,26,.18) 5px 18px,rgba(232,223,205,.72) 19px)}
-#hbh-river .bubble .b-tag{display:inline-block;margin-top:5px;background:rgba(239,229,205,.96);border:1px solid rgba(43,38,34,.38);color:#111;font-size:11px;line-height:1;padding:4px 7px;border-radius:3px;font-weight:900;white-space:nowrap;max-width:96px;overflow:hidden;text-overflow:ellipsis}
-#hbh-river .bubble .b-name{font-size:9.5px;color:#111;font-weight:800;margin-top:4px;line-height:1.24;max-height:24px;overflow:hidden}
-#hbh-river .bubble .b-year{font:700 12px/1.1 Georgia,"Times New Roman",serif;color:var(--red);margin-top:2px}
-#hbh-river .bubble .b-year span{font-size:9px;margin-left:1px}
-#hbh-river .river-hover-note{position:absolute;z-index:5;display:none;pointer-events:none;max-width:258px;padding:9px 11px;background:rgba(238,229,211,.96);border:1px solid rgba(122,31,26,.24);border-left:3px solid var(--red);color:#111;font-size:11px;line-height:1.45;box-shadow:0 10px 26px rgba(43,38,34,.13)}
-#hbh-river .river-hover-note b{display:block;color:var(--red);font-size:13px;line-height:1.2;margin-bottom:3px}
-#hbh-river .river-lens{position:absolute;z-index:6;display:none;pointer-events:none;width:268px;padding:10px 12px;background:rgba(238,229,211,.95);border:1px solid rgba(122,31,26,.24);border-top:3px solid var(--red);color:#111;font-size:11px;line-height:1.55;box-shadow:0 10px 26px rgba(43,38,34,.13)}
-#hbh-river .river-lens b{display:block;color:var(--red);font-size:13px;margin-bottom:3px}
-#hbh-river .river-detail{position:absolute;z-index:20;background:rgba(238,229,211,.97);border:1px solid rgba(122,31,26,.26);border-left:3px solid var(--red);border-radius:4px;padding:14px 16px;width:286px;display:none;font-size:12px;line-height:1.68;color:#111;box-shadow:0 18px 42px rgba(43,38,34,.16)}
-#hbh-river .river-detail.open{display:block}
-#hbh-river .river-detail .rd-name{font-size:18px;font-weight:900;color:var(--red);margin-bottom:3px}
-#hbh-river .river-detail .rd-cat{font-size:11px;color:#111;margin-bottom:8px;font-weight:800}
-#hbh-river .river-detail .rd-close{position:absolute;top:6px;right:9px;cursor:pointer;font-size:18px;color:#111;background:none;border:none;font-family:inherit;line-height:1}
-#hbh-river .river-detail .rd-close:hover{color:var(--red)}
-#hbh-river .river-detail .rd-jump{display:inline-block;margin-top:9px;font-size:11px;color:var(--red);cursor:pointer;border:1px solid rgba(122,31,26,.32);border-radius:4px;padding:4px 9px;background:transparent;font-family:inherit;transition:all .18s}
-#hbh-river .river-detail .rd-jump:hover{background:rgba(122,31,26,.06);border-color:var(--red)}
-#hbh-river .river-profile{position:relative;min-height:0;padding:15px 16px 14px;background:linear-gradient(180deg,rgba(239,229,205,.86),rgba(226,211,184,.82));border-left:2px solid rgba(122,31,26,.42);box-shadow:-12px 0 30px rgba(43,38,34,.07);overflow:hidden;color:#111}
-#hbh-river .profile-kicker{font-size:11px;color:var(--red);font-weight:900;letter-spacing:.18em;margin-bottom:7px}
-#hbh-river .profile-top{display:grid;grid-template-columns:66px 1fr;gap:12px;align-items:start;padding-bottom:10px;border-bottom:1px solid rgba(43,38,34,.18)}
-#hbh-river .profile-photo{width:66px;height:78px;border:1px solid rgba(43,38,34,.36);background:rgba(238,229,205,.70);display:grid;place-items:center;overflow:hidden;color:#3B322A;font-size:28px;font-weight:900}
-#hbh-river .profile-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.18) contrast(1.05)}
-#hbh-river .profile-name{font-size:24px;line-height:1.05;font-weight:900;color:#111;margin-bottom:6px}
-#hbh-river .profile-meta{font:700 12px/1.55 Georgia,"Noto Serif SC",serif;color:#111}
-#hbh-river .profile-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-#hbh-river .profile-tags span{border:1px solid rgba(122,31,26,.32);background:rgba(247,237,217,.7);padding:3px 7px;border-radius:3px;font-size:11px;font-weight:800;color:#111}
-#hbh-river .profile-section{margin-top:11px}
-#hbh-river .profile-section h3{margin:0 0 7px;color:var(--red);font-size:13px;line-height:1;font-weight:900}
-#hbh-river .profile-section p{margin:0;color:#111;font-size:12px;line-height:1.62}
-#hbh-river .year-list{display:flex;flex-direction:column;gap:4px;overflow:visible;padding-right:3px}
-#hbh-river .year-list.long{max-height:214px;overflow:auto}
-#hbh-river .year-list::-webkit-scrollbar,#hbh-river .profile-directory .person-results::-webkit-scrollbar{width:5px}
-#hbh-river .year-list::-webkit-scrollbar-thumb,#hbh-river .profile-directory .person-results::-webkit-scrollbar-thumb{background:rgba(43,38,34,.30);border-radius:8px}
-#hbh-river .year-item{display:grid;grid-template-columns:44px 1fr;gap:8px;padding:5px 0;border-top:1px solid rgba(43,38,34,.12)}
-#hbh-river .year-item b{font:900 12px/1.2 Georgia,"Times New Roman",serif;color:var(--red)}
-#hbh-river .year-item span{font-size:11.5px;line-height:1.38;color:#111}
-#hbh-river .profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
-#hbh-river .profile-stats div{background:rgba(247,237,217,.58);border:1px solid rgba(43,38,34,.14);padding:6px 8px}
-#hbh-river .profile-stats b{display:block;color:var(--red);font:900 17px/1 Georgia,"Times New Roman",serif}
-#hbh-river .profile-stats span{font-size:10px;color:#111;font-weight:800}
-#hbh-river .profile-directory{margin-top:12px;padding-top:10px;border-top:1px solid rgba(43,38,34,.18)}
-#hbh-river .profile-directory .dir-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
-#hbh-river .profile-directory .dir-head b{color:var(--red);font-size:13px}
-#hbh-river .profile-directory .dir-head span{font-size:10.5px;color:#111;font-weight:800}
-#hbh-river .person-search{width:100%;border:1px solid rgba(43,38,34,.28);background:rgba(248,239,220,.78);color:#111;padding:7px 8px;font:800 12px/1 var(--fontSerif);border-radius:3px;outline:none}
-#hbh-river .person-search:focus{border-color:rgba(122,31,26,.55);background:rgba(255,247,230,.92)}
-#hbh-river .person-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:7px;max-height:82px;overflow:auto;padding-right:2px}
-#hbh-river .person-results button{min-width:0;border:1px solid rgba(43,38,34,.20);background:rgba(247,237,217,.54);color:#111;border-radius:3px;padding:5px 6px;font:900 11px/1.12 var(--fontSerif);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#hbh-river .person-results button.active,#hbh-river .person-results button:hover{border-color:rgba(122,31,26,.52);background:rgba(122,31,26,.12);color:#111}
-#hbh-river .river-view-switch{position:absolute;left:28px;bottom:54px;z-index:32;display:flex;gap:6px;background:rgba(238,229,211,.92);border:1px solid rgba(43,38,34,.22);padding:5px;border-radius:4px;box-shadow:0 8px 20px rgba(43,38,34,.12)}
-#hbh-river .river-view-switch button{border:0;background:transparent;color:#111;padding:6px 10px;border-radius:3px;font:900 12px/1 var(--fontSerif);cursor:pointer}
-#hbh-river .river-view-switch button.active{background:var(--red);color:#F7ECD7}
-#hbh-river .river-guide{position:absolute;left:28px;bottom:96px;width:332px;z-index:31;background:rgba(238,229,211,.94);border:1px solid rgba(122,31,26,.24);border-left:3px solid var(--red);padding:12px 13px;color:#111;box-shadow:0 12px 28px rgba(43,38,34,.13)}
-#hbh-river .river-guide .g-k{font:900 10px/1 var(--fontSerif);color:var(--red);letter-spacing:.16em;margin-bottom:6px}
-#hbh-river .river-guide .g-title{font-size:15px;line-height:1.25;font-weight:900;margin-bottom:5px}
-#hbh-river .river-guide .g-text{font-size:11.5px;line-height:1.55;font-weight:700}
-#hbh-river .river-guide .g-actions{display:flex;gap:6px;margin-top:9px}
-#hbh-river .river-guide button{border:1px solid rgba(43,38,34,.28);background:rgba(247,237,217,.74);color:#111;border-radius:3px;padding:5px 8px;font:900 11px/1 var(--fontSerif);cursor:pointer}
-#hbh-river .river-guide button.primary{background:var(--red);border-color:var(--red);color:#F7ECD7}
-#hbh-river .river-legend{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;color:#111}
-#hbh-river .river-legend span{font-size:11px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-#hbh-river .river-legend span i{display:inline-block;width:20px;height:3px;border-radius:99px}
-@media (max-height:820px){
-  #hbh-river .network-shell{grid-template-rows:118px minmax(0,1fr) 32px;padding-top:70px}
-  #hbh-river .river-title h1{font-size:25px}
-  #hbh-river .river-title .sub{font-size:12px}
-  #hbh-river .seg button{font-size:11px;padding:5px 8px}
-  #hbh-river .profile-name{font-size:22px}
-  #hbh-river .river-guide{width:300px}
+#hbh-river:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 42% 46%,transparent 54%,rgba(58,42,24,.12) 100%);mix-blend-mode:multiply}
+
+#hbh-river .river-frame{position:absolute;inset:0;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) 366px}
+#hbh-river .river-stage{position:relative;overflow:hidden}
+#hbh-river .river-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block}
+#hbh-river .river-canvas text{font-family:var(--serif)}
+#hbh-river .river-overlay{position:absolute;inset:0;z-index:4;pointer-events:none}
+#hbh-river .river-cards{position:absolute;inset:0;z-index:7;pointer-events:none}
+
+/* —— 报头 + 一行提要 —— */
+#hbh-river .river-masthead{position:absolute;left:40px;top:26px;z-index:8;display:flex;gap:15px;align-items:flex-start;max-width:60%}
+#hbh-river .river-masthead .seal{width:50px;height:50px;flex:none;background:var(--accent);color:#F2E7D2;display:grid;place-items:center;font:800 19px/1.05 var(--serif);border-radius:2px;writing-mode:vertical-rl;letter-spacing:3px;box-shadow:0 6px 15px rgba(110,45,22,.26),inset 0 0 0 1px rgba(255,235,205,.22)}
+#hbh-river .river-masthead .kicker{font:800 10.5px/1 var(--serif);color:var(--accent);letter-spacing:.3em;margin-bottom:9px}
+#hbh-river .river-masthead h1{margin:0;font-size:40px;line-height:1;font-weight:900;letter-spacing:.06em;color:#1E160E}
+#hbh-river .river-masthead .lead-line{margin-top:10px;font-size:14px;line-height:1.5;font-weight:700;color:#4A3B2A;letter-spacing:.04em;border-left:3px solid var(--accent);padding-left:10px}
+
+/* —— 河面圈层标签 —— */
+#hbh-river .river-band-label{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:6px;background:rgba(245,238,224,.84);border:1px solid rgba(36,29,21,.18);padding:2px 8px;border-radius:2px;font:800 12.5px/1 var(--serif);color:#241D15;white-space:nowrap;box-shadow:0 3px 9px rgba(36,29,21,.13)}
+#hbh-river .river-band-label i{width:8px;height:8px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+
+/* —— 引线卡片 —— */
+#hbh-river .river-card{position:absolute;width:166px;pointer-events:auto;cursor:pointer;display:flex;gap:8px;align-items:flex-start;padding:6px 8px;background:rgba(246,239,224,.94);border:1px solid rgba(36,29,21,.22);border-radius:2px;box-shadow:0 5px 14px rgba(36,29,21,.16);transition:transform .15s,box-shadow .15s,border-color .15s}
+#hbh-river .river-card.hot{transform:translateY(-2px);box-shadow:0 10px 24px rgba(36,29,21,.26);border-color:var(--accent);z-index:9}
+#hbh-river .river-card .rc-photo{width:38px;height:48px;flex:none;border:1px solid rgba(36,29,21,.3);background:rgba(238,230,212,.7);display:grid;place-items:center;overflow:hidden}
+#hbh-river .river-card .rc-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.16) contrast(1.05)}
+#hbh-river .river-card .rc-photo span{font:900 21px/1 var(--serif);color:#A4906F}
+#hbh-river .river-card .rc-name{font:900 13px/1 var(--serif);color:#241D15;margin-bottom:4px}
+#hbh-river .river-card .rc-cap{font-size:10px;line-height:1.5;color:#5A4F40}
+
+/* —— 图例 + 角注 + 提示 —— */
+#hbh-river .river-legend{position:absolute;left:40px;bottom:14px;z-index:6;display:flex;gap:13px;flex-wrap:wrap;align-items:center;max-width:66%}
+#hbh-river .river-legend .lg{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#3A2D1E;cursor:pointer;opacity:.92}
+#hbh-river .river-legend .lg:hover{opacity:1}
+#hbh-river .river-legend .lg i{width:16px;height:9px;border-radius:2px;flex:none;border:1px solid rgba(0,0,0,.14)}
+#hbh-river .river-footnote{position:absolute;left:40px;bottom:0;z-index:6;max-width:70%;font-size:10px;line-height:1.5;color:#857458}
+#hbh-river .river-tip{position:absolute;z-index:30;display:none;pointer-events:none;max-width:230px;padding:7px 10px;background:rgba(28,22,15,.92);color:#F0E8D6;font-size:11.5px;line-height:1.5;border-radius:3px;box-shadow:0 8px 22px rgba(0,0,0,.32)}
+#hbh-river .river-tip b{color:#E8C9A0;font-weight:800}
+
+/* ============ 右侧深读栏 ============ */
+#hbh-river .river-aside{position:relative;z-index:5;background:linear-gradient(180deg,rgba(229,219,200,.72),rgba(214,202,179,.76));border-left:1px solid rgba(36,29,21,.18);box-shadow:-14px 0 34px rgba(36,29,21,.08);overflow-y:auto;overflow-x:hidden;padding:30px 26px 30px}
+#hbh-river .river-aside::-webkit-scrollbar{width:6px}
+#hbh-river .river-aside::-webkit-scrollbar-thumb{background:rgba(36,29,21,.26);border-radius:8px}
+#hbh-river .as-kicker{font:800 10.5px/1 var(--serif);color:var(--accent);letter-spacing:.3em;margin-bottom:12px}
+#hbh-river .as-title{font-size:25px;line-height:1.08;font-weight:900;color:#1E160E;margin:0 0 3px}
+#hbh-river .as-sub{font-size:11.5px;color:#6A5C49;font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+#hbh-river .as-rule{height:1px;background:linear-gradient(90deg,rgba(154,74,44,.55),rgba(36,29,21,.12) 70%,transparent);margin:14px 0}
+#hbh-river .as-essay{font-size:13px;line-height:1.92;color:#352A1E;text-align:justify;margin:0 0 11px}
+#hbh-river .as-essay .em{color:var(--accent);font-weight:800}
+#hbh-river .as-lead{float:left;font-size:42px;line-height:.82;font-weight:900;color:var(--accent);margin:4px 9px -2px 0}
+#hbh-river .as-stats{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+#hbh-river .as-stat{flex:1 1 44%;border-top:1px solid rgba(36,29,21,.22);padding:8px 2px 4px}
+#hbh-river .as-stat b{display:block;font:900 27px/1 Georgia,"Songti SC",serif;color:#241D15}
+#hbh-river .as-stat span{font-size:10.5px;color:#6A5C49;font-weight:700;letter-spacing:.06em}
+#hbh-river .as-cloud{line-height:1.55;margin:4px 0 2px;text-align:center}
+#hbh-river .as-cloud .w{display:inline-block;margin:1px 6px;font-weight:800;vertical-align:middle;transition:color .15s,transform .15s}
+#hbh-river .as-cloud .w:hover{color:var(--accent);transform:translateY(-1px)}
+#hbh-river .as-most{font-size:12px;line-height:1.85;color:#423627}
+#hbh-river .as-most .k{color:var(--accent);font-weight:800;margin-right:2px}
+#hbh-river .as-hint{margin-top:14px;font-size:11px;line-height:1.6;color:#7A6C56;border-left:2px solid rgba(154,74,44,.4);padding-left:9px}
+#hbh-river .as-back{display:inline-flex;align-items:center;gap:5px;font:800 12px/1 var(--serif);color:#F2E7D2;background:var(--accent);border:0;cursor:pointer;padding:9px 14px;margin-top:18px;border-radius:2px}
+#hbh-river .as-back:hover{background:#7E3A20}
+#hbh-river .as-portrait{width:96px;height:118px;float:right;margin:2px 0 10px 12px;border:1px solid rgba(36,29,21,.3);background:rgba(238,230,212,.6);display:grid;place-items:center;overflow:hidden;position:relative}
+#hbh-river .as-portrait img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.16) contrast(1.04)}
+#hbh-river .as-portrait .mono{font:900 40px/1 var(--serif);color:#A4906F}
+#hbh-river .as-portrait .ph{position:absolute;bottom:0;left:0;right:0;font-size:8.5px;text-align:center;color:#8A7B62;background:rgba(238,230,212,.7);padding:2px 0;letter-spacing:.04em}
+#hbh-river .as-types{margin:2px 0 6px}
+#hbh-river .as-trow{display:grid;grid-template-columns:62px 1fr 26px;gap:7px;align-items:center;margin:5px 0;font-size:11.5px}
+#hbh-river .as-trow .tn{color:#423627;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hbh-river .as-trow .tb{height:7px;border-radius:99px;background:var(--accent);opacity:.82}
+#hbh-river .as-trow .tv{font:800 11px/1 Georgia,serif;color:#6A5C49;text-align:right}
+#hbh-river .as-spark{display:flex;align-items:flex-end;gap:2px;height:34px;margin:4px 0 2px}
+#hbh-river .as-spark i{flex:1;min-width:2px;background:rgba(154,74,44,.5);border-radius:1px 1px 0 0}
+/* 逸闻独立滚动区 */
+#hbh-river .as-scroll{max-height:40vh;overflow-y:auto;padding-right:9px;margin:2px -9px 0 0;border-top:1px dashed rgba(36,29,21,.18);padding-top:6px}
+#hbh-river .as-scroll::-webkit-scrollbar{width:5px}
+#hbh-river .as-scroll::-webkit-scrollbar-thumb{background:rgba(154,74,44,.3);border-radius:8px}
+#hbh-river .as-anecdote{font-size:12.5px;line-height:1.95;color:#352A1E;text-align:justify;margin:0 0 9px;text-indent:1.6em}
+#hbh-river .as-anecdote .em{color:var(--accent);font-weight:800}
+#hbh-river .as-fig{margin:8px 0 2px;border:1px solid rgba(36,29,21,.22);background:repeating-linear-gradient(45deg,rgba(36,29,21,.04) 0 7px,transparent 7px 14px),rgba(238,230,212,.5);min-height:74px;display:grid;place-items:center;text-align:center;padding:12px 10px}
+#hbh-river .as-fig .l{font-size:10px;color:var(--accent);font-weight:800;letter-spacing:.18em}
+#hbh-river .as-fig .c{font-size:10.5px;color:#7A6C56;margin-top:5px;line-height:1.5}
+#hbh-river .as-h{font:800 12px/1 var(--serif);color:var(--accent);letter-spacing:.12em;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+#hbh-river .as-h:after{content:"";flex:1;height:1px;background:rgba(36,29,21,.14)}
+#hbh-river .as-people{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+#hbh-river .as-people button{border:1px solid rgba(36,29,21,.2);background:rgba(238,230,212,.5);color:#352A1E;border-radius:2px;padding:4px 8px;font:700 11.5px/1 var(--serif);cursor:pointer}
+#hbh-river .as-people button:hover{border-color:var(--accent);background:rgba(154,74,44,.1)}
+
+@media (max-height:880px){
+  #hbh-river .river-masthead h1{font-size:34px}
+  #hbh-river .as-title{font-size:22px}
+  #hbh-river .as-essay{font-size:12.5px;line-height:1.8}
+  #hbh-river .as-scroll{max-height:34vh}
 }
 </style>
 </head>
@@ -431,57 +421,24 @@
 
 <!-- ============ 第三屏：交游长河（纸本 ThemeRiver + 气泡卡片）============ -->
 <section id="hbh-river" class="hbh-page" data-page="river">
-<div class="network-shell">
-  <header class="network-head">
-    <div class="river-title">
-      <div class="eyebrow">数字黄宾虹 · 交游网络</div>
-      <h1>群贤毕至与薪火相传：黄宾虹交游网络</h1>
-      <div class="sub">每一位友人是一条随时间明灭的丝线：线越粗，往来越密；线越淡，关系渐远；断点标出交往终止。</div>
-    </div>
-    <div class="network-controls">
-      <div class="filter-row">
-        <div class="label">身份</div>
-        <div class="seg" id="riverIdentityTabs">
-          <button data-filter="all" class="active">全部</button>
-          <button data-filter="nanshe">革命同舟/南社</button>
-          <button data-filter="scholar">金石书画知交</button>
-          <button data-filter="student">晚辈学生</button>
-        </div>
+<div class="river-frame">
+  <div class="river-stage" id="riverStage">
+    <svg class="river-canvas" id="riverSvg" preserveAspectRatio="none"></svg>
+    <div class="river-overlay" id="riverLabels"></div>
+    <div class="river-cards" id="riverCards"></div>
+    <header class="river-masthead">
+      <div class="seal">交游</div>
+      <div class="mast-text">
+        <div class="kicker">数字黄宾虹 · 第三章</div>
+        <h1>交游长河</h1>
+        <div class="lead-line">早岁徽州金石，中年海上鬻画，晚境西湖传薪。</div>
       </div>
-      <div class="filter-row">
-        <div class="label">故事</div>
-        <div class="seg" id="riverStoryTabs">
-          <button data-story="all" class="active">全部故事</button>
-          <button data-story="early">早年：风云南社与金石结盟</button>
-          <button data-story="lifelong">终生：风雨不改的异地知音</button>
-          <button data-story="late">晚境：师徒传薪与最后的知心</button>
-        </div>
-      </div>
-    </div>
-  </header>
-  <main class="network-main">
-    <section class="thread-pane overview" id="riverThreadPane">
-      <canvas id="riverBaseCanvas"></canvas>
-      <canvas id="riverHoverCanvas"></canvas>
-      <div class="river-bubbles" id="riverBubbles"></div>
-      <div class="river-hover-note" id="riverHover"></div>
-      <div class="river-lens" id="riverLens"></div>
-      <div class="river-detail" id="riverDetail">
-        <button class="rd-close" title="关闭">×</button>
-        <div class="rd-name"></div>
-        <div class="rd-cat"></div>
-        <div class="rd-row"></div>
-        <button class="rd-jump">入丝线</button>
-      </div>
-    </section>
-    <aside class="river-profile" id="riverProfile"></aside>
-  </main>
-  <div class="river-guide" id="riverGuide"></div>
-  <div class="river-view-switch" id="riverViewSwitch">
-    <button data-view="overview" class="active">总览</button>
-    <button data-view="detail">详细</button>
+    </header>
+    <div class="river-legend" id="riverLegend"></div>
+    <div class="river-footnote" id="riverFootnote"></div>
+    <div class="river-tip" id="riverTip"></div>
   </div>
-  <div class="river-legend" id="riverLegend"></div>
+  <aside class="river-aside" id="riverAside"></aside>
 </div>
 </section>
 
@@ -1126,619 +1083,312 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
   };
 
   HBH.init.river = function(){
-/* ---- 交游网络：总览河流 + 详细丝线 ---- */
+/* ---- 交游长河：纸本 ThemeRiver + 墨点人物 + 引线卡片 + 右侧深读栏（自绘，零外部库）---- */
 (function(){
-var R = window.HBH_RIVER || {years:[],themeRiver:{years:[],layers:[]},streams:[],cards:[],anchors:[],eras:[],layers:[],yearRange:[1865,1955]};
-var pane = document.getElementById('riverThreadPane');
-var baseCanvas = document.getElementById('riverBaseCanvas');
-var hoverCanvas = document.getElementById('riverHoverCanvas');
-var base = baseCanvas.getContext('2d');
-var hover = hoverCanvas.getContext('2d');
-var bubblesEl = document.getElementById('riverBubbles');
-var profile = document.getElementById('riverProfile');
-var legend = document.getElementById('riverLegend');
-var hoverNote = document.getElementById('riverHover');
-var riverLens = document.getElementById('riverLens');
-var riverDetail = document.getElementById('riverDetail');
-var viewSwitch = document.getElementById('riverViewSwitch');
-var guideEl = document.getElementById('riverGuide');
-var identityTabs = document.getElementById('riverIdentityTabs');
-var storyTabs = document.getElementById('riverStoryTabs');
-var dpr = Math.min(window.devicePixelRatio||1,2);
-var YEAR_MIN = (R.yearRange&&R.yearRange[0]) || 1865;
-var YEAR_MAX = (R.yearRange&&R.yearRange[1]) || 1955;
-var YEAR_SPAN = YEAR_MAX - YEAR_MIN;
-var W=0,H=0, P={left:102,right:34,top:22,bottom:70};
-var OP={left:72,right:70,topRatio:.205,botRatio:.705,axisRatio:.785};
-var allThreads=[], visibleThreads=[], threadGeom=[], overviewNodes=[], cardPositions=[], displayCards=[];
-var overviewGeom=null, searchTerm='', hoveredCard=null;
-var state={filter:'all',story:'all',view:'overview',hover:null,selected:null,guide:0};
-var PORTRAITS={
-  '王一亭':'assets/portraits/wang-yiting.jpg',
-  '齐白石':'assets/portraits/qi-baishi.jpg',
-  '徐悲鸿':'assets/portraits/xu-beihong.jpg',
-  '张大千':'assets/portraits/zhang-daqian.jpg',
-  '潘天寿':'assets/portraits/pan-tianshou.jpg'
-};
-var ID_COLORS={nanshe:'#B76452',scholar:'#7A5D47',student:'#5C7891',other:'#7D766D'};
-var LAYER_COLORS={'书画同道':'#D9907B','金石考古':'#A86750','诗文师友':'#B76452','出版传媒':'#87977F','教育弟子':'#5C7891','政商护持':'#70688D'};
-var LAYER_ORDER=['书画同道','金石考古','诗文师友','出版传媒','教育弟子','政商护持'];
-var CURATED=['许承尧','黄节','柳亚子','陈去病','邓实','王一亭','蔡守','齐白石','徐悲鸿','张善孖','张大千','傅雷','夏承焘','潘天寿','李可染','王伯敏','俞剑华','叶恭绰','陆丹林','陈师曾'];
-var STUDENT_NAMES=new Set(['傅雷','潘天寿','李可染','王伯敏','俞剑华','夏承焘']);
-var NANSHE_NAMES=new Set(['柳亚子','陈去病','黄节','邓实']);
-var TYPE_COLORS={'作画赠予':'#B87850','通信':'#7A9A8A','书信往还':'#7A9A8A','师生':'#6A8AAA','合作':'#B89060','合作编书':'#B89060','同游':'#C8A898','雅集同游':'#C8A898','题跋鉴赏':'#8A7AAA','收藏交易':'#6E6E86','见面会谈':'#9A6A58','来访':'#9A6A58','其他':'#8B7D6D'};
-var CARD_SPECS=[
-  {key:'birth',person:'黄宾虹生',avatar:'虹',kind:'event',layer:'诗文师友',year:1865,relation:'生平节点',primaryType:'出身',note:'生于金华，祖籍歙县潭渡。',y:.51,dx:38},
-  {person:'许承尧',avatar:'许',layer:'诗文师友',year:1886,relation:'诗文师友',note:'徽州乡谊与诗文金石往还，成为早岁学问底色。',y:.18,dx:18},
-  {person:'黄节',avatar:'节',layer:'出版传媒',year:1894,relation:'诗文出版',note:'诗文师友与出版往还，连接晚清民初学术圈。',y:.64,dx:-18},
-  {person:'邓实',avatar:'邓',layer:'出版传媒',year:1907,relation:'出版传媒',note:'上海《国粹学报》与神州国光社，交游圈开始加速展开。',y:.18,dx:-30},
-  {key:'nanshe',person:'柳亚子·陈去病',source:'柳亚子',avatar:'南',kind:'event',layer:'诗文师友',year:1909,relation:'南社师友',primaryType:'雅集同游',note:'南社成立，诗社同人与革命文友进入黄宾虹网络。',y:.33,dx:10},
-  {key:'guangshe',person:'神州国光社',avatar:'编',kind:'event',layer:'出版传媒',year:1912,relation:'合作编书',primaryType:'合作编书',note:'主编美术、金石与画史类丛刊，出版成为交往枢纽。',y:.67,dx:10},
-  {person:'王一亭',avatar:'王',layer:'书画同道',year:1919,relation:'书画同道',note:'海上画坛往来密切，作画赠予与雅集活动频繁。',y:.25,dx:-20},
-  {person:'蔡守',avatar:'蔡',layer:'金石考古',year:1923,relation:'金石考古',note:'合编古玺印谱，金石考据与收藏鉴藏往还加深。',y:.15,dx:-20},
-  {person:'齐白石',avatar:'齐',layer:'书画同道',year:1928,relation:'书画同道',note:'北平相往还，题跋评鉴与互赠作品使两位画家并置于时代坐标。',y:.24,dx:-102},
-  {person:'徐悲鸿',avatar:'徐',layer:'书画同道',year:1928,relation:'书画同道',note:'现代美术教育与传统笔墨之间的重要交会。',y:.38,dx:-28},
-  {person:'张善孖',avatar:'善',layer:'书画同道',year:1929,relation:'书画同道',note:'海上交游峰值中的高频人物，合作、题跋与赠画交错。',y:.64,dx:-42},
-  {person:'张大千',avatar:'千',layer:'书画同道',year:1930,relation:'书画同道',note:'海上交游，题赠与作品往来形成高峰期的重要支流。',y:.145,dx:86},
-  {person:'傅雷',avatar:'傅',layer:'诗文师友',year:1933,relation:'诗文师友',note:'订交后为黄宾虹撰评、护持其艺，形成文论支撑。',y:.315,dx:58},
-  {person:'潘天寿',avatar:'潘',layer:'教育弟子',year:1948,relation:'教育弟子',note:'南归杭州，艺专任教与晚年授业成为新的往还方式。',y:.20,dx:-56},
-  {person:'王伯敏',avatar:'伯',layer:'教育弟子',year:1949,relation:'教育弟子',note:'杭州晚境中的研究、记录与传承者。',y:.64,dx:8},
-  {person:'李可染',avatar:'李',layer:'教育弟子',year:1953,relation:'教育弟子',note:'晚年授业与画学传承，使交游延伸为后学谱系。',y:.32,dx:-28},
-  {key:'death',person:'黄宾虹卒',avatar:'虹',kind:'event',layer:'政商护持',year:1955,relation:'生平节点',primaryType:'身后影响',note:'卒于杭州，年九十。作品、文稿与师友记忆进入公共叙述。',y:.53,dx:-24}
-];
-var GUIDES=[
-  {story:'early',focus:'邓实',title:'早年：风云南社与金石结盟',text:'上海以前后的出版、金石和南社往还同时涨起，交游从乡谊扩展成学术和革命同道人网络。'},
-  {story:'lifelong',focus:'许承尧',title:'终生：风雨不改的异地知音',text:'少数长线关系跨过迁居、战乱和晚年南归，线条没有完全退场，反而成为晚境中仍可回望的旧友。'},
-  {story:'late',focus:'傅雷',title:'晚境：师徒传薪与最后的知心',text:'抗战后旧友渐淡，下方后学和青年学者密集亮起，交游的重心从同道往还转成传薪和记录。'}
-];
+  var R=window.HBH_RIVER||{};
+  var TR=R.themeRiver||{years:[],layers:[]};
+  var SVGNS='http://www.w3.org/2000/svg';
+  var stage=document.getElementById('riverStage');
+  var svg=document.getElementById('riverSvg');
+  var labelsEl=document.getElementById('riverLabels');
+  var cardsEl=document.getElementById('riverCards');
+  var legendEl=document.getElementById('riverLegend');
+  var footEl=document.getElementById('riverFootnote');
+  var asideEl=document.getElementById('riverAside');
+  var tipEl=document.getElementById('riverTip');
+  if(!stage||!svg) return;
 
-function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
-function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
-function yrX(y){return P.left + ((y-YEAR_MIN)/YEAR_SPAN)*(W-P.left-P.right)}
-function oX(y){return OP.left + ((y-YEAR_MIN)/YEAR_SPAN)*(W-OP.left-OP.right)}
-function hexToRgb(hex){hex=String(hex||'#777').replace('#','');if(hex.length===3)hex=hex.split('').map(function(c){return c+c}).join('');var n=parseInt(hex,16);return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}}
-function rgba(hex,a){var c=hexToRgb(hex);return 'rgba('+c.r+','+c.g+','+c.b+','+a+')'}
-function rand(i){var x=Math.sin(i*12.9898+78.233)*43758.5453;return x-Math.floor(x)}
-function hashText(s){s=String(s||'');var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
-function yearValue(s,y){var rec=s.byYear&&s.byYear[String(y)];if(rec)return rec.total||0;return (s.years||[]).indexOf(y)>=0?1:0}
-function typeNames(s,n){return Object.keys(s.typeCounts||{}).sort(function(a,b){return (s.typeCounts[b]||0)-(s.typeCounts[a]||0)}).slice(0,n||4)}
-function streamInk(s){return TYPE_COLORS[s.primaryType]||LAYER_COLORS[s.layer]||'#7A1F1A'}
-function identityOf(s){
-  if(STUDENT_NAMES.has(s.person)||s.layer==='教育弟子'||s.primaryType==='师生'||(s.first>=1944&&s.last>=1948)) return 'student';
-  if(NANSHE_NAMES.has(s.person)||(s.layer==='出版传媒'&&s.first<=1915)) return 'nanshe';
-  if(s.layer==='书画同道'||s.layer==='金石考古') return 'scholar';
-  return 'other';
-}
-function identityLabel(id){return {nanshe:'革命同舟/南社',scholar:'金石书画知交',student:'晚辈学生',other:'其他往还'}[id]||id}
-function storyMatch(s){
-  var id=identityOf(s), span=(s.last||s.first||0)-(s.first||0);
-  if(state.story==='early') return s.first<=1915 && (id==='nanshe'||s.layer==='金石考古'||s.layer==='出版传媒');
-  if(state.story==='lifelong') return (s.last>=1953 && span>=30 && (s.total||0)>=20);
-  if(state.story==='late') return (id==='student'||s.first>=1928||s.peakYear>=1943||STUDENT_NAMES.has(s.person)) && s.last>=1947;
-  return true;
-}
-function filterMatch(s){
-  var id=identityOf(s);
-  if(state.filter==='all') return true;
-  return id===state.filter;
-}
-function activePool(){return allThreads.filter(function(s){return filterMatch(s)&&storyMatch(s)})}
-function mergeData(){
-  var map=new Map();
-  (R.streams||[]).forEach(function(s){map.set(s.person,Object.assign({},s));});
-  (R.cards||[]).forEach(function(c){
-    var cur=map.get(c.person)||{};
-    map.set(c.person,Object.assign({},c,cur,{byYear:cur.byYear||c.byYear,typeCounts:cur.typeCounts||c.typeCounts}));
-  });
-  allThreads=Array.from(map.values()).filter(function(s){return s.person&&s.first&&s.last});
-  allThreads.forEach(function(s){
-    s.id=identityOf(s);
-    s.img=PORTRAITS[s.person]||'';
-    s.total=s.total||0;
-    s.primaryType=s.primaryType||typeNames(s,1)[0]||'其他';
-  });
-  allThreads.sort(function(a,b){return (b.total||0)-(a.total||0)});
-  state.selected=allThreads.find(function(s){return s.person==='许承尧'}) || allThreads[0] || null;
-}
-function visibleMax(){return clamp(Math.floor((H-P.top-P.bottom-10)/13),34,48)}
-function chooseThreads(){
-  var pool=activePool(), max=visibleMax();
-  pool.sort(function(a,b){
-    var ga=(a.id==='student'||a.first>=1944)?2:(a.first<=1915?0:1);
-    var gb=(b.id==='student'||b.first>=1944)?2:(b.first<=1915?0:1);
-    if(ga!==gb)return ga-gb;
-    if(a.first!==b.first)return a.first-b.first;
-    return (b.total||0)-(a.total||0);
-  });
-  if(state.filter==='all'&&state.story==='all'){
-    var chosen=[], seen=new Set();
-    if(state.selected&&pool.indexOf(state.selected)>=0){chosen.push(state.selected);seen.add(state.selected.person)}
-    CURATED.forEach(function(n){var s=pool.find(function(x){return x.person===n});if(s&&!seen.has(n)&&chosen.length<max){chosen.push(s);seen.add(n)}});
-    pool.slice().sort(function(a,b){return (b.total||0)-(a.total||0)}).forEach(function(s){if(chosen.length<max&&!seen.has(s.person)){chosen.push(s);seen.add(s.person)}});
-    visibleThreads=chosen;
-  }else{
-    visibleThreads=pool.slice(0,max);
-    if(state.selected&&pool.indexOf(state.selected)>=0&&visibleThreads.indexOf(state.selected)<0){
-      visibleThreads.unshift(state.selected);
-      visibleThreads=visibleThreads.slice(0,max);
-    }
-  }
-  if(!visibleThreads.length) visibleThreads=pool.slice(0,1);
-  if(!state.selected || visibleThreads.indexOf(state.selected)<0) state.selected=visibleThreads[0]||null;
-}
-function setupCanvas(c,ctx){
-  c.width=Math.max(1,W*dpr);c.height=Math.max(1,H*dpr);
-  c.style.width=W+'px';c.style.height=H+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-function resize(){
-  var r=pane.getBoundingClientRect();
-  W=r.width;H=r.height;
-  setupCanvas(baseCanvas,base);setupCanvas(hoverCanvas,hover);
-  render();
-}
-function drawPaper(ctx){
-  ctx.clearRect(0,0,W,H);
-  var grad=ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0,'#E8DFCD');grad.addColorStop(.52,'#E3D8C5');grad.addColorStop(1,'#DDD2BC');
-  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
-  ctx.save();ctx.globalCompositeOperation='multiply';
-  ctx.strokeStyle='rgba(74,55,34,.042)';ctx.lineWidth=.7;
-  for(var y=8;y<H;y+=13){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y+Math.sin(y*.03)*3);ctx.stroke();}
-  for(var i=0;i<520;i++){ctx.fillStyle='rgba(80,63,43,'+(.012+rand(i+7)*.026)+')';ctx.fillRect(rand(i)*W,rand(i+41)*H,1+rand(i+4)*2,.45)}
-  ctx.restore();
-}
-function drawDetailAxis(ctx){
-  var ay=H-P.bottom+18;
-  ctx.strokeStyle='rgba(17,17,17,.54)';ctx.lineWidth=.85;
-  ctx.beginPath();ctx.moveTo(P.left,ay);ctx.lineTo(W-P.right,ay);ctx.stroke();
-  for(var y=1870;y<=1950;y+=10){
-    var x=yrX(y);
-    ctx.fillStyle='rgba(17,17,17,.82)';ctx.font='700 10px Georgia,"Times New Roman",serif';ctx.textAlign='center';
-    ctx.fillText(y+'AD',x,ay+18);
-    ctx.fillStyle='rgba(122,31,26,.72)';
-    ctx.beginPath();ctx.moveTo(x,ay-8);ctx.lineTo(x-5,ay-1);ctx.lineTo(x+5,ay-1);ctx.closePath();ctx.fill();
-  }
-  (R.eras||[]).forEach(function(er){
-    var x1=yrX(er.start),x2=yrX(er.end),ey=ay+27;
-    ctx.fillStyle='rgba(201,188,164,.54)';ctx.fillRect(x1,ey,x2-x1,17);
-    ctx.fillStyle='rgba(17,17,17,.72)';ctx.font='700 11px "Noto Serif SC","Songti SC",serif';ctx.fillText(er.label,(x1+x2)/2,ey+12);
-    if(er.start>YEAR_MIN){ctx.strokeStyle='rgba(122,31,26,.28)';ctx.setLineDash([3,5]);ctx.beginPath();ctx.moveTo(x1,18);ctx.lineTo(x1,ay+18);ctx.stroke();ctx.setLineDash([]);}
-  });
-  [{year:1907,label:'迁居上海'},{year:1937,label:'困居北平'}].forEach(function(a){
-    var x=yrX(a.year), ly=ay+52;
-    ctx.strokeStyle='rgba(122,31,26,.38)';ctx.setLineDash([4,6]);ctx.beginPath();ctx.moveTo(x,18);ctx.lineTo(x,ly-18);ctx.stroke();ctx.setLineDash([]);
-    ctx.font='700 12px "Noto Serif SC","Songti SC",serif';var w=ctx.measureText(a.label).width+20;
-    ctx.fillStyle='rgba(238,229,211,.92)';roundRectPath(ctx,x-w/2,ly-14,w,23,4);ctx.fill();
-    ctx.strokeStyle='rgba(122,31,26,.34)';roundRectPath(ctx,x-w/2,ly-14,w,23,4);ctx.stroke();
-    ctx.fillStyle='#111';ctx.textAlign='center';ctx.fillText(a.label,x,ly+2);ctx.textAlign='start';
-  });
-  ctx.textAlign='start';
-}
-function smoothLine(ctx,pts){
-  if(!pts.length)return;
-  ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
-  for(var i=0;i<pts.length-1;i++){
-    var p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
-    ctx.bezierCurveTo(p1.x+(p2.x-p0.x)/6,p1.y+(p2.y-p0.y)/6,p2.x-(p3.x-p1.x)/6,p2.y-(p3.y-p1.y)/6,p2.x,p2.y);
-  }
-}
-function roundRectPath(ctx,x,y,w,h,r){
-  r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-}
-function drawRiverWash(ctx){
-  var yrs=(R.themeRiver&&R.themeRiver.years)||[], layers=(R.themeRiver&&R.themeRiver.layers)||[];
-  if(!yrs.length||!layers.length)return;
-  var washTop=H*.26,washH=H*.42,max=1;
-  yrs.forEach(function(_,i){var t=0;layers.forEach(function(l){t+=Math.sqrt((l.values&&l.values[i])||0)});max=Math.max(max,t)});
-  var stack=yrs.map(function(){return 0});
-  layers.forEach(function(layer,li){
-    var top=[],bot=[];
-    yrs.forEach(function(y,i){
-      var x=yrX(y.year), h=Math.sqrt((layer.values&&layer.values[i])||0)/max*washH;
-      var center=washTop+washH*.56+Math.sin((y.year-1890)/7)*9;
-      var b=center+stack[i], t=b-h; stack[i]+=h*.82;
-      top.push({x:x,y:t});bot.push({x:x,y:b});
-    });
-    ctx.save();ctx.globalAlpha=.12;ctx.fillStyle=layer.color||'#999';
-    smoothLine(ctx,top);smoothLine(ctx,bot.slice().reverse());ctx.closePath();ctx.fill();ctx.restore();
-  });
-}
-function computeGeom(){
-  threadGeom=[];
-  var plotTop=P.top+6, plotBottom=H-P.bottom-14, rowH=(plotBottom-plotTop)/Math.max(visibleThreads.length,1);
-  rowH=clamp(rowH,12,18);
-  visibleThreads.forEach(function(s,i){
-    var group=(s.id==='student'||s.first>=1944)?2:(s.first<=1915?0:1);
-    var y=plotTop+i*rowH+rowH*.55;
-    threadGeom.push({s:s,y:y,rowH:rowH,group:group});
-  });
-}
-function drawThread(ctx,g,mode){
-  var s=g.s, color=ID_COLORS[s.id]||ID_COLORS.other, y=g.y;
-  var start=clamp(s.first,YEAR_MIN,YEAR_MAX), end=clamp(s.last,YEAR_MIN,YEAR_MAX);
-  ctx.save();ctx.lineCap='round';
-  if(mode!=='highlight'){
-    ctx.fillStyle='rgba(17,17,17,.82)';ctx.font='700 11px "Noto Serif SC","Songti SC",serif';ctx.textBaseline='middle';
-    ctx.fillText(s.person,8,y);
-    ctx.fillStyle='rgba(17,17,17,.48)';ctx.font='700 9px Georgia,"Times New Roman",serif';
-    ctx.fillText(String(start),58,y);
-  }
-  for(var yr=start;yr<end;yr++){
-    var v=yearValue(s,yr), x1=yrX(yr), x2=yrX(yr+1);
-    ctx.strokeStyle=v?rgba(color,mode==='highlight' ? .92 : .58):rgba('#5D554D',mode==='highlight' ? .32 : .13);
-    ctx.lineWidth=(mode==='highlight'?2.2:1)+(v?Math.sqrt(v)*(mode==='highlight' ? .72 : .42):0);
-    ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
-  }
-  ctx.fillStyle=rgba(color,mode==='highlight'?1:.78);
-  ctx.beginPath();ctx.arc(yrX(start),y,mode==='highlight'?4.2:2.8,0,Math.PI*2);ctx.fill();
-  if(end<YEAR_MAX){
-    ctx.fillStyle=rgba('#3B322A',mode==='highlight' ? .92 : .58);
-    ctx.beginPath();ctx.arc(yrX(end),y,mode==='highlight'?5:3.6,0,Math.PI*2);ctx.fill();
-    ctx.strokeStyle='rgba(238,229,211,.82)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(yrX(end)-2,y-2);ctx.lineTo(yrX(end)+2,y+2);ctx.moveTo(yrX(end)+2,y-2);ctx.lineTo(yrX(end)-2,y+2);ctx.stroke();
-  }else{
-    ctx.strokeStyle=rgba(color,mode==='highlight' ? .9 : .55);ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(yrX(end)-2,y-3);ctx.lineTo(yrX(end)+6,y);ctx.lineTo(yrX(end)-2,y+3);ctx.stroke();
-  }
-  var marks=Object.keys(s.byYear||{}).map(Number).sort(function(a,b){return a-b});
-  marks.forEach(function(yr){
-    if(yr<YEAR_MIN||yr>YEAR_MAX)return;
-    var v=yearValue(s,yr), r=clamp(Math.sqrt(v)*.85,1.2,mode==='highlight'?5.5:3.4);
-    ctx.fillStyle=rgba(color,mode==='highlight' ? .98 : .62);
-    ctx.beginPath();ctx.arc(yrX(yr),y,r,0,Math.PI*2);ctx.fill();
-  });
-  if(mode==='highlight'){
-    ctx.fillStyle='#111';ctx.font='900 15px "Noto Serif SC","Songti SC",serif';ctx.textBaseline='bottom';
-    ctx.fillText(s.person+'  '+start+'-'+end,Math.max(P.left,yrX(start)-8),y-8);
-  }
-  ctx.restore();
-}
-function drawBase(){
-  drawPaper(base);drawRiverWash(base);computeGeom();
-  base.fillStyle='rgba(122,31,26,.88)';base.font='900 11px "Noto Serif SC","Songti SC",serif';
-  base.fillText('早年友朋',8,P.top-4);base.fillText('晚境后学',8,H-P.bottom-22);
-  threadGeom.forEach(function(g){drawThread(base,g,'base')});
-  drawDetailAxis(base);
-}
-function drawHover(){
-  hover.clearRect(0,0,W,H);
-  if(state.view==='overview'){
-    var n=state.hover;
-    if(n){
-      hover.save();hover.strokeStyle='rgba(122,31,26,.92)';hover.lineWidth=1.6;
-      hover.beginPath();hover.arc(n.x,n.y,n.r+6,0,Math.PI*2);hover.stroke();
-      hover.fillStyle='rgba(122,31,26,.12)';hover.beginPath();hover.arc(n.x,n.y,n.r+10,0,Math.PI*2);hover.fill();hover.restore();
-    }
-    return;
-  }
-  var g=state.hover||geomFor(state.selected);
-  if(g) drawThread(hover,g,'highlight');
-}
-function geomFor(s){for(var i=0;i<threadGeom.length;i++)if(threadGeom[i].s===s)return threadGeom[i];return null}
-function topYearRows(s){
-  var rows=Object.keys(s.byYear||{}).map(function(y){var r=s.byYear[y]||{};return {year:+y,total:r.total||0,types:Object.keys(r.types||{}).sort(function(a,b){return (r.types[b]||0)-(r.types[a]||0)}).slice(0,3)}});
-  if(!rows.length) rows=(s.years||[]).map(function(y){return {year:y,total:1,types:[s.primaryType||'其他']}});
-  return rows.sort(function(a,b){return b.total-a.total||a.year-b.year});
-}
-function profileNote(s){
-  var gap=s.last<YEAR_MAX?'最后记录停在 '+s.last+' 年，丝线以墨点收束。':'记录延伸到黄宾虹生命末年。';
-  return '这条丝线从 '+s.first+' 年亮起，持续到 '+s.last+' 年；数据中记录 '+(s.total||0)+' 次互动，峰值在 '+(s.peakYear||s.first)+' 年。'+gap;
-}
-function directoryRows(){
-  var q=searchTerm.trim();
-  var pool=q?allThreads.filter(function(s){return s.person.indexOf(q)>=0 || (s.primaryType||'').indexOf(q)>=0 || (s.layer||'').indexOf(q)>=0}):activePool();
-  pool=pool.slice().sort(function(a,b){return (b.total||0)-(a.total||0)||a.first-b.first});
-  return pool.slice(0,18);
-}
-function directoryHtml(){
-  var rows=directoryRows(), active=activePool().length;
-  var buttons=rows.map(function(s){return '<button data-person="'+esc(s.person)+'" class="'+(state.selected&&state.selected.person===s.person?'active':'')+'" title="'+esc(s.person+'｜'+s.first+'-'+s.last)+'">'+esc(s.person)+'</button>'}).join('');
-  if(!buttons) buttons='<button disabled>无匹配</button>';
-  return '<div class="profile-directory"><div class="dir-head"><b>全库名录</b><span>'+active+'/'+allThreads.length+' 人</span></div>'+
-    '<input class="person-search" value="'+esc(searchTerm)+'" placeholder="姓名 / 类型 / 圈层">'+
-    '<div class="person-results">'+buttons+'</div></div>';
-}
-function renderProfile(s){
-  if(!s){profile.innerHTML='';return}
-  var photo=s.img?'<img src="'+esc(s.img)+'" alt="">':esc(s.person.slice(0,1));
-  var allRows=topYearRows(s), long=allRows.length>10, shown=(long?allRows.slice(0,12):allRows);
-  var years=shown.map(function(r){return '<div class="year-item"><b>'+r.year+'</b><span>'+esc(r.total+' 次｜'+(r.types.join('、')||s.primaryType||'其他'))+'</span></div>'}).join('');
-  var tags=typeNames(s,6).map(function(t){return '<span>'+esc(t)+' '+(s.typeCounts&&s.typeCounts[t]||'')+'</span>'}).join('') || '<span>'+esc(s.primaryType||'其他')+'</span>';
-  var eventTitle=long?'年度事件（高频 '+shown.length+'/'+allRows.length+'）':'年度事件';
-  profile.innerHTML=
-    '<div class="profile-kicker">雁素往来 / 知己档案</div>'+
-    '<div class="profile-top"><div class="profile-photo">'+photo+'</div><div><div class="profile-name">'+esc(s.person)+'</div>'+
-    '<div class="profile-meta">'+esc(identityLabel(s.id))+'<br>'+esc(s.first+'-'+s.last+'｜峰值 '+(s.peakYear||s.first)+'｜互动 '+(s.total||0)+' 次')+'</div>'+
-    '<div class="profile-tags">'+tags+'</div></div></div>'+
-    '<div class="profile-stats"><div><b>'+esc(s.first)+'</b><span>起点</span></div><div><b>'+esc(s.last)+'</b><span>终点</span></div><div><b>'+esc(s.total||0)+'</b><span>记录</span></div></div>'+
-    '<div class="profile-section"><h3>关系摘要</h3><p>'+esc(profileNote(s))+'</p></div>'+
-    '<div class="profile-section"><h3>'+esc(eventTitle)+'</h3><div class="year-list'+(long?' long':'')+'">'+years+'</div></div>'+
-    directoryHtml();
-}
-function placeOverlay(el,ev,dx,dy){
-  var pr=pane.getBoundingClientRect(), x=ev.clientX-pr.left+(dx||14), y=ev.clientY-pr.top+(dy||12);
-  var pw=el.offsetWidth||240, ph=el.offsetHeight||72;
-  el.style.left=clamp(x,8,W-pw-8)+'px';el.style.top=clamp(y,8,H-ph-8)+'px';
-}
-function showThreadTooltip(g,ev){
-  if(!g){hoverNote.style.display='none';return}
-  var s=g.s;
-  hoverNote.innerHTML='<b>'+esc(s.person)+'</b>'+esc(identityLabel(s.id)+'｜'+s.first+'-'+s.last+'｜'+(s.total||0)+'次')+'<br>'+esc('峰值 '+(s.peakYear||s.first)+'｜'+(typeNames(s,3).join('、')||s.primaryType||'其他'));
-  hoverNote.style.display='block';
-  placeOverlay(hoverNote,ev,14,12);
-}
-function findThread(mx,my){
-  var best=null,bd=Infinity;
-  threadGeom.forEach(function(g){
-    var s=g.s, y=g.y, x1=yrX(s.first)-8, x2=yrX(s.last)+10;
-    if(mx<0||mx>x2||my<y-Math.max(6,g.rowH*.55)||my>y+Math.max(6,g.rowH*.55))return;
-    var d=Math.abs(my-y)+(mx<x1?x1-mx:0);
-    if(d<bd){bd=d;best=g}
-  });
-  return best;
-}
-function orderedLayers(){
-  var source=(R.themeRiver&&R.themeRiver.layers)||R.layers||[], byName={};
-  source.forEach(function(l){byName[l.name]=l});
-  return LAYER_ORDER.map(function(name){var l=byName[name]||{name:name,values:[]};return {name:name,color:l.color||LAYER_COLORS[name]||'#ccc',values:l.values||[]}});
-}
-function smoothArray(values){
-  var out=[];for(var i=0;i<values.length;i++){var sum=0,weight=0;for(var j=-3;j<=3;j++){var k=clamp(i+j,0,values.length-1),w=[.06,.12,.20,.24,.20,.12,.06][j+3];sum+=values[k]*w;weight+=w}out.push(sum/weight)}return out;
-}
-function bandPath(ctx,topPts,botPts){ctx.beginPath();smoothLine(ctx,topPts);smoothLine(ctx,botPts.slice().reverse());ctx.closePath()}
-function computeOverviewGeom(){
-  var yrs=(R.themeRiver&&R.themeRiver.years)||[], layers=orderedLayers();
-  if(!yrs.length||!layers.length)return null;
-  var n=yrs.length, transformed=layers.map(function(layer){
-    var vals=layer.values.length?layer.values:yrs.map(function(y){return y.layers&&y.layers[layer.name]||0});
-    return smoothArray(vals.map(function(v){return Math.pow(Math.max(v,0),.44)}));
-  }), totals=[];
-  for(var i=0;i<n;i++){var t=0;for(var li=0;li<layers.length;li++)t+=transformed[li][i];totals.push(t)}
-  var maxTotal=Math.max.apply(null,totals.concat([1])), riverTop=H*OP.topRatio, riverBot=H*OP.botRatio, riverH=riverBot-riverTop, scale=riverH*.96/maxTotal, bands={}, curves=[];
-  layers.forEach(function(l){bands[l.name]=[]});
-  for(var ix=0;ix<n;ix++){
-    var year=yrs[ix].year,totalH=totals[ix]*scale,center=H*.465+H*.026*Math.sin((year-1892)/7.5)-H*.012*Math.cos((year-1926)/5.7),top=clamp(center-totalH/2,riverTop,riverBot-totalH),cursor=top;
-    for(var li2=0;li2<layers.length;li2++){var h=transformed[li2][ix]*scale;bands[layers[li2].name][ix]={x:oX(year),top:cursor,bot:cursor+h,mid:cursor+h/2,year:year,height:h};cursor+=h}
-  }
-  layers.forEach(function(layer){var b=bands[layer.name]||[];curves.push({layer:layer,topPts:b.map(function(d){return{x:d.x,y:d.top}}),botPts:b.map(function(d){return{x:d.x,y:d.bot}})})});
-  return {years:yrs,layers:layers,bands:bands,curves:curves,riverTop:riverTop,riverBot:riverBot,riverH:riverH};
-}
-function nearestYearIndex(y,geom){var yrs=geom.years||[],best=0,bd=Infinity;for(var i=0;i<yrs.length;i++){var d=Math.abs(yrs[i].year-y);if(d<bd){bd=d;best=i}}return best}
-function bandAt(geom,layer,year){
-  var i=nearestYearIndex(year,geom), b=geom.bands[layer]&&geom.bands[layer][i];
-  return b||(geom.bands['书画同道']&&geom.bands['书画同道'][i])||{x:oX(year),top:geom.riverTop,bot:geom.riverTop+geom.riverH*.2,mid:geom.riverTop+geom.riverH*.1,height:geom.riverH*.2};
-}
-function nodeForStream(s,geom){
-  var year=s.peakYear||s.first||YEAR_MIN,b=bandAt(geom,s.layer,year),seed=hashText(s.person),j=(rand(seed)-.5)*Math.min(28,Math.max(5,b.height*.62));
-  return {x:oX(year)+(rand(seed+11)-.5)*11,y:clamp((b.mid||((b.top+b.bot)/2))+j,b.top+3,b.bot-3),r:clamp(Math.sqrt(s.total||1)*.34,1.35,5.3),stream:s,active:filterMatch(s)&&storyMatch(s)};
-}
-function drawOverviewTextures(ctx,name){
-  ctx.save();
-  if(name==='书画同道'){
-    ctx.fillStyle='rgba(122,86,70,.14)';
-    for(var x=OP.left;x<W-OP.right;x+=12){for(var y=H*.32;y<H*.80;y+=11){ctx.beginPath();ctx.arc(x+(rand(x+y)*2-1),y+(rand(x-y)*2-1),.75,0,Math.PI*2);ctx.fill()}}
-  }else if(name==='金石考古'||name==='教育弟子'){
-    ctx.strokeStyle='rgba(96,72,52,.17)';ctx.lineWidth=.75;
-    for(var hx=-H;hx<W+H;hx+=7){ctx.beginPath();ctx.moveTo(hx,0);ctx.lineTo(hx+H,H);ctx.stroke()}
-  }else if(name==='诗文师友'){
-    ctx.strokeStyle='rgba(115,52,42,.20)';ctx.lineWidth=.9;
-    for(var sy=H*.36;sy<H*.82;sy+=8){ctx.beginPath();ctx.moveTo(OP.left-20,sy);ctx.lineTo(W-OP.right+20,sy);ctx.stroke()}
-  }
-  ctx.restore();
-}
-function drawOverviewRiver(ctx){
-  overviewGeom=computeOverviewGeom();overviewNodes=[];
-  if(!overviewGeom)return;
-  overviewGeom.curves.forEach(function(lc){
-    if(!lc.topPts.length)return;
-    bandPath(ctx,lc.topPts,lc.botPts);ctx.save();ctx.globalAlpha=.92;ctx.fillStyle=lc.layer.color||LAYER_COLORS[lc.layer.name]||'#ccc';ctx.fill();ctx.restore();
-    ctx.save();bandPath(ctx,lc.topPts,lc.botPts);ctx.clip();drawOverviewTextures(ctx,lc.layer.name);ctx.restore();
-  });
-  drawOverviewThreads(ctx,overviewGeom);
-  drawOverviewNodes(ctx,overviewGeom);
-}
-function drawOverviewThreads(ctx,geom){
-  var streams=allThreads.filter(function(s){return (s.total||0)>=10&&s.first&&s.last&&s.last>s.first}).sort(function(a,b){return (a.total||0)-(b.total||0)});
-  ctx.save();ctx.lineCap='round';
-  streams.forEach(function(s){
-    var b1=bandAt(geom,s.layer,s.first),b2=bandAt(geom,s.layer,s.last),seed=hashText(s.person),x1=oX(s.first),x2=oX(s.last);
-    var y1=clamp((b1.mid||((b1.top+b1.bot)/2))+(rand(seed)-.5)*8,b1.top+2,b1.bot-2),y2=clamp((b2.mid||((b2.top+b2.bot)/2))+(rand(seed+5)-.5)*8,b2.top+2,b2.bot-2);
-    var active=filterMatch(s)&&storyMatch(s),span=s.last-s.first,a=active?clamp(.04+(s.total||0)/780,.05,.22):.018;
-    ctx.strokeStyle=rgba(streamInk(s),a);ctx.lineWidth=span>35?1.05:.72;if(span>25)ctx.setLineDash([2,5]);else ctx.setLineDash([]);
-    ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(x1+(x2-x1)*.32,y1-10-rand(seed+1)*16,x1+(x2-x1)*.68,y2+10+rand(seed+2)*16,x2,y2);ctx.stroke();
-  });
-  ctx.setLineDash([]);ctx.restore();
-}
-function drawOverviewNodes(ctx,geom){
-  allThreads.forEach(function(s){
-    var n=nodeForStream(s,geom), high=(s.total||0)>=60;
-    overviewNodes.push(n);
-    ctx.fillStyle=rgba(streamInk(s),n.active ? (high ? .70 : .46) : .13);
-    ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();
-    if(high&&n.active){ctx.strokeStyle='rgba(232,223,205,.72)';ctx.lineWidth=.65;ctx.beginPath();ctx.arc(n.x,n.y,n.r+.9,0,Math.PI*2);ctx.stroke()}
-  });
-  drawOverviewLabels(ctx,geom);
-}
-function drawOverviewLabels(ctx,geom){
-  var streams=activePool().slice().sort(function(a,b){return (b.total||0)-(a.total||0)}).slice(0,26),boxes=[];
-  ctx.save();ctx.font='700 8.5px "Noto Serif SC","Songti SC",serif';ctx.textBaseline='top';
-  streams.forEach(function(s,idx){
-    var n=nodeForStream(s,geom), name=s.person, side=(idx%4<2)?-1:1, tx=clamp(n.x+6,n.x<100?OP.left:n.x,W-OP.right-42), ty=clamp(n.y+side*(8+(idx%3)*7),H*.30,H*.79), w=ctx.measureText(name).width+8, h=14, box={x:tx-4,y:ty-2,w:w,h:h};
-    if(boxes.some(function(b){return !(box.x+box.w<b.x||b.x+b.w<box.x||box.y+box.h<b.y||b.y+b.h<box.y)}))return;
-    boxes.push(box);ctx.fillStyle=(s.total||0)>70?'rgba(122,31,26,.86)':'rgba(17,17,17,.70)';ctx.fillText(name,tx,ty);
-  });
-  ctx.restore();
-}
-function drawOverviewAxis(ctx){
-  var ay=H*OP.axisRatio;
-  ctx.strokeStyle='rgba(17,17,17,.55)';ctx.lineWidth=.85;ctx.beginPath();ctx.moveTo(OP.left,ay);ctx.lineTo(W-OP.right,ay);ctx.stroke();
-  for(var y=1870;y<=1950;y+=10){var x=oX(y);ctx.fillStyle='rgba(17,17,17,.82)';ctx.font='700 10px Georgia,"Times New Roman",serif';ctx.textAlign='center';ctx.fillText(String(y)+'AD',x,ay+19);ctx.fillStyle='rgba(122,31,26,.76)';ctx.beginPath();ctx.moveTo(x,ay-8);ctx.lineTo(x-5,ay-1);ctx.lineTo(x+5,ay-1);ctx.closePath();ctx.fill()}
-  var eraY=ay+30;(R.eras||[]).forEach(function(er){var x1=oX(er.start),x2=oX(er.end);ctx.fillStyle='rgba(201,188,164,.58)';ctx.fillRect(x1,eraY,x2-x1,18);ctx.strokeStyle='rgba(107,98,88,.32)';ctx.lineWidth=.75;ctx.beginPath();ctx.moveTo(x1,eraY);ctx.lineTo(x2,eraY);ctx.stroke();ctx.fillStyle='rgba(17,17,17,.82)';ctx.font='700 11px "Noto Serif SC","Songti SC",serif';ctx.fillText(er.label,(x1+x2)/2,eraY+13);if(er.start>YEAR_MIN){ctx.strokeStyle='rgba(154,143,126,.44)';ctx.setLineDash([3,5]);ctx.beginPath();ctx.moveTo(x1,eraY-5);ctx.lineTo(x1,H*OP.topRatio-12);ctx.stroke();ctx.setLineDash([])}});
-  [{year:1907,label:'迁居上海'},{year:1937,label:'困居北平'}].forEach(function(a){var x=oX(a.year),labelY=ay+58;ctx.strokeStyle='rgba(122,31,26,.44)';ctx.lineWidth=.8;ctx.setLineDash([4,6]);ctx.beginPath();ctx.moveTo(x,H*OP.topRatio-10);ctx.lineTo(x,ay+47);ctx.stroke();ctx.setLineDash([]);ctx.font='700 13px "Noto Serif SC","Songti SC",serif';var w=ctx.measureText(a.label).width+22;ctx.fillStyle='rgba(238,229,211,.92)';roundRectPath(ctx,x-w/2,labelY-14,w,24,4);ctx.fill();ctx.strokeStyle='rgba(122,31,26,.42)';roundRectPath(ctx,x-w/2,labelY-14,w,24,4);ctx.stroke();ctx.fillStyle='#111';ctx.fillText(a.label,x,labelY+3)});
-  ctx.textAlign='start';
-}
-function sourceFor(name){var list=(R.cards||[]).concat(R.streams||[]);for(var i=0;i<list.length;i++)if(list[i].person===name)return list[i];return null}
-function shortLabel(c){var raw=String(c.short||c.primaryType||c.relation||c.note||'').replace(/\s+/g,'').split(/[，。；、]/)[0];return raw.length>12?raw.slice(0,12):raw}
-function getDisplayCards(){
-  return CARD_SPECS.map(function(spec,i){var src=sourceFor(spec.source||spec.person)||{},c={};Object.keys(src).forEach(function(k){c[k]=src[k]});Object.keys(spec).forEach(function(k){c[k]=spec[k]});c.year=c.year||c.peakYear||c.first||YEAR_MIN;c.layer=c.layer||src.layer||'书画同道';c.primaryType=c.primaryType||src.primaryType||c.relation||'交往';c.total=src.total||c.total||0;c.img=c.img||PORTRAITS[c.person]||'';c.order=i;return c});
-}
-function computeCardPositions(){
-  cardPositions=[];displayCards=getDisplayCards().filter(function(c){return !c.hidden});
-  var placed=[],cardW=108,cardH=144;
-  displayCards.forEach(function(c){var x=oX(c.year)+(c.dx||0),y=H*(c.y||.25);if(H<820&&c.y<.38)y+=16;x=clamp(x,OP.left+48,W-OP.right-48);y=clamp(y,H*.115,H*.695);placed.push({card:c,x:x,y:y})});
-  for(var pass=0;pass<7;pass++){for(var i=0;i<placed.length;i++){for(var j=i+1;j<placed.length;j++){var dx=placed[i].x-placed[j].x,dy=placed[i].y-placed[j].y;if(Math.abs(dx)<cardW&&Math.abs(dy)<cardH){if(Math.abs(dx)<Math.abs(dy)*.82){var xp=(cardW-Math.abs(dx))/2+5;placed[i].x-=xp;placed[j].x+=xp}else{var dir=dy<0?-1:1,yp=(cardH-Math.abs(dy))/2+5;placed[i].y+=dir*yp;placed[j].y-=dir*yp}}}}placed.forEach(function(p){p.x=clamp(p.x,OP.left+48,W-OP.right-48);p.y=clamp(p.y,H*.115,H*.695)})}
-  cardPositions=placed;
-}
-function buildBubbles(){
-  bubblesEl.innerHTML='';
-  if(state.view!=='overview')return;
-  computeCardPositions();
-  cardPositions.forEach(function(p){
-    var c=p.card,div=document.createElement('div'),kind=c.kind||'person',avatar=esc(c.avatar||String(c.person||'?').slice(0,1)),media=c.img?'<img src="'+esc(c.img)+'" alt="" draggable="false" loading="eager">':'<span>'+avatar+'</span>';
-    div.className='bubble';div.style.left=p.x+'px';div.style.top=p.y+'px';div.dataset.person=c.person;
-    div.innerHTML='<div class="b-frame"><div class="b-type">'+esc(c.layer||'')+'</div><div class="b-avatar" data-kind="'+esc(kind)+'">'+media+'</div><div class="b-tag">'+esc(c.person)+'</div><div class="b-name">'+esc((c.relation||c.layer||'交往')+' · '+shortLabel(c))+'</div><div class="b-year">'+esc(c.year)+'<span>AD</span></div></div>';
-    div.addEventListener('click',function(ev){ev.stopPropagation();showPopup(c,ev)});
-    div.addEventListener('mouseenter',function(){highlightCard(c.person)});
-    div.addEventListener('mouseleave',function(){highlightCard(null)});
-    bubblesEl.appendChild(div);
-  });
-}
-function highlightCard(name){hoveredCard=name;bubblesEl.querySelectorAll('.bubble').forEach(function(b){if(name&&b.dataset.person!==name)b.classList.add('dim');else b.classList.remove('dim')})}
-function nodeForCard(c,geom){var i=nearestYearIndex(c.year,geom),band=(geom.bands[c.layer]&&geom.bands[c.layer][i])||null;return band?{x:oX(c.year),y:band.mid||((band.top+band.bot)/2)}:{x:oX(c.year),y:geom.riverTop+geom.riverH*.45}}
-function drawLeaderLines(ctx,geom){
-  if(!geom)return;
-  cardPositions.forEach(function(p){var c=p.card,node=nodeForCard(c,geom),half=(c.kind==='event')?42:60,fromY=p.y<node.y?p.y+half:p.y-half,elbowY=fromY+(node.y-fromY)*.58,alpha=(hoveredCard&&hoveredCard!==c.person) ? .12 : .65;ctx.strokeStyle='rgba(154,143,126,'+alpha+')';ctx.lineWidth=.75;ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(p.x,fromY);ctx.lineTo(p.x,elbowY);ctx.lineTo(node.x,elbowY);ctx.lineTo(node.x,node.y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(122,31,26,'+alpha+')';ctx.beginPath();ctx.arc(node.x,node.y,3,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(232,223,205,'+alpha+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(node.x,node.y,3,0,Math.PI*2);ctx.stroke()});
-}
-function streamDetailObject(s){return {person:s.person,source:s.person,layer:s.layer||'交往',year:s.peakYear||s.first||YEAR_MIN,first:s.first,last:s.last,total:s.total||0,primaryType:s.primaryType||typeNames(s,1)[0]||'其他',note:'活跃 '+(s.first||'?')+(s.last&&s.last!==s.first?'–'+s.last:'')+'；峰值 '+(s.peakYear||'?')+'AD。主要往还：'+(typeNames(s,3).join('、')||s.primaryType||'其他')+'。'}};
-function showPopup(c,ev){
-  riverDetail.querySelector('.rd-name').textContent=c.person;
-  riverDetail.querySelector('.rd-cat').textContent=(c.layer||'')+' · '+(c.year||c.first||'?')+'AD · '+(c.primaryType||c.relation||'交往')+(c.total?' · 互动'+c.total+'次':'');
-  riverDetail.querySelector('.rd-row').textContent=c.note||('主要关系：'+(c.primaryType||'其他'));
-  riverDetail.querySelector('.rd-jump').onclick=function(){var target=c.source||c.person;if(sourceFor(target)||allThreads.find(function(s){return s.person===target}))selectPerson(target,true,false)};
-  riverDetail.classList.add('open');placeOverlay(riverDetail,ev,10,-60);
-}
-function drawOverview(){
-  drawPaper(base);drawOverviewRiver(base);drawOverviewAxis(base);buildBubbles();drawLeaderLines(base,overviewGeom);
-}
-function findOverviewNode(mx,my){
-  var best=null,bd=Infinity;overviewNodes.forEach(function(n){var dx=mx-n.x,dy=my-n.y,d=dx*dx+dy*dy,lim=Math.pow(n.r+8,2);if(d<lim&&d<bd){best=n;bd=d}});return best;
-}
-function showOverviewTooltip(n,ev){
-  if(!n){hoverNote.style.display='none';return}
-  var s=n.stream;hoverNote.innerHTML='<b>'+esc(s.person)+'</b>'+esc((s.layer||identityLabel(s.id))+'｜'+s.first+'-'+s.last+'｜'+(s.total||0)+'次')+'<br>'+esc('峰值 '+(s.peakYear||s.first)+'｜'+(typeNames(s,3).join('、')||s.primaryType||'其他'));
-  hoverNote.style.display='block';placeOverlay(hoverNote,ev,14,12);
-}
-function nearbyYearStats(year){
-  var years=(R.years||[]).filter(function(d){return Math.abs(d.year-year)<=1});if(!years.length)return null;
-  var layers={},total=0;years.forEach(function(d){total+=(d.total||0);Object.keys(d.layers||{}).forEach(function(k){layers[k]=(layers[k]||0)+(d.layers[k]||0)})});
-  var topLayer=Object.keys(layers).sort(function(a,b){return layers[b]-layers[a]})[0]||'书画同道';
-  var people=activePool().filter(function(s){return s.first<=year&&s.last>=year}).sort(function(a,b){return (b.total||0)-(a.total||0)}).slice(0,5).map(function(s){return s.person});
-  return {year:year,total:total,topLayer:topLayer,people:people};
-}
-function showLens(year,ev){
-  var s=nearbyYearStats(year);if(!s){riverLens.style.display='none';return}
-  riverLens.innerHTML='<b>'+s.year+'年前后</b>'+esc('三年窗口互动 '+s.total+' 次；主导群体为 '+s.topLayer+'。')+'<br>'+esc('同场高频人物：'+(s.people.join('、')||'暂无'));
-  riverLens.style.display='block';placeOverlay(riverLens,ev,18,-92);
-}
-function inOverviewRiver(my){return overviewGeom&&my>=overviewGeom.riverTop-18&&my<=overviewGeom.riverBot+18}
-function hideTransient(){hoverNote.style.display='none';riverLens.style.display='none';state.hover=null;drawHover()}
-function renderGuide(){
-  var g=GUIDES[state.guide%GUIDES.length];
-  guideEl.innerHTML='<div class="g-k">故事线 '+(state.guide+1)+' / '+GUIDES.length+'</div><div class="g-title">'+esc(g.title)+'</div><div class="g-text">'+esc(g.text)+'</div><div class="g-actions"><button data-guide="prev">上一段</button><button data-guide="next">下一段</button><button data-guide="detail" class="primary">入丝线</button></div>';
-}
-function applyGuide(idx,detailView){
-  state.guide=(idx+GUIDES.length)%GUIDES.length;var g=GUIDES[state.guide];state.story=g.story;state.filter='all';setActiveButtons();
-  var s=allThreads.find(function(x){return x.person===g.focus})||activePool()[0];if(s)state.selected=s;
-  if(detailView)state.view='detail';
-  render();
-}
-function render(){
-  pane.classList.toggle('overview',state.view==='overview');pane.classList.toggle('detail',state.view==='detail');
-  hover.clearRect(0,0,W,H);riverDetail.classList.remove('open');riverLens.style.display='none';hoverNote.style.display='none';
-  if(state.view==='overview'){
-    drawOverview();
-  }else{
-    bubblesEl.innerHTML='';
-    chooseThreads();drawBase();
-  }
-  renderProfile(state.selected);drawHover();buildLegend();renderGuide();setActiveButtons();
-}
-function setActiveButtons(){
-  identityTabs.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.dataset.filter===state.filter)});
-  storyTabs.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.dataset.story===state.story)});
-  viewSwitch.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.dataset.view===state.view)});
-}
-function buildLegend(){
-  var active=activePool().length;
-  var items=state.view==='overview'?[
-    ['全部人物点位 '+allThreads.length+' 人','#3B322A'],
-    ['当前筛选 '+active+' 人',ID_COLORS.nanshe],
-    ['彩色河流为交往总量','#C8736A'],
-    ['关键卡片为叙事锚点','#7A5D47']
-  ]:[
-    ['详细丝线 '+visibleThreads.length+'/'+active+' 人','#3B322A'],
-    ['革命同舟/南社',ID_COLORS.nanshe],
-    ['金石书画知交',ID_COLORS.scholar],
-    ['晚辈学生',ID_COLORS.student]
+  var YEARS=(TR.years||[]).map(function(y){return typeof y==='object'?y.year:y;});
+  var YMIN=YEARS[0]||1865, YMAX=YEARS[YEARS.length-1]||1955, YSPAN=(YMAX-YMIN)||1, N=YEARS.length;
+  var STREAMS=R.streams||[];
+
+  var PALETTE=['#B06A3A','#3F5E6E','#9C4B43','#5E7E61','#45748A','#A0823F'];     // 河带：矿物国画色
+  var DOTCOL=['#E07B28','#2C86AE','#CE3F33','#4E9A52','#2F8AC4','#D29A22'];       // 墨点：鲜艳分色，一眼可见
+  var TEXTURE=['hatch','hatchR','cross','dots','dotsB','vert'];
+  var LAYERS=(TR.layers||[]).map(function(l,i){var v=l.values||[];return {name:l.name,color:PALETTE[i%6],dot:DOTCOL[i%6],tex:TEXTURE[i%6],values:v,total:v.reduce(function(a,b){return a+(b||0);},0)};});
+  var LIDX={}; LAYERS.forEach(function(l,i){LIDX[l.name]=i;});
+  var ERAS=R.eras||[], ANCHORS=R.anchors||[];
+
+  var TYPE_TOT,TOP3,LONGEST;
+  (function(){var T={};STREAMS.forEach(function(s){var c=s.typeCounts||{};for(var k in c){if(k==='其他')continue;T[k]=(T[k]||0)+c[k];}});
+    TYPE_TOT=Object.keys(T).map(function(k){return {k:k,v:T[k]};}).sort(function(a,b){return b.v-a.v;});
+    var bt=STREAMS.slice().sort(function(a,b){return b.total-a.total;});TOP3=bt.slice(0,3);
+    LONGEST=STREAMS.filter(function(s){return s.total>=30;}).sort(function(a,b){return (b.last-b.first)-(a.last-a.first);})[0]||bt[0];})();
+
+  var CIRCLE_ESSAY={
+    '书画同道':'黄宾虹一生的水脉主流，是与画人的往还。自海上的张善孖、张大千、王一亭，到南北画家的题跋互赠，他在反复的「作画赠予」与「题跋鉴赏」里，确认自己的笔墨坐标。这一圈在一九二〇年代海上鼎盛期涨成洪峰——那是他鬻画、编书、论画最盛的年月，也是「画家黄质」长成「黄宾虹」的年月。',
+    '金石考古':'黄宾虹治画，先治金石。他与许承尧、叶恭绰、蔡守诸人的往来，多在古印、碑版、画史的考订之间。金石的「分明」与「浑厚」，正是他日后「五笔七墨」的根。这一圈不似画坛喧腾，却最绵长——许承尧一脉，自徽州少年直贯到西湖晚岁，几与一生等长。',
+    '诗文师友':'诗与文，是黄宾虹的底色。早岁徽州的乡谊唱和，往来不密而极久，常跨越半个世纪。它们像河床底下的潜流，频次最低，却是整条长河最早的源头——他后来所有的笔墨，都从这片诗文的水土里长出。',
+    '出版传媒':'黄宾虹半生以编辑为业。神州国光社、《美术丛书》《国粹学报》……出版是他交游的枢纽：同事即同道，把金石书画的圈子，织进了近代文化生产的大网络。人数虽少，分量极重。',
+    '教育弟子':'南归西湖之后，往还的重心，从同道转向后学。潘天寿、李可染、王伯敏一辈，在他晚岁的画室里听讲、记录、问学。这一圈起得最晚，却把长河引向身后——他的笔墨，经由师生，流成了二十世纪下半叶的中国山水。',
+    '政商护持':'一个鬻画为生的画家，离不开护持者。收藏家、报人、商界同乡，以收藏、引荐、雅集的方式，托住了他的生计与声名。这一圈不显于画史，却是长河得以奔流的河堤。'
+  };
+
+  var PORTRAITS={'王一亭':'assets/portraits/wang-yiting.jpg','齐白石':'assets/portraits/qi-baishi.jpg','徐悲鸿':'assets/portraits/xu-beihong.jpg','张大千':'assets/portraits/zhang-daqian.jpg','潘天寿':'assets/portraits/pan-tianshou.jpg'};
+  var NOTE={
+    '许承尧':{n:'歙县同乡，方志学家与诗人。黄宾虹治学的根柢——金石、诗文、乡邦文献——多由这一脉养成。',f:'许承尧像 / 或二人往来书札',a:[
+      '一八八六年，二十出头的黄宾虹在歙县结识了长他八岁的许承尧。彼时许氏已是徽州士林中的人物——后来中进士、入翰林，又弃官归里，主修《歙县志》《歙事闲谭》，是近世徽州文献的集大成者。两人一见，便有谈不完的金石、诗文与乡邦掌故。',
+      '此后近七十年，无论黄宾虹迁居上海、困守北平，还是南归西湖，与许承尧的书札从未断过。信里谈碑版的剥蚀、谈古印的真伪、谈新安画派的源流，也谈故乡的山水与旧人。对一个一生漂泊的画家而言，许承尧是他与徽州之间，始终没有断掉的那根线。',
+      '黄宾虹晚年山水里那份「浑厚华滋」的底气，一半是笔墨，一半是学问。而那学问的根，正埋在徽州——埋在与许承尧这样的乡贤半个多世纪的往还里。']},
+    '齐白石':{n:'与黄宾虹并称「北齐南黄」，二十世纪中国画的两座高峰。',f:'齐白石像 / 或「北齐南黄」并置作品',a:[
+      '「北齐南黄」——二十世纪的中国画坛，北有齐白石，南有黄宾虹，并称两座高峰。一个以红花墨叶、虫鱼草木的烂漫天真动人，一个以层层积墨、浑厚华滋的苍茫深沉服人，恰是一时瑜亮。',
+      '两人都是大器晚成、衰年变法的典型：齐白石「衰年变法」十载乃成，黄宾虹更是年近八旬才臻化境。他们彼此惺惺相惜，互有题赠。一南一北，遥遥相望，共同撑起了那个时代中国画的天空。']},
+    '张善孖':{n:'海上画坛昆仲之兄，以画虎名世，大风堂之长。海上鼎盛期与黄宾虹往来之最密者。',f:'张善孖像 / 或大风堂师友合影',a:[
+      '若论海上鼎盛期与黄宾虹往来最密的人，张善孖排在最前。大风堂的长兄、以画虎名世的「虎痴」，与黄宾虹在一九二〇年代末的沪上，作画相赠、合作题跋、连袂出游，一年之内的往还可逾三十次。',
+      '在数据绘成的这条长河里，张善孖是「书画同道」一圈中最稠密的一笔。他像一个枢纽，把大风堂、把整个海上画坛的热闹，都牵进了黄宾虹的交游网络。']},
+    '张大千':{n:'大风堂主，纵横南北画坛的传奇。',f:'张大千像 / 或二人合作画作',a:[
+      '大风堂主张大千，是二十世纪画坛的传奇。他与黄宾虹自上海订交，题赠、临摹、品鉴往来不绝。一个摹古入神、纵横跌宕，一个沉潜笔墨、积健为雄——路数迥异，却彼此看重。',
+      '他们其实是同一种人：都从传统的最深处下手，又都不甘心只做古人的影子。大千后来泼墨泼彩、自开新面，黄宾虹晚年浑厚华滋、自成一家——殊途，却同归于「变古为新」四字。']},
+    '王一亭':{n:'海上画坛领袖、实业家兼护持者，佛画与花卉名重一时。',f:'王一亭像 / 或海上题襟馆雅集',a:[
+      '黄宾虹初到上海，人地两生。海上画坛的领袖王一亭——既是名重一时的画家，又是叱咤商界的实业家——成了他立足沪上的重要倚靠。题襟馆的雅集、豫园书画善会的往还，处处可见王一亭居中引荐的身影。',
+      '在那个鬻画为生的年代，一个画家能否在上海站稳，往往不只看笔墨，更看人脉。王一亭之于黄宾虹，既是画友，也是护持者——他用自己在海上的声望与网络，为这位徽州来的画师，撑开了一片天地。']},
+    '傅雷':{n:'翻译家、艺术批评家，黄宾虹晚年艺术最早、也最坚定的知音。',f:'傅雷致黄宾虹书札 / 一九四三年八秩画展',a:[
+      '一九四三年，黄宾虹八十岁。在大多数人还读不懂他那「黑团团里墨团团」的年月，是傅雷站了出来——在上海为他操办了生平第一次个人画展，并写下《观画答客问》，逐条为世人解释：何以要黑、要密、要厚、要重。',
+      '傅雷与黄宾虹，一个是锋芒毕露的批评家与翻译家，一个是沉默寡言的老画师，却成了忘年知音。此后十余年，两人书札往复不断，论画、论古、论时局。傅雷信中提到的那位「宾虹先生」，语气里满是敬重。',
+      '黄宾虹曾说，自己的画要五十年后才有人懂。其实不必等那么久——在他生前，至少有一个傅雷，是真的懂了。']},
+    '潘天寿':{n:'国立艺专同道与后辈，以雄阔奇崛的指墨与构图名世。',f:'潘天寿像 / 或国立艺专师友',a:[
+      '南归西湖之后，黄宾虹与潘天寿同在国立艺专。一位是浑厚华滋的积墨大家，一位是雄阔奇崛的构图圣手——两种几乎相反的气质，却共同为二十世纪的中国画，守住了那一副「骨」。',
+      '在艺专的教席与画案之间，他们往来论艺。黄宾虹晚年那些关于笔墨、关于「内美」的议论，有不少正是在这样的同道切磋里，一点点说出来、传下去的。']},
+    '李可染':{n:'晚岁向黄宾虹问学的后学，后以「采一炼十」自成一格。',f:'李可染像 / 或其积墨山水',a:[
+      '李可染曾登门向黄宾虹问学。老人把自己一生参透的积墨法、「七墨」之变，倾囊相授。日后李可染山水里那层层积染、黑入太阴而又通体发亮的境界，分明能看见宾虹一脉的余响。',
+      '「采一炼十」，是李可染自道的功夫。而他所采、所炼的那个传统里，黄宾虹是极重的一脉。长河流到身后，经由这样的后学，化成了二十世纪下半叶崭新的中国山水。']},
+    '黄节':{n:'国学保存会与《国粹学报》同人，诗人、学者。',f:'黄节像 / 或《国粹学报》书影',a:[
+      '晚清民初，黄节与黄宾虹同在上海的国学与出版圈中。国学保存会、《国粹学报》、神州国光社——在那个「保存国粹」近乎一种文化救亡的年代，他们既是同事，也是同道。',
+      '黄节是诗人，也是学者；黄宾虹治金石、编画史。两人在诗文与金石之间往还印证，把传统学问的香火，一卷一卷地，整理、刊印、传续了下去。']},
+    '柳亚子':{n:'南社发起人之一，诗人与革命文人。',f:'柳亚子像 / 或南社雅集',a:[
+      '南社，是清末民初最重要的革命文学团体。柳亚子作为发起人之一，意气风发。早岁的黄宾虹也在这股风云之中——他参与革命、鼓吹新学，与柳亚子等南社同人诗酒酬唱、同声相应。',
+      '后来黄宾虹渐渐沉入笔墨，淡出了政治的舞台。但南社这一段，是他交游长河里一段不该被忘记的激流——它把一个徽州青年的世界，从乡邦的诗文，推向了整个天下的风云。']},
+    '蔡守':{n:'号哲夫，南社中人，精金石篆刻与考据。',f:'蔡守（哲夫）像 / 或合编古印谱',a:[
+      '蔡守，号哲夫，南社中人，精于金石篆刻与考据。他与黄宾虹合编古玺印谱、考订金石文字，是黄宾虹「治画先治金石」一路上最相得的同道之一。',
+      '自世纪初订交，两人的往来绵延了半个世纪。在一方古印、一片碑版的真伪聚散之间，他们彼此印证、彼此成全——金石的「分明」与「浑厚」，后来都化进了黄宾虹的笔底。']},
+    '徐悲鸿':{n:'现代美术教育的旗手，主张以西画造型革新中国画。',f:'徐悲鸿像 / 或二人交往画作',a:[
+      '徐悲鸿是现代美术教育的旗手，主张引西画的造型之学，来革新中国画。黄宾虹则一生深耕传统笔墨，走的是另一条路。两条看似相悖的路向，在二十世纪的画坛交会、碰撞。',
+      '立场不同，却不妨彼此敬重。在一个新旧剧烈交替的时代，黄宾虹与徐悲鸿，一守一攻，恰是那一代知识人面对「中国画向何处去」时，两种同样赤诚的回答。']},
+    '叶恭绰':{n:'收藏家、书画家与政界耆宿，金石书画鉴藏的重镇。',f:'叶恭绰像 / 或二人鉴藏题跋',a:[
+      '叶恭绰富收藏、精鉴别，与黄宾虹在古书画、碑版印谱之间往还印证。鉴藏家与画学家的交谊，常在一卷古画的真伪聚散里见分晓。']},
+    '俞剑华':{n:'美术史家，中国画论文献整理的奠基者之一。',f:'俞剑华像 / 或其画史著述',a:[
+      '俞剑华编述画史画论，与黄宾虹在画学文献之间往还问答。一以笔墨实践，一以文献钩沉，共同为传统画学立此存照。']},
+    '刘海粟':{n:'上海美专创办者，新美术运动的闯将。',f:'刘海粟像 / 或上海美专',a:[
+      '刘海粟锐意革新，黄宾虹沉潜传统，路向不同而相往还。海上画坛的此一时，新与旧并非两不相干，而是在同一条河里彼此激荡。']}
+  };
+
+  // 十二卡：贴河岸、按年代铺满；a=锚定年, side=贴上/贴下
+  var CARD_LIST=[
+    {p:'许承尧',a:1889,side:'above',c:'徽州同乡，金石诗文的引路人。近七十年书札往还，长河里流得最久的一支。'},
+    {p:'黄节',a:1900,side:'below',c:'国学保存会同人。保存国粹、整理金石，既是同事，也是同道。'},
+    {p:'蔡守',a:1907,side:'above',c:'南社金石名家。合编古印谱，「治画先治金石」的同道。'},
+    {p:'柳亚子',a:1913,side:'below',c:'南社发起人。诗社酬唱与革命同道，把交游推向更广的天下。'},
+    {p:'王一亭',a:1921,side:'above',c:'海上画坛领袖兼护持者。雅集、赠画、引荐，多赖其居中。'},
+    {p:'张善孖',a:1928,side:'below',c:'大风堂之长，以画虎名世。海上鼎盛期与他往来最密的人。'},
+    {p:'张大千',a:1932,side:'below',c:'大风堂主。题赠临摹不绝——都是从传统深处再出新意的人。'},
+    {p:'徐悲鸿',a:1936,side:'above',c:'现代美术教育旗手。中西融合与传统笔墨，在此交会。'},
+    {p:'傅雷',a:1943,side:'above',c:'为他办八秩画展、撰《观画答客问》。看不懂他的时代里，少数看懂的人。'},
+    {p:'齐白石',a:1948,side:'below',c:'「北齐南黄」。南北相望，同以衰年变法成就晚境。'},
+    {p:'潘天寿',a:1951,side:'below',c:'西湖艺专同道。一以浑厚，一以奇崛，共守中国画的「骨」。'},
+    {p:'李可染',a:1954,side:'above',c:'晚岁问学的后学。层层积墨的黑与亮，是宾虹一脉的余响。'}
   ];
-  legend.innerHTML=items.map(function(it){return '<span><i style="background:'+it[1]+'"></i>'+esc(it[0])+'</span>'}).join('');
-}
-function selectPerson(name,detailView,keepContext){
-  var s=allThreads.find(function(x){return x.person===name});if(!s)return;
-  if(!keepContext){state.filter='all';state.story='all'}
-  state.selected=s;if(detailView)state.view='detail';hideTransient();render();
-}
-identityTabs.addEventListener('click',function(ev){
-  var b=ev.target.closest('button');if(!b)return;
-  state.filter=b.dataset.filter;state.hover=null;render();
-});
-storyTabs.addEventListener('click',function(ev){
-  var b=ev.target.closest('button');if(!b)return;
-  state.story=b.dataset.story;state.hover=null;render();
-});
-viewSwitch.addEventListener('click',function(ev){
-  var b=ev.target.closest('button');if(!b)return;
-  state.view=b.dataset.view;state.hover=null;render();
-});
-guideEl.addEventListener('click',function(ev){
-  var b=ev.target.closest('button');if(!b)return;
-  if(b.dataset.guide==='prev')applyGuide(state.guide-1,false);
-  if(b.dataset.guide==='next')applyGuide(state.guide+1,false);
-  if(b.dataset.guide==='detail')applyGuide(state.guide,true);
-});
-profile.addEventListener('click',function(ev){
-  var b=ev.target.closest('[data-person]');if(!b)return;
-  selectPerson(b.dataset.person,true,false);
-});
-profile.addEventListener('input',function(ev){
-  if(!ev.target.classList.contains('person-search'))return;
-  searchTerm=ev.target.value;var pos=ev.target.selectionStart||searchTerm.length;renderProfile(state.selected);
-  setTimeout(function(){var input=profile.querySelector('.person-search');if(input){input.focus();try{input.setSelectionRange(pos,pos)}catch(_){}}},0);
-});
-riverDetail.querySelector('.rd-close').addEventListener('click',function(ev){ev.stopPropagation();riverDetail.classList.remove('open');highlightCard(null)});
-pane.addEventListener('click',function(ev){if(!ev.target.closest('.river-detail')&&!ev.target.closest('.bubble'))riverDetail.classList.remove('open')});
-hoverCanvas.addEventListener('mousemove',function(ev){
-  var r=hoverCanvas.getBoundingClientRect(), mx=ev.clientX-r.left, my=ev.clientY-r.top;
-  if(state.view==='overview'){
-    var n=findOverviewNode(mx,my);hoverCanvas.style.cursor=n?'pointer':'default';
-    if(n!==state.hover){state.hover=n;drawHover()}
-    if(n){showOverviewTooltip(n,ev);riverLens.style.display='none'}
-    else{hoverNote.style.display='none';if(inOverviewRiver(my))showLens(Math.round(YEAR_MIN+((mx-OP.left)/(W-OP.left-OP.right))*YEAR_SPAN),ev);else riverLens.style.display='none'}
-    return;
+
+  function el(t,a,p){var n=document.createElementNS(SVGNS,t);if(a)for(var k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function darken(hex,f){var n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;return 'rgb('+Math.round(r*f)+','+Math.round(g*f)+','+Math.round(b*f)+')';}
+  function clamp(v,a,b){return v<a?a:v>b?b:v;}
+  function hash01(s){s=String(s);var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return ((h>>>0)%10000)/10000;}
+  function smooth(pts){if(pts.length<2)return '';var d='';for(var i=0;i<pts.length-1;i++){var p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||pts[i+1];var c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6,c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;d+='C'+c1x.toFixed(2)+' '+c1y.toFixed(2)+' '+c2x.toFixed(2)+' '+c2y.toFixed(2)+' '+p2[0].toFixed(2)+' '+p2[1].toFixed(2)+' ';}return d;}
+  function insideOut(L){var idx=L.map(function(_,i){return i;});idx.sort(function(a,b){return L[a].total-L[b].total;});var top=0,bot=0,tops=[],bots=[];idx.forEach(function(i){if(top<bot){top+=L[i].total;tops.push(i);}else{bot+=L[i].total;bots.push(i);}});return bots.reverse().concat(tops);}
+  var ORDER=insideOut(LAYERS);
+  function makePattern(defs,id,color,kind){var p=el('pattern',{id:id,width:7,height:7,patternUnits:'userSpaceOnUse'},defs);var ink=darken(color,0.5);if(kind==='hatch')p.setAttribute('patternTransform','rotate(45)');if(kind==='hatchR')p.setAttribute('patternTransform','rotate(-45)');if(kind==='dots'||kind==='dotsB'){el('circle',{cx:3.5,cy:3.5,r:(kind==='dots'?0.9:1.4),fill:ink,opacity:0.22},p);}else if(kind==='cross'){el('path',{d:'M0 3.5 H7 M3.5 0 V7',stroke:ink,'stroke-width':0.8,opacity:0.18},p);}else{el('line',{x1:0,y1:0,x2:0,y2:7,stroke:ink,'stroke-width':1.1,opacity:0.20},p);}}
+  function findStream(name){for(var i=0;i<STREAMS.length;i++)if(STREAMS[i].person===name)return STREAMS[i];return null;}
+
+  var state={mode:'global',key:null};
+  var geom=null,bandPaths=[],dotEls={},dotData=[],dotByPerson={};
+
+  var W=0,H=0;
+  function build(){
+    W=stage.clientWidth||1000; H=stage.clientHeight||700;
+    svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.setAttribute('width',W); svg.setAttribute('height',H);
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    labelsEl.innerHTML=''; if(cardsEl)cardsEl.innerHTML=''; bandPaths=[]; dotEls={}; dotData=[]; dotByPerson={};
+    var xOf=function(y){return (y-YMIN)/YSPAN*W;};
+    var riverTop=116,riverBottom=H-104,cy=(riverTop+riverBottom)/2,avail=(riverBottom-riverTop)*0.9;
+    function smA(a){var K=[1,3,5,3,1],o=new Array(a.length);for(var i=0;i<a.length;i++){var s=0,w=0;for(var t=-2;t<=2;t++){var x=i+t;if(x<0||x>=a.length)continue;var k=K[t+2];s+=a[x]*k;w+=k;}o[i]=w?s/w:0;}return o;}
+    var thick=LAYERS.map(function(l){return smA(smA(l.values.map(function(v){return Math.sqrt(Math.max(0,v||0));})));});
+    var totalRaw=YEARS.map(function(_,j){var s=0;for(var k=0;k<LAYERS.length;k++)s+=thick[k][j];return s;});
+    var S=avail/(Math.max.apply(null,totalRaw)||1);
+    var defs=el('defs',null,svg); LAYERS.forEach(function(l,k){makePattern(defs,'tex'+k,l.color,l.tex);});
+    var bandTop=LAYERS.map(function(){return new Array(N);}),bandBot=LAYERS.map(function(){return new Array(N);});
+    var envTop=new Array(N),envBot=new Array(N);
+    for(var j=0;j<N;j++){var stackH=totalRaw[j]*S;var y=cy-stackH/2;envTop[j]=y;envBot[j]=y+stackH;for(var oi=0;oi<ORDER.length;oi++){var k=ORDER[oi],h=thick[k][j]*S;bandTop[k][j]=y;bandBot[k][j]=y+h;y+=h;}}
+    geom={xOf:xOf,bandTop:bandTop,bandBot:bandBot,envTop:envTop,envBot:envBot,riverTop:riverTop,riverBottom:riverBottom,cy:cy};
+
+    var gR=el('g',{},svg);
+    LAYERS.forEach(function(l,k){
+      var tp=[],bp=[];for(var j=0;j<N;j++){var x=xOf(YEARS[j]);tp.push([x,bandTop[k][j]]);bp.push([x,bandBot[k][j]]);}
+      var d='M'+tp[0][0].toFixed(2)+' '+tp[0][1].toFixed(2)+' '+smooth(tp)+'L'+bp[N-1][0].toFixed(2)+' '+bp[N-1][1].toFixed(2)+' '+smooth(bp.slice().reverse())+'Z';
+      var pc=el('path',{d:d,fill:l.color,opacity:0.95,'data-layer':k},gR); pc.style.cursor='pointer';
+      el('path',{d:d,fill:'url(#tex'+k+')','pointer-events':'none'},gR);
+      el('path',{d:'M'+tp[0][0].toFixed(2)+' '+tp[0][1].toFixed(2)+' '+smooth(tp),fill:'none',stroke:'rgba(247,240,224,.24)','stroke-width':1,'pointer-events':'none'},gR);
+      bandPaths[k]=pc; pc.addEventListener('click',function(ev){ev.stopPropagation();selectCircle(l.name);});
+    });
+
+    // —— 墨点：每位交游者一点，鲜艳分色 ——
+    var gDots=el('g',{},svg); var placed=[];
+    STREAMS.forEach(function(s){var k=LIDX[s.layer];if(k==null)return;var idx=clamp((s.peakYear||s.first||YMIN)-YMIN,0,N-1);
+      var bt=bandTop[k][idx],bb=bandBot[k][idx];if(bb-bt<3){var m=(bt+bb)/2;bt=m-2;bb=m+2;}
+      var x=xOf(s.peakYear||s.first||YMIN)+(hash01(s.person+'x')-0.5)*6;var y=bt+hash01(s.person)*(bb-bt);
+      var r=clamp(2.7+(Math.sqrt(s.total)-1)*0.27,2.6,6.2);placed.push({x:x,y:y,r:r,k:k,s:s});});
+    for(var pass=0;pass<5;pass++){for(var i=0;i<placed.length;i++){for(var jj=i+1;jj<placed.length;jj++){var a=placed[i],b=placed[jj];var dx=b.x-a.x,dy=b.y-a.y,dist=Math.sqrt(dx*dx+dy*dy)||0.01,need=a.r+b.r+1;if(dist<need){var pu=(need-dist)/2/dist;dx*=pu;dy*=pu;a.x-=dx;a.y-=dy*1.6;b.x+=dx;b.y+=dy*1.6;}}}}
+    placed.forEach(function(p){p.x=clamp(p.x,4,W-4);p.y=clamp(p.y,riverTop-8,riverBottom+8);
+      var dc=LAYERS[p.k].dot;var op=clamp(0.84+Math.sqrt(p.s.total)/34,0.84,1);var big=p.s.total>=70;
+      var c=el('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:p.r.toFixed(1),fill:dc,'fill-opacity':op.toFixed(2),stroke:'rgba(36,24,12,.55)','stroke-width':big?1.0:0.5,'data-person':p.s.person},gDots);
+      c.style.cursor='pointer';dotEls[p.s.person]=c;dotData.push(p);dotByPerson[p.s.person]={x:p.x,y:p.y};
+      c.addEventListener('mouseenter',function(ev){showTip(p,ev);c.setAttribute('r',(p.r+1.8).toFixed(1));});
+      c.addEventListener('mousemove',function(ev){moveTip(ev);});
+      c.addEventListener('mouseleave',function(){tipEl.style.display='none';if(!(state.mode==='person'&&state.key===p.s.person))c.setAttribute('r',p.r.toFixed(1));});
+      c.addEventListener('click',function(ev){ev.stopPropagation();selectPerson(p.s.person);});});
+
+    // 纪元 + 刻度 + 锚点
+    var eraY=H-86,eraH=21,tint=['#C9B79A','#B79C7A','#9A8568','#84704F'];
+    ERAS.forEach(function(e,i){var x0=xOf(Math.max(e.start,YMIN)),x1=xOf(Math.min(e.end,YMAX));
+      el('rect',{x:x0.toFixed(1),y:eraY,width:Math.max(1,x1-x0).toFixed(1),height:eraH,fill:tint[i%4],opacity:0.55},svg);
+      el('line',{x1:x0.toFixed(1),y1:riverTop,x2:x0.toFixed(1),y2:(eraY+eraH),stroke:'rgba(36,29,21,.15)','stroke-width':1,'stroke-dasharray':'2 5'},svg);
+      var t=el('text',{x:((x0+x1)/2).toFixed(1),y:(eraY+14),'text-anchor':'middle','font-size':12,'font-weight':800,fill:'#332815'},svg);t.textContent=e.label;});
+    el('line',{x1:xOf(YMAX).toFixed(1),y1:riverTop,x2:xOf(YMAX).toFixed(1),y2:(eraY+eraH),stroke:'rgba(36,29,21,.15)','stroke-width':1,'stroke-dasharray':'2 5'},svg);
+    var tickY=eraY+eraH+3;
+    for(var yr=Math.ceil(YMIN/5)*5;yr<=YMAX;yr+=5){var x=xOf(yr),mj=(yr%10===0);el('line',{x1:x.toFixed(1),y1:tickY,x2:x.toFixed(1),y2:tickY+(mj?8:5),stroke:'rgba(36,29,21,.5)','stroke-width':mj?1.1:0.6},svg);if(mj){var ty=el('text',{x:x.toFixed(1),y:tickY+19,'text-anchor':'middle','font-size':10.5,'font-weight':700,fill:'#564732'},svg);ty.textContent=yr;}}
+    ANCHORS.forEach(function(a){var x=xOf(a.year);
+      el('line',{x1:x.toFixed(1),y1:riverTop,x2:x.toFixed(1),y2:(eraY-10),stroke:'rgba(138,75,47,.30)','stroke-width':1,'stroke-dasharray':'1 5'},svg);
+      el('path',{d:'M'+x.toFixed(1)+' '+(eraY-11)+' L'+(x-5).toFixed(1)+' '+(eraY-3)+' L'+(x+5).toFixed(1)+' '+(eraY-3)+' Z',fill:'#8A4B2F'},svg);
+      var at=el('text',{x:x.toFixed(1),y:(eraY-15),'text-anchor':'middle','font-size':10,'font-weight':800,fill:'#8A4B2F'},svg);at.textContent=a.year;});
+
+    LAYERS.forEach(function(l,k){var pj=0,pv=-1;for(var j=0;j<N;j++){if(thick[k][j]>pv){pv=thick[k][j];pj=j;}}if(pv*S<30)return;
+      var x=xOf(YEARS[pj]),my=(bandTop[k][pj]+bandBot[k][pj])/2;var d=document.createElement('div');d.className='river-band-label';d.style.left=x+'px';d.style.top=my+'px';d.innerHTML='<i style="background:'+l.color+'"></i>'+l.name;labelsEl.appendChild(d);});
+
+    placeCards();
+
+    var lg='';LAYERS.forEach(function(l,i){lg+='<span class="lg" data-layer="'+i+'"><i style="background:'+l.color+'"></i>'+l.name+'</span>';});
+    if(legendEl)legendEl.innerHTML=lg;
+    if(footEl)footEl.textContent='河宽 ∝ √(当年往来次数)，已均匀压缩主河道以显支流 · 居中对称基线不表示绝对零点 · 墨点一人，点径∝往来频次，色分六圈 · 数据 295 人 / 6587 次往来';
+    applyHighlight();
   }
-  var g=findThread(mx,my);
-  hoverCanvas.style.cursor=g?'pointer':'default';
-  if(g!==state.hover){state.hover=g;drawHover();}
-  showThreadTooltip(g,ev);
-});
-hoverCanvas.addEventListener('mouseleave',function(){state.hover=null;hoverCanvas.style.cursor='default';hoverNote.style.display='none';riverLens.style.display='none';drawHover();});
-hoverCanvas.addEventListener('click',function(ev){
-  var r=hoverCanvas.getBoundingClientRect(), mx=ev.clientX-r.left, my=ev.clientY-r.top;
-  if(state.view==='overview'){var n=findOverviewNode(mx,my);if(n){state.selected=n.stream;renderProfile(n.stream);showPopup(streamDetailObject(n.stream),ev);drawHover()}return}
-  var g=findThread(mx,my);
-  if(g){state.selected=g.s;renderProfile(g.s);drawHover();}
-});
-window.addEventListener('resize',resize);
-mergeData();setActiveButtons();resize();
+
+  // —— 引线卡片：贴河岸、按年代铺、短引线接河面，不压墨点 ——
+  function placeCards(){
+    if(!cardsEl)return; var gLead=el('g',{},svg);
+    var CW=166,CH=62;
+    // 用户标注红框（图像像素 → 舞台比例：stage 2292×1748）+ 左下空白补一格 = 12 格
+    var SLOTS=[
+      {xf:0.8281,yf:0.0761},{xf:0.5057,yf:0.1173},{xf:0.3198,yf:0.2037},
+      {xf:0.5833,yf:0.2328},{xf:0.9167,yf:0.2328},{xf:0.2360,yf:0.3164},
+      {xf:0.1789,yf:0.4194},{xf:0.3390,yf:0.6310},{xf:0.3826,yf:0.7632},
+      {xf:0.9093,yf:0.7700},{xf:0.5646,yf:0.8101},{xf:0.1780,yf:0.5850}
+    ];
+    var cards=CARD_LIST.map(function(cd){var dot=dotByPerson[cd.p];return dot?{cd:cd,dot:dot}:null;}).filter(Boolean);
+    // 贪心最近匹配：每张卡落到离其墨点最近的红框，引线最短
+    var pairs=[];
+    cards.forEach(function(c,ci){SLOTS.forEach(function(s,si){var dx=c.dot.x/W-s.xf,dy=c.dot.y/H-s.yf;pairs.push({ci:ci,si:si,d:dx*dx+dy*dy});});});
+    pairs.sort(function(a,b){return a.d-b.d;});
+    var uc={},us={},placed=[];
+    pairs.forEach(function(p){if(uc[p.ci]||us[p.si])return;uc[p.ci]=1;us[p.si]=1;placed.push({c:cards[p.ci],s:SLOTS[p.si]});});
+    placed.forEach(function(pl){
+      var it=pl.c,s=pl.s;
+      var x=clamp(s.xf*W-CW/2,6,W-CW-6), y=clamp(s.yf*H-CH/2,6,H-CH-118);
+      var por=PORTRAITS[it.cd.p];
+      var div=document.createElement('div');div.className='river-card';div.style.left=x.toFixed(0)+'px';div.style.top=y.toFixed(0)+'px';div.setAttribute('data-person',it.cd.p);
+      div.innerHTML='<div class="rc-photo">'+(por?'<img src="'+por+'" alt="">':'<span>'+esc(it.cd.p.charAt(0))+'</span>')+'</div><div class="rc-body"><div class="rc-name">'+esc(it.cd.p)+'</div><div class="rc-cap">'+esc(it.cd.c)+'</div></div>';
+      cardsEl.appendChild(div);
+      div.addEventListener('click',function(){selectPerson(it.cd.p);});
+      div.addEventListener('mouseenter',function(){div.classList.add('hot');});
+      div.addEventListener('mouseleave',function(){div.classList.remove('hot');});
+      var d=it.dot, sx=clamp(d.x,x,x+CW), sy=clamp(d.y,y,y+CH);
+      el('path',{d:'M'+sx.toFixed(1)+' '+sy.toFixed(1)+' L'+d.x.toFixed(1)+' '+d.y.toFixed(1),stroke:'rgba(58,44,28,.5)','stroke-width':1,fill:'none'},gLead);
+      el('circle',{cx:d.x.toFixed(1),cy:d.y.toFixed(1),r:'3.2',fill:'none',stroke:'#8A4B2F','stroke-width':1.3},gLead);
+    });
+  }
+
+  function showTip(p,ev){var s=p.s;tipEl.innerHTML='<b>'+esc(s.person)+'</b>　'+esc(s.layer)+'<br>往来 '+s.total+' 次 · '+s.first+'–'+s.last+'　点击深读';tipEl.style.display='block';moveTip(ev);}
+  function moveTip(ev){var r=stage.getBoundingClientRect();var x=ev.clientX-r.left+14,y=ev.clientY-r.top+14;if(x>r.width-240)x=ev.clientX-r.left-226;tipEl.style.left=x+'px';tipEl.style.top=y+'px';}
+  function applyHighlight(){
+    LAYERS.forEach(function(l,k){if(!bandPaths[k])return;var off=(state.mode==='circle'&&state.key!==l.name);bandPaths[k].setAttribute('opacity',off?0.24:0.95);});
+    dotData.forEach(function(p){var c=dotEls[p.s.person];if(!c)return;var dim=false,hi=false;
+      if(state.mode==='circle')dim=(p.s.layer!==state.key);
+      if(state.mode==='person'){hi=(p.s.person===state.key);dim=!hi;}
+      c.style.opacity=dim?0.12:1;if(hi){c.setAttribute('r',(p.r+2.6).toFixed(1));c.setAttribute('stroke','#3A1E0E');c.setAttribute('stroke-width',1.8);}else{c.setAttribute('r',p.r.toFixed(1));c.setAttribute('stroke','rgba(36,24,12,.55)');c.setAttribute('stroke-width',p.s.total>=70?1.0:0.5);}});
+  }
+  function selectCircle(name){state.mode='circle';state.key=name;renderCircle(name);applyHighlight();asideEl.scrollTop=0;}
+  function selectPerson(name){var s=findStream(name);if(!s)return;state.mode='person';state.key=name;renderPerson(s);applyHighlight();asideEl.scrollTop=0;}
+  function goGlobal(){state.mode='global';state.key=null;renderGlobal();applyHighlight();asideEl.scrollTop=0;}
+
+  function renderGlobal(){
+    var maxV=TYPE_TOT[0]?TYPE_TOT[0].v:1,minV=TYPE_TOT[TYPE_TOT.length-1]?TYPE_TOT[TYPE_TOT.length-1].v:1;
+    var cloud=TYPE_TOT.map(function(d){var t=(Math.sqrt(d.v)-Math.sqrt(minV))/((Math.sqrt(maxV)-Math.sqrt(minV))||1);var fs=(14+t*22).toFixed(1);var col='rgb('+Math.round(120-78*t)+','+Math.round(88-58*t)+','+Math.round(70-46*t)+')';return '<span class="w" style="font-size:'+fs+'px;color:'+col+'">'+esc(d.k)+'</span>';}).join('');
+    var most='<span class="k">往来最密</span>'+TOP3.map(function(s,i){return esc(s.person)+(i===0?'（'+s.total+'次）':'');}).join('、')+'。<br>'+
+             '<span class="k">相伴最久</span>'+esc(LONGEST.person)+'，自 '+LONGEST.first+' 直贯 '+LONGEST.last+'，几与一生等长。<br>'+
+             '<span class="k">晚岁新声</span>潘天寿、李可染辈，在西湖画室里的问学。';
+    asideEl.innerHTML=
+      '<div class="as-kicker">交游小传</div>'+
+      '<h2 class="as-title">一生，画成一条河</h2>'+
+      '<div class="as-sub">六圈交游 · 九十年涨落</div>'+
+      '<p class="as-essay"><span class="as-lead">河</span>一个人的一生，可以画成一条河。黄宾虹九十年里往还过的三百余位师友，被分作六圈交游——书画、金石、诗文、出版、教育、护持。河道的宽窄，是那一年往来的疏密；河水的分股，是六圈交情的此消彼长。</p>'+
+      '<div class="as-stats"><div class="as-stat"><b>295</b><span>交游其人</span></div><div class="as-stat"><b>6587</b><span>往来其事</span></div><div class="as-stat"><b>91</b><span>春秋之间</span></div><div class="as-stat"><b>6</b><span>交游之圈</span></div></div>'+
+      '<div class="as-h">交游的形态</div><div class="as-cloud">'+cloud+'</div>'+
+      '<div class="as-h">长河之最</div><div class="as-most">'+most+'</div>'+
+      '<div class="as-hint">点开河中任一道<b style="color:var(--accent)">色带</b>，看一圈交游如何聚散；点开任一颗<b style="color:var(--accent)">墨点</b>或<b style="color:var(--accent)">卡片</b>，听一个人与他之间的一段交情。</div>';
+  }
+
+  function renderCircle(name){
+    var idx=LIDX[name];var inLayer=STREAMS.filter(function(s){return s.layer===name;});
+    var people=inLayer.slice().sort(function(a,b){return b.total-a.total;});
+    var totalI=inLayer.reduce(function(a,s){return a+s.total;},0);
+    var T={};inLayer.forEach(function(s){var c=s.typeCounts||{};for(var k in c){if(k==='其他')continue;T[k]=(T[k]||0)+c[k];}});
+    var tt=Object.keys(T).map(function(k){return {k:k,v:T[k]};}).sort(function(a,b){return b.v-a.v;}).slice(0,5);var tmax=tt[0]?tt[0].v:1;
+    var first=Math.min.apply(null,inLayer.map(function(s){return s.first;})),last=Math.max.apply(null,inLayer.map(function(s){return s.last;}));
+    var rows=tt.map(function(d){return '<div class="as-trow"><span class="tn">'+esc(d.k)+'</span><span class="tb" style="width:'+Math.max(6,d.v/tmax*100)+'%;background:'+LAYERS[idx].color+'"></span><span class="tv">'+d.v+'</span></div>';}).join('');
+    var chips=people.slice(0,12).map(function(s){return '<button data-person="'+esc(s.person)+'">'+esc(s.person)+'</button>';}).join('');
+    asideEl.innerHTML=
+      '<div class="as-kicker">第'+'一二三四五六'.charAt(idx)+'圈交游</div>'+
+      '<h2 class="as-title" style="color:'+darken(LAYERS[idx].color,0.78)+'">'+esc(name)+'</h2>'+
+      '<div class="as-sub">'+inLayer.length+' 人 · '+totalI+' 次往来 · '+first+'–'+last+'</div>'+
+      '<div class="as-rule"></div>'+
+      '<p class="as-essay">'+esc(CIRCLE_ESSAY[name]||'').replace(/「([^」]+)」/g,'<span class="em">「$1」</span>')+'</p>'+
+      '<div class="as-h">这一圈的往来形态</div><div class="as-types">'+rows+'</div>'+
+      '<div class="as-h">圈中其人</div><div class="as-people">'+chips+'</div>'+
+      '<button class="as-back" data-back="1">← 看完了，回长河全景</button>';
+  }
+
+  function personProse(s){var span=s.last-s.first;var types=Object.keys(s.typeCounts||{}).filter(function(k){return k!=='其他';}).map(function(k){return {k:k,v:s.typeCounts[k]};}).sort(function(a,b){return b.v-a.v;});var t1=types[0]?types[0].k:'往来',t2=types[1]?types[1].k:'';
+    return esc(s.person)+'，黄宾虹'+esc(s.layer)+'中的一脉。两人的往来见于 '+s.first+' 至 '+s.last+' 年间'+(span>=40?'，几乎跨越其一生':span>=15?'，前后绵延 '+span+' 年':'')+'，以「<span class="em">'+esc(t1)+'</span>」为主'+(t2?'，间杂「'+esc(t2)+'」':'')+'，至 '+s.peakYear+' 年最密。';}
+  function renderPerson(s){
+    var note=NOTE[s.person],por=PORTRAITS[s.person];
+    var types=Object.keys(s.typeCounts||{}).filter(function(k){return k!=='其他';}).map(function(k){return {k:k,v:s.typeCounts[k]};}).sort(function(a,b){return b.v-a.v;}).slice(0,6);var tmax=types[0]?types[0].v:1;
+    var rows=types.map(function(d){return '<div class="as-trow"><span class="tn">'+esc(d.k)+'</span><span class="tb" style="width:'+Math.max(6,d.v/tmax*100)+'%"></span><span class="tv">'+d.v+'</span></div>';}).join('');
+    var by=s.byYear||{},ys=[];for(var y=s.first;y<=s.last;y++)ys.push((by[y]&&by[y].total)||0);var ymax=Math.max.apply(null,ys.concat([1]));
+    var spark=ys.map(function(v){return '<i style="height:'+Math.max(2,v/ymax*34)+'px" title="'+v+'"></i>';}).join('');
+    var portrait='<div class="as-portrait">'+(por?'<img src="'+por+'" alt="">':'<span class="mono">'+esc(s.person.charAt(0))+'</span>')+'<span class="ph">'+(por?'肖像':'像 · 待补')+'</span></div>';
+    var essay=note?('<span class="as-lead">'+esc(s.person.charAt(0))+'</span>'+esc(note.n).replace(/「([^」]+)」/g,'<span class="em">「$1」</span>')):personProse(s);
+    var scrollBlock='';
+    if(note&&note.a&&note.a.length){
+      var paras=note.a.map(function(p){return '<p class="as-anecdote">'+esc(p).replace(/「([^」]+)」/g,'<span class="em">「$1」</span>')+'</p>';}).join('');
+      scrollBlock='<div class="as-scroll"><div class="as-h">交游一束</div>'+paras+'<div class="as-fig"><div><div class="l">图 · 待补</div><div class="c">'+esc(note.f||'')+'</div></div></div></div>';
+    }
+    asideEl.innerHTML=
+      portrait+
+      '<div class="as-kicker">'+esc(s.layer)+'</div>'+
+      '<h2 class="as-title">'+esc(s.person)+'</h2>'+
+      '<div class="as-sub">往来 '+s.total+' 次 · '+s.first+'–'+s.last+' · 峰于 '+s.peakYear+'</div>'+
+      '<div class="as-rule"></div>'+
+      '<p class="as-essay">'+essay+'</p>'+
+      '<div class="as-h">往来的形态</div><div class="as-types">'+rows+'</div>'+
+      '<div class="as-h">往来年表 '+s.first+'–'+s.last+'</div><div class="as-spark">'+spark+'</div>'+
+      scrollBlock+
+      '<button class="as-back" data-back="1">← 看完了，回长河全景</button>';
+  }
+
+  asideEl.addEventListener('click',function(ev){var b=ev.target.closest('[data-back]');if(b){goGlobal();return;}var p=ev.target.closest('[data-person]');if(p){selectPerson(p.getAttribute('data-person'));return;}});
+  if(legendEl)legendEl.addEventListener('click',function(ev){var s=ev.target.closest('[data-layer]');if(s)selectCircle(LAYERS[+s.getAttribute('data-layer')].name);});
+
+  var rt;function onResize(){clearTimeout(rt);rt=setTimeout(build,160);}
+  window.addEventListener('resize',onResize);
+  build(); renderGlobal();
 })();
   };
 

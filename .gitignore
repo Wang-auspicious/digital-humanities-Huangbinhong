@@ -1,1 +1,27 @@
+# —— 密钥 / 凭证 ——
 deepseek_key.txt
+*_key.txt
+*.key
+*.env
+
+# —— 临时 / 调试脚本与产物（下划线前缀约定）——
+_*
+*.bak
+*.bak_*
+HBH.html.bak_*
+__pycache__/
+*.pyc
+*.log
+.omx/
+.playwright-cli/
+demo_outputs/
+
+# —— 竞赛原始数据（体量大 / 官方提供，不入库）——
+MC1/
+MC2/
+VAST_Challenge_2026_MC1/
+VAST_Challenge_2026_MC2/
+*.zip
+
+# —— 零散下载件 ——
+2604.10696v1.pdf
