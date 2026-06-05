@@ -59,6 +59,9 @@ class GraphRAGRetriever:
         self.use_reranker = C.USE_RERANKER if use_reranker is None else use_reranker
         self._emb = None
         self._reranker = None
+        # 画史知识卡片切片下标（用于定向注入）
+        self.card_cids = [i for i, c in enumerate(self.chunks)
+                          if c.get("source_type") == "画史综述"]
 
     # ── 懒加载模型 ──
     @property
@@ -76,9 +79,26 @@ class GraphRAGRetriever:
         return self._reranker
 
     # ── 单路召回 ──
-    def _dense(self, query, k):
-        qv = self.emb.encode([C.EMB_QUERY_INSTRUCTION + query],
-                             normalize_embeddings=True, convert_to_numpy=True)[0]
+    def _encode_query(self, query):
+        return self.emb.encode([C.EMB_QUERY_INSTRUCTION + query],
+                               normalize_embeddings=True, convert_to_numpy=True)[0]
+
+    def _inject_cards(self, qv, final_cids):
+        """按稠密相似度，把强相关的画史卡片注入最终上下文（top-1/top-2，阈值从严）。"""
+        out = list(final_cids)
+        if not self.card_cids:
+            return out
+        scored = sorted(((float(self.dense[c] @ qv), c) for c in self.card_cids),
+                        reverse=True)
+        for rank, (s, c) in enumerate(scored[:2]):
+            thr = C.CARD_INJECT_SIM1 if rank == 0 else C.CARD_INJECT_SIM2
+            if s >= thr and c not in out:
+                out.append(c)
+        return out
+
+    def _dense(self, query, k, qv=None):
+        if qv is None:
+            qv = self._encode_query(query)
         sims = self.dense @ qv
         idx = np.argpartition(-sims, min(k, len(sims) - 1))[:k]
         idx = idx[np.argsort(-sims[idx])]
@@ -140,7 +160,8 @@ class GraphRAGRetriever:
                        if e in self.corp.eid2cid]
 
         # 2) 文本召回 + 融合
-        dense = self._dense(query, C.DENSE_TOPK)
+        qv = self._encode_query(query)
+        dense = self._dense(query, C.DENSE_TOPK, qv=qv)
         bm25 = self._bm25(query, C.BM25_TOPK)
         fused = self._rrf([dense, bm25])
         cand = [cid for cid, _ in fused[:fuse_k]]
@@ -164,6 +185,9 @@ class GraphRAGRetriever:
         else:
             ranked = cand
         final_cids = ranked[:final_k]
+
+        # 4.5) 定向注入强相关画史卡片（补足年谱所缺的画风/评价/聚合类知识）
+        final_cids = self._inject_cards(qv, final_cids)
 
         # 5) 汇总三元组（实体相关 + 最终切片事件的边），分层排序去重并截断
         final_eids = [self.chunks[cid]["event_id"] for cid in final_cids]

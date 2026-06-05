@@ -177,8 +177,33 @@ class Corpus:
                 "orgs": sorted(evt_orgs.get(eid, [])),
                 "artworks": sorted(evt_artworks.get(eid, [])),
             })
+        # —— 追加：人工画史知识卡片（补足年谱所缺的画风/评价/聚合类知识，与年谱切片一同被检索）——
+        for card in self._load_cards():
+            txt = (card.get("text") or "").strip()
+            if len(txt) < 6:
+                continue
+            chunks.append({
+                "cid": len(chunks),
+                "event_id": "card_" + str(card.get("id", len(chunks))),
+                "year": card.get("year"),
+                "date": None,
+                "source_type": "画史综述",         # 与年谱事件区分，提示模型这是画史共识而非具体史料
+                "source_page": None,
+                "topics": card.get("topics", []),
+                "title": card.get("title", ""),
+                "text": (card.get("title", "") + "。" + txt) if card.get("title") else txt,
+                "persons": [], "places": [], "concepts": [], "orgs": [], "artworks": [],
+            })
+
         self.chunks = chunks
         self.eid2cid = {c["event_id"]: c["cid"] for c in chunks}
+
+    def _load_cards(self):
+        try:
+            cards = _load(C.CARDS_JSON)
+            return cards if isinstance(cards, list) else []
+        except Exception:
+            return []
 
     # ── 边 → 三元组 ───────────────────────────────────────────────────────────
     def edge_to_triple(self, e):

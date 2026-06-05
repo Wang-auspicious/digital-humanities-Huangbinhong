@@ -1995,6 +1995,10 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
 <script>
 (function(){
   var RAG_URL = "http://localhost:8765/chat";
+  // —— 心跳：让后台 RAG 进程随网页存活；页面一关，心跳停止，后台几秒内自动退出（启动器 启动黄宾虹.cmd 配套）——
+  var HB_URL = "http://localhost:8765/heartbeat";
+  function beat(){ try{ fetch(HB_URL,{method:'GET',cache:'no-store',mode:'cors'}).catch(function(){}); }catch(e){} }
+  beat(); setInterval(beat, 4000);
   var sprite = document.getElementById('hbh-sprite');
   var hint   = document.getElementById('hbh-hint');
   var chat   = document.getElementById('hbh-chat');

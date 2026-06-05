@@ -1,9 +1,9 @@
 {
-  "n_chunks": 5143,
+  "n_chunks": 5151,
   "emb_model": "BAAI/bge-small-zh-v1.5",
   "emb_dim": 512,
   "n_edges": 4731,
   "n_persons": 302,
   "n_places": 55,
-  "build_seconds": 70.1
+  "build_seconds": 112.3
 }

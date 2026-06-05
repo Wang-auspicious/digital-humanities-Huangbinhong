@@ -39,6 +39,22 @@ os.environ.pop("ANTHROPIC_AUTH_TOKEN", None)      # 由 load_key() 从本地 txt
 PORT = int(os.environ.get("HBH_RAG_PORT", "8765"))
 MAX_HISTORY_TURNS = 6      # 仅保留最近若干轮，控制上下文与时延
 
+# —— 心跳看门狗：网页每隔几秒 GET /heartbeat；一旦页面关闭、心跳中断超过 GRACE 秒，服务自动退出 ——
+# 容忍刷新（刷新只会短暂断流，几秒内恢复）；首次心跳到达前永不退出（等待浏览器加载 + 模型载入）。
+import threading
+import time
+HEARTBEAT_GRACE = float(os.environ.get("HBH_HEARTBEAT_GRACE", "12"))
+_last_beat = [0.0]
+_connected = [False]
+
+
+def _watchdog():
+    while True:
+        time.sleep(3)
+        if _connected[0] and (time.time() - _last_beat[0] > HEARTBEAT_GRACE):
+            print("页面已关闭（心跳中断 %.0fs），服务自动退出。" % HEARTBEAT_GRACE)
+            os._exit(0)
+
 from graphrag.pipeline import GraphRAG
 from graphrag import llm as L
 from graphrag.prompt import build_prompt
@@ -81,7 +97,7 @@ def answer(message, history):
         return {"answer": txt, "backend": "retrieval-only",
                 "entities": bundle["entities"]}
 
-    out = L.generate(messages, temperature=0.35, max_tokens=2048)
+    out = L.generate(messages, temperature=0.2, max_tokens=2048)
     return {"answer": out, "backend": L.backend_info()[0],
             "entities": bundle["entities"]}
 
@@ -105,6 +121,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(204); self._cors(); self.end_headers()
 
     def do_GET(self):
+        if self.path.startswith("/heartbeat"):
+            _connected[0] = True
+            _last_beat[0] = time.time()
+            return self._json(200, {"ok": True, "beat": True})
         self._json(200, {"ok": True, "model": os.environ.get("ANTHROPIC_MODEL"),
                          "service": "黄宾虹 GraphRAG"})
 
@@ -127,4 +147,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    threading.Thread(target=_watchdog, daemon=True).start()
     ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
