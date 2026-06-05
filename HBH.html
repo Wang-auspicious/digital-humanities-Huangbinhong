@@ -346,113 +346,187 @@
   #hbh-river .as-scroll{max-height:34vh}
 }
 
-/* ===== 笔墨课徒 → #hbh-brush（五笔七墨语法谱 · 矿物国画色 · 宣纸纹理）===== */
+/* ===== 五笔七墨 → #hbh-brush（信息图大报 · 单屏密集六栏 · 白宾虹/黑宾虹双联）===== */
 #hbh-brush{
-  --paper-top:#E9DFC9;--paper-mid:#E2D6BD;--paper-bot:#D5C8AC;
-  --ink:#241D15;--ink-soft:#5A4F40;--accent:#9A4A2C;--bi:#3F5E6E;
+  --paper:#E9DFC9;--paper2:#E2D6BD;--paper3:#D8CBAF;--paperWhite:#F4F1EA;
+  --ink:#221B12;--ink2:#3A2E22;--soft:#6A5C49;--faint:#8C7E68;
+  --line:rgba(58,42,28,.34);--line2:rgba(58,42,28,.16);
+  --accent:#9A4A2C;--accent2:#B86A45;--bi:#3F5E6E;--deep:#23211C;
   --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
-  position:relative;width:100%;height:100%;margin:0;overflow:hidden;
+  overflow:hidden;color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased;
   background:
-    radial-gradient(ellipse at 22% 18%,rgba(255,250,236,.5),transparent 42%),
-    radial-gradient(ellipse at 82% 86%,rgba(120,96,62,.12),transparent 46%),
-    linear-gradient(164deg,var(--paper-top) 0%,var(--paper-mid) 52%,var(--paper-bot) 100%);
-  color:var(--ink);font-family:var(--serif);user-select:none;-webkit-user-select:none;
+    radial-gradient(120% 70% at 10% 2%,rgba(255,252,242,.5),transparent 40%),
+    linear-gradient(160deg,var(--paper) 0%,var(--paper2) 56%,var(--paper3) 100%);
 }
-#hbh-brush *{box-sizing:border-box}
-#hbh-brush:before{content:"";position:absolute;inset:-20px;z-index:0;pointer-events:none;mix-blend-mode:multiply;opacity:.5;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E") 0 0/150px 150px,
-    repeating-linear-gradient(7deg,rgba(80,60,38,.05) 0 1px,transparent 1px 9px);}
-#hbh-brush .b-wrap{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;padding:26px 34px 22px}
+#hbh-brush::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.42;
+  background:repeating-linear-gradient(8deg,rgba(80,60,38,.04) 0 1px,transparent 1px 9px),
+            repeating-linear-gradient(99deg,rgba(255,255,255,.05) 0 1px,transparent 1px 13px);}
+#hbh-brush .bx{position:absolute;top:18px;left:0;right:0;bottom:0;z-index:1;display:grid;
+  grid-template-columns:32px 196px minmax(0,1fr) 182px minmax(0,1fr) 206px;
+  grid-template-rows:minmax(0,1fr) 116px 18px;}
+#hbh-brush .bx>*{min-width:0;min-height:0}
+/* 列容器 */
+#hbh-brush .col{border-right:1px solid var(--line);padding:8px 11px;display:flex;flex-direction:column;
+  gap:6px;overflow:hidden}
+#hbh-brush .vh{font:800 11px/1.15 var(--serif);color:var(--accent);letter-spacing:.2em;
+  border-bottom:1px solid var(--line);padding-bottom:3px;margin-bottom:1px;flex:0 0 auto}
+#hbh-brush p,#hbh-brush .tx{font-size:10.5px;line-height:1.56;color:var(--ink2);margin:0;text-align:justify}
+#hbh-brush .tx b,#hbh-brush p b{color:var(--accent);font-weight:700}
+#hbh-brush .mut{font-size:8.6px;line-height:1.46;color:var(--faint);letter-spacing:.01em}
 
-/* 顶栏：题头 + 模式切换 */
-#hbh-brush .b-mast{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1px solid rgba(60,45,32,.28);padding-bottom:12px;flex:0 0 auto}
-#hbh-brush .b-mast .seal{width:46px;height:46px;flex:0 0 auto;display:grid;place-items:center;border:2px solid var(--accent);color:var(--accent);font:900 19px/1 "KaiTi","STKaiti",var(--serif);transform:rotate(-5deg);margin-right:16px}
-#hbh-brush .b-mast .mt{display:flex;align-items:flex-end;gap:14px;flex:1 1 auto;min-width:0}
-#hbh-brush .b-kicker{font-size:11px;letter-spacing:.26em;color:var(--accent);font-weight:900;margin-bottom:6px}
-#hbh-brush .b-h1{font-size:30px;font-weight:900;letter-spacing:.1em;line-height:1}
-#hbh-brush .b-quote{font-size:13px;color:var(--ink-soft);line-height:1.6;max-width:520px;margin-bottom:2px}
-#hbh-brush .b-quote b{color:var(--ink);font-weight:700}
-#hbh-brush .b-quote .qs{display:block;font-size:10.5px;color:var(--accent);letter-spacing:.08em;margin-top:2px}
-#hbh-brush .b-toggle{flex:0 0 auto;display:flex;border:1px solid rgba(60,45,32,.4);border-radius:999px;overflow:hidden}
-#hbh-brush .b-toggle button{border:0;background:transparent;color:var(--ink-soft);font:700 13px/1 var(--serif);letter-spacing:.14em;padding:9px 17px;cursor:pointer}
-#hbh-brush .b-toggle button.on{background:var(--accent);color:#fff6e6}
+/* 左·竖排刊名 rail */
+#hbh-brush .rail{position:relative;border-right:1px solid var(--line);display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;padding:8px 0 12px;background:rgba(58,42,28,.03)}
+#hbh-brush .rail .stamp{position:absolute;top:8px;left:50%;transform:translateX(-50%) rotate(-4deg);
+  width:26px;height:32px;display:grid;place-items:center;writing-mode:vertical-rl;background:var(--accent);
+  color:#F4ECDA;font:900 10px/1.05 "KaiTi","STKaiti",var(--serif);border-radius:3px;letter-spacing:.04em;text-align:center}
+#hbh-brush .rail .vtitle{writing-mode:vertical-rl;font:900 35px/1 var(--serif);letter-spacing:.18em;color:var(--ink);
+  text-shadow:0 1px 0 rgba(255,255,255,.3)}
+#hbh-brush .rail .vsub{writing-mode:vertical-rl;font:700 12px/1 var(--serif);letter-spacing:.42em;color:var(--accent);margin-top:11px}
+#hbh-brush .rail .vkik{writing-mode:vertical-rl;font:600 9px/1 var(--serif);letter-spacing:.3em;color:var(--soft);margin-top:9px}
 
-/* ===== 进一·识字 · 课徒册页 ===== */
-#hbh-brush .b-body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-top:10px}
-#hbh-brush .kp-plain{flex:0 0 auto;font-size:12px;line-height:1.66;color:var(--ink-soft);max-width:980px;margin-bottom:8px}
-#hbh-brush .kp-paper{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:row-reverse;align-items:stretch;
-  background:linear-gradient(180deg,rgba(255,251,240,.14),transparent 26%)}
+/* 左栏 c1 */
+#hbh-brush .por{display:flex;gap:9px;align-items:flex-start;flex:0 0 auto}
+#hbh-brush .por .pim{position:relative;width:62px;height:78px;flex:0 0 auto;overflow:hidden;
+  border:1px solid var(--line);background:#cdbf9f;box-shadow:1px 2px 0 rgba(58,42,28,.14)}
+#hbh-brush .por .pim img{width:100%;height:100%;object-fit:cover;object-position:center 14%;
+  filter:grayscale(1) sepia(.4) contrast(1.06)}
+#hbh-brush .por .pm{font-size:9px;line-height:1.52;color:var(--ink2)}
+#hbh-brush .por .pm b{display:block;font-size:15px;font-weight:900;color:var(--ink);letter-spacing:.04em;margin-bottom:2px}
+#hbh-brush .por .age{display:inline-block;margin-top:3px;background:var(--accent);color:#F4ECDA;font:800 9px/1 var(--serif);
+  padding:2px 6px;letter-spacing:.06em}
+#hbh-brush .wb-mini{display:flex;flex-direction:column;gap:4px;flex:0 0 auto}
+#hbh-brush .wb-mini .it{display:grid;grid-template-columns:28px 1fr;gap:7px;align-items:center}
+#hbh-brush .wb-mini svg{width:28px;height:20px;display:block}
+#hbh-brush .wb-mini .wc{font:900 12px/1 var(--serif);color:var(--bi)}
+#hbh-brush .wb-mini .it.va .wc{color:var(--accent)}
+#hbh-brush .wb-mini .wm{font-size:9.4px;line-height:1.32;color:var(--ink2)}
+#hbh-brush .wb-mini .wm b{color:var(--ink);font-weight:700}
+#hbh-brush .dim{display:flex;align-items:flex-end;gap:8px;flex:0 0 auto;margin-top:auto;border-top:1px dashed var(--line);padding-top:6px}
+#hbh-brush .dim .fig{display:flex;align-items:flex-end;gap:1px}
+#hbh-brush .dim .fig i{display:block;width:6px;background:var(--ink2)}
+#hbh-brush .dim .dt{font-size:9px;line-height:1.5;color:var(--soft)}
+#hbh-brush .dim .dt b{display:block;color:var(--accent);font-size:11.5px;font-weight:800}
 
-/* 谱列（右） */
-#hbh-brush .kp-spectrum{flex:0 0 auto;display:flex;flex-direction:row-reverse;gap:14px;padding:4px 6px 4px 22px;border-left:1px solid rgba(60,45,32,.2)}
-#hbh-brush .kp-col{display:flex;flex-direction:column;align-items:center;gap:1px}
-#hbh-brush .kp-col .ch{writing-mode:vertical-rl;font:900 12px/1 var(--serif);letter-spacing:.14em;margin-bottom:7px}
-#hbh-brush .kp-col.bi .ch{color:var(--bi)} #hbh-brush .kp-col.mo .ch{color:var(--accent)}
-#hbh-brush .kpc{position:relative;display:flex;align-items:center;gap:2px;padding:2px 3px;cursor:pointer}
-#hbh-brush .kpc .kc{font-size:29px;font-weight:900;line-height:1;color:var(--ink);transition:color .15s}
-#hbh-brush .kpc .km{writing-mode:vertical-rl;font-size:8.5px;color:var(--ink-soft);letter-spacing:.04em;max-height:52px;overflow:hidden}
-#hbh-brush .kpc .ring{position:absolute;left:-6px;top:50%;width:48px;height:48px;transform:translateY(-50%);opacity:0;transition:opacity .22s;pointer-events:none}
-#hbh-brush .kpc.on .ring{opacity:.95}
-#hbh-brush .kp-col.bi .kpc.on .kc{color:var(--bi)} #hbh-brush .kp-col.mo .kpc.on .kc{color:var(--accent)}
+/* 画栏 通用 */
+#hbh-brush .pcol{padding:0;display:flex;flex-direction:column}
+#hbh-brush .pcap{padding:6px 11px 5px;border-bottom:1px solid var(--line);flex:0 0 auto}
+#hbh-brush .pcap .pt{font:900 14px/1.1 var(--serif);letter-spacing:.05em}
+#hbh-brush .pcap.bai .pt{color:#6b552f}#hbh-brush .pcap.hei .pt{color:var(--accent)}
+#hbh-brush .pcap .ps{font-size:9px;color:var(--soft);letter-spacing:.01em;margin-top:2px}
+#hbh-brush .bars{padding:6px 11px;border-bottom:1px solid var(--line);flex:0 0 auto}
+#hbh-brush .bars .br{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+#hbh-brush .bars .bn{flex:0 0 46px;font-size:9px;color:var(--soft)}
+#hbh-brush .bars .bt{flex:1 1 auto;height:9px;background:rgba(58,42,28,.1)}
+#hbh-brush .bars .bt i{display:block;height:100%;background:var(--ink2)}
+#hbh-brush .bars .bp{flex:0 0 auto;font:800 9px/1 Georgia,serif;color:var(--accent)}
+#hbh-brush .paint{position:relative;flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;background:rgba(58,42,28,.08)}
+#hbh-brush .pcol.hei .paint{background:var(--deep)}
+#hbh-brush .paint img{max-width:100%;max-height:100%;object-fit:contain;display:block;box-shadow:0 4px 16px rgba(30,20,10,.34)}
+#hbh-brush .call{position:absolute;max-width:138px;z-index:3;font-size:9px;line-height:1.42;color:var(--ink);
+  background:rgba(244,241,234,.92);border:1px solid var(--line);padding:3px 6px;letter-spacing:.01em}
+#hbh-brush .pcol.hei .call{background:rgba(35,33,28,.86);color:#E8E3D8;border-color:rgba(233,220,194,.3)}
+#hbh-brush .call b{color:var(--accent)}#hbh-brush .pcol.hei .call b{color:var(--accent2)}
+#hbh-brush .call::after{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 2px rgba(244,241,234,.8)}
+#hbh-brush .call.tl::after{right:-9px;top:6px}#hbh-brush .call.tr::after{left:-9px;top:6px}
+#hbh-brush .call.bl::after{right:-9px;bottom:6px}#hbh-brush .call.br::after{left:-9px;bottom:6px}
+/* 黑·七墨热点标注 */
+#hbh-brush .qhot{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:4px;z-index:4;
+  cursor:default;white-space:nowrap}
+#hbh-brush .qhot.l{flex-direction:row-reverse}
+#hbh-brush .qhot .qd{width:17px;height:17px;flex:0 0 auto;border-radius:50%;background:rgba(154,74,44,.95);
+  border:1.5px solid #F4ECDA;color:#F8EFDD;font:800 10px/1 var(--serif);display:grid;place-items:center;
+  box-shadow:0 1px 4px rgba(8,4,1,.7)}
+#hbh-brush .qhot .ql{font:700 9.2px/1.18 var(--serif);color:#F4ECDA;background:rgba(28,26,21,.82);
+  padding:2px 5px;border-radius:2px;letter-spacing:.03em;max-width:100px;white-space:normal}
+#hbh-brush .qhot .ql b{color:var(--accent2);font-weight:800}
+#hbh-brush .pthumbs{display:flex;gap:5px;padding:5px 11px;border-top:1px solid var(--line);flex:0 0 auto;align-items:center}
+#hbh-brush .pthumbs img{width:28px;height:38px;object-fit:cover;border:1px solid var(--line);filter:saturate(.9)}
+#hbh-brush .pthumbs .tl2{font-size:8.6px;line-height:1.4;color:var(--soft)}
 
-/* 示范（中） */
-#hbh-brush .kp-demo{flex:1 1 auto;position:relative;display:flex;align-items:center;justify-content:center;margin-top:2.5%;min-width:0}
-#hbh-brush .kp-demo .stage{position:relative;width:90%;height:80%;display:grid;place-items:center}
-#hbh-brush .kp-demo svg,#hbh-brush .kp-demo canvas{width:100%;height:100%;display:block}
-#hbh-brush .kp-demo .dlabel{position:absolute;left:1%;bottom:0;font-size:9px;letter-spacing:.1em;color:var(--ink-soft);opacity:.72}
-#hbh-brush .kp-demo .dbig{position:absolute;right:2%;top:2%;text-align:right;pointer-events:none}
-#hbh-brush .kp-demo .dbig .bc{font-size:64px;font-weight:900;line-height:.86;color:rgba(60,45,32,.12)}
-#hbh-brush .kp-demo .dbig .bm{font-size:13px;letter-spacing:.12em;color:var(--accent);margin-top:2px}
-#hbh-brush .kp-demo .dcount{position:absolute;right:3%;top:46%;font:900 13px/1.4 var(--serif);letter-spacing:.08em;color:var(--accent);text-align:right}
+/* 中栏 center */
+#hbh-brush .qm-list{display:flex;flex-direction:column;gap:0;flex:0 0 auto}
+#hbh-brush .qm-list .qi{display:grid;grid-template-columns:16px 1fr;gap:6px;align-items:baseline;padding:2px 0;border-bottom:1px dotted var(--line2)}
+#hbh-brush .qm-list .qc{font:900 13px/1 var(--serif);color:var(--accent)}
+#hbh-brush .qm-list .qt{font-size:9px;line-height:1.4;color:var(--ink2)}
+#hbh-brush .qm-list .qt b{color:var(--ink);font-weight:700}
+#hbh-brush .ji{display:flex;gap:9px;align-items:center;flex:0 0 auto;background:rgba(58,42,28,.05);padding:7px;border:1px solid var(--line2)}
+#hbh-brush .ji-stage{position:relative;width:92px;height:92px;flex:0 0 auto;border:1px solid var(--line);background:#1a1812;overflow:hidden}
+#hbh-brush .ji-stage canvas{width:100%;height:100%;display:block}
+#hbh-brush .ji-ctrl{flex:1 1 auto;min-width:0}
+#hbh-brush .ji-ctrl .jt{font:800 9.5px/1.1 var(--serif);color:var(--ink);letter-spacing:.04em}
+#hbh-brush .ji-num{display:flex;align-items:baseline;gap:5px;margin:1px 0 2px}
+#hbh-brush .ji-num .n{font:900 26px/1 Georgia,serif;color:var(--accent)}
+#hbh-brush .ji-num .u{font-size:9.5px;color:var(--soft)}
+#hbh-brush .ji-slider{width:100%;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;outline:none;
+  background:linear-gradient(90deg,var(--paperWhite),var(--deep));margin:3px 0}
+#hbh-brush .ji-slider::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;
+  background:var(--accent);border:2px solid #F4ECDA;cursor:pointer}
+#hbh-brush .ji-slider::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:2px solid #F4ECDA;cursor:pointer}
+#hbh-brush .ji-tx{font-size:9px;line-height:1.42;color:var(--ink2)}
+#hbh-brush .ji-tx b{color:var(--accent)}
+#hbh-brush .swatch{flex:1 1 auto;display:flex;flex-direction:column;gap:3px;min-height:0}
+#hbh-brush .sw-head{display:flex;justify-content:space-between;font-size:8.6px;color:var(--soft);letter-spacing:.03em}
+#hbh-brush .sw-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:stretch}
+#hbh-brush .sw-cell{display:flex;align-items:center;gap:5px;cursor:default;transition:transform .14s}
+#hbh-brush .sw-cell .chip{flex:0 0 auto;width:18px;height:15px;border:1px solid rgba(58,42,28,.35)}
+#hbh-brush .sw-cell .lab{font-size:8.6px;line-height:1.2;color:var(--ink2)}
+#hbh-brush .sw-cell .lab b{display:block;font:800 9.5px/1 Georgia,serif;color:var(--accent)}
+#hbh-brush .sw-cell.hot{transform:translateX(2px)}#hbh-brush .sw-cell.hot .chip{box-shadow:0 0 0 1.5px var(--accent)}
 
-/* 题跋（左 · 直书） */
-#hbh-brush .kp-colophon{flex:0 0 auto;width:248px;margin-top:1%;display:flex;flex-direction:column;min-height:0}
-#hbh-brush .kp-script{flex:1 1 auto;min-height:0;display:flex;flex-direction:row-reverse;justify-content:flex-start;gap:13px;padding:2px 14px 2px 2px;overflow:hidden}
-#hbh-brush .kp-def{writing-mode:vertical-rl;font-size:18px;line-height:1.62;font-weight:700;color:var(--ink);letter-spacing:.05em}
-#hbh-brush .kp-def .ds{font-size:10.5px;font-weight:400;color:var(--accent);letter-spacing:.08em}
-#hbh-brush .kp-note{writing-mode:vertical-rl;font-size:11.5px;line-height:1.92;color:var(--ink-soft);letter-spacing:.02em}
-#hbh-brush .kp-jin{writing-mode:vertical-rl;font-size:11px;line-height:1.88;color:var(--bi);letter-spacing:.02em}
-#hbh-brush .kp-foot{flex:0 0 auto;display:flex;align-items:flex-end;gap:9px;padding:6px 2px 26px}
-#hbh-brush .kp-foot .rfig{margin:0}
-#hbh-brush .kp-foot .rfig img{display:block;width:84px;height:100px;object-fit:cover;border:1px solid rgba(60,45,32,.34);box-shadow:2px 3px 0 rgba(60,45,32,.12);filter:saturate(.92)}
-#hbh-brush .kp-foot .rfig figcaption{font-size:8px;color:var(--ink-soft);letter-spacing:.08em;margin-top:3px;text-align:center}
-#hbh-brush .kp-foot .jset{display:flex;gap:3px}
-#hbh-brush .kp-foot .jset img{width:34px;height:46px;object-fit:cover;border:1px solid rgba(60,45,32,.3);filter:sepia(.2) saturate(.85)}
-#hbh-brush .kp-seal{position:absolute;left:6px;bottom:2px;width:40px;height:40px;display:grid;place-items:center;border:2px solid var(--accent);color:var(--accent);font:900 11px/1.04 "KaiTi","STKaiti",var(--serif);text-align:center;transform:rotate(-5deg);opacity:.9}
+/* 右栏 rcol */
+#hbh-brush .rquote{font-size:10.5px;line-height:1.6;color:var(--ink2);font-weight:300;border-left:2px solid var(--accent);
+  padding-left:8px;flex:0 0 auto}
+#hbh-brush .rquote b{color:var(--accent);font-weight:700}#hbh-brush .rquote .by{display:block;font-size:8.6px;color:var(--soft);margin-top:2px;letter-spacing:.08em}
+#hbh-brush .seals{display:flex;gap:6px;flex:0 0 auto;align-items:center}
+#hbh-brush .seals .sq{width:32px;height:38px;display:grid;place-items:center;writing-mode:vertical-rl;border:1.5px solid var(--accent);
+  color:var(--accent);font:900 10px/1.1 "KaiTi","STKaiti",var(--serif);border-radius:3px;text-align:center;opacity:.9}
+#hbh-brush .seals .sq.fill{background:var(--accent);color:#F4ECDA;border-color:var(--accent)}
+#hbh-brush .seals .st{font-size:8.6px;line-height:1.5;color:var(--soft)}
+#hbh-brush .depth svg{width:100%;height:50px;display:block}
+#hbh-brush .spark{flex:0 0 auto}
+#hbh-brush .spark svg{width:100%;height:46px;display:block}
+#hbh-brush .stat{display:flex;gap:9px;flex:0 0 auto;border-top:1px dashed var(--line);padding-top:6px;margin-top:auto}
+#hbh-brush .stat .s1{text-align:center}
+#hbh-brush .stat .s1 b{display:block;font:900 19px/1 Georgia,serif;color:var(--accent)}
+#hbh-brush .stat .s1 span{font-size:8px;color:var(--soft);letter-spacing:.04em}
 
-/* ===== 进二·读画 · 白→黑三联 ===== */
-#hbh-brush .b-read{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-top:10px}
-#hbh-brush .ev-head{flex:0 0 auto;display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
-#hbh-brush .ev-head .et{font:900 15px/1 var(--serif);letter-spacing:.1em;color:var(--accent)}
-#hbh-brush .ev-head .eh{font-size:11.5px;color:var(--ink-soft)}
-#hbh-brush .ev-strip{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-#hbh-brush .ev-stage{position:relative;display:flex;flex-direction:column;min-height:0}
-#hbh-brush .ev-stage .sl{flex:0 0 auto;display:flex;align-items:baseline;gap:7px;margin-bottom:6px}
-#hbh-brush .ev-stage .sl b{font-size:15px;font-weight:900}
-#hbh-brush .ev-stage.bai .sl b{color:#8a7448}#hbh-brush .ev-stage.shu .sl b{color:var(--accent)}#hbh-brush .ev-stage.hei .sl b{color:var(--ink)}
-#hbh-brush .ev-stage .sl span{font-size:10px;color:var(--ink-soft);letter-spacing:.04em}
-#hbh-brush .ev-pic{flex:1 1 auto;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#hbh-brush .ev-pic img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 8px 26px rgba(40,28,14,.24);filter:saturate(.95);transition:filter .3s,opacity .3s}
-#hbh-brush .ev-pic.dim img{filter:saturate(.55) brightness(.94);opacity:.4}
-#hbh-brush .ev-pic .badge{position:absolute;right:6px;bottom:6px;font:900 11px/1 var(--serif);letter-spacing:.12em;padding:5px 9px;color:#fff6e6;opacity:0;transition:opacity .25s}
-#hbh-brush .ev-pic .badge.show{opacity:1}
-#hbh-brush .ev-note{flex:0 0 auto;font-size:11px;line-height:1.66;color:var(--ink-soft);margin-top:7px;min-height:52px}
-#hbh-brush .ev-note .qs{color:var(--accent);font-size:10px;display:block;margin-top:3px}
-#hbh-brush .ev-bar{flex:0 0 auto;margin-top:9px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(60,45,32,.22);padding-top:9px}
-#hbh-brush .ev-tags{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:5px;max-width:330px}
-#hbh-brush .ev-tags button{border:1px solid rgba(60,45,32,.4);background:rgba(255,250,236,.4);font:700 15px/1 var(--serif);width:31px;height:31px;cursor:pointer;color:var(--ink)}
-#hbh-brush .ev-tags button.bi{color:var(--bi)}#hbh-brush .ev-tags button.mo{color:var(--accent)}
-#hbh-brush .ev-tags button.on{background:var(--accent);border-color:var(--accent);color:#fff6e6}
-#hbh-brush .ev-tags button.on.bi{background:var(--bi);border-color:var(--bi)}
-#hbh-brush .ev-read{flex:1 1 auto;font-size:12.5px;line-height:1.7;color:var(--ink);min-width:0}
-#hbh-brush .ev-read b{color:var(--accent)}
-#hbh-brush .ev-honest{flex:0 0 auto;font-size:9.5px;color:var(--ink-soft);max-width:210px;line-height:1.5;border-left:2px solid rgba(60,45,32,.3);padding-left:8px}
+/* 底·变法时间轴带 */
+#hbh-brush .tband{grid-column:1 / -1;border-top:1px solid var(--line);position:relative;padding:6px 18px 8px;
+  display:flex;flex-direction:column;background:rgba(58,42,28,.05)}
+#hbh-brush .tband .tb-head{display:flex;align-items:baseline;gap:14px;flex:0 0 auto}
+#hbh-brush .tband .th{font:800 11px/1 var(--serif);color:var(--accent);letter-spacing:.16em}
+#hbh-brush .tband .tb-sub{font-size:9px;color:var(--soft);letter-spacing:.02em}
+#hbh-brush .tl-read{margin:4px 0 0 auto;max-width:64%;text-align:right;font-size:10px;line-height:1.5;color:var(--ink2);flex:0 0 auto}
+#hbh-brush .tl-read b{color:var(--accent);font-weight:700}
+#hbh-brush .tl-axis{position:relative;height:30px;margin:6px 40px 2px 62px;flex:0 0 auto}
+#hbh-brush .tl-bar{position:absolute;left:0;right:0;top:13px;height:8px;border-radius:5px;
+  background:linear-gradient(90deg,var(--paperWhite) 0%,#cdbf9f 30%,#7a6f5b 60%,#3a352c 84%,var(--deep) 100%);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.3)}
+#hbh-brush .tl-cap{position:absolute;font:800 9px/1 var(--serif);letter-spacing:.1em;color:var(--soft)}
+#hbh-brush .tl-cap.l{left:-54px;top:13px}#hbh-brush .tl-cap.r{right:-34px;top:13px;color:#5a5040}
+#hbh-brush .tl-node{position:absolute;top:17px;transform:translate(-50%,-50%);background:none;border:0;padding:0;cursor:pointer;z-index:2}
+#hbh-brush .tl-node .dot{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--ink2);box-shadow:0 1px 3px rgba(40,28,14,.3);transition:all .18s}
+#hbh-brush .tl-node:hover .dot{transform:scale(1.14)}
+#hbh-brush .tl-node.on .dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(154,74,44,.22)}
+#hbh-brush .tl-node .yr{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font:800 9px/1 Georgia,serif;color:var(--ink2);white-space:nowrap}
+#hbh-brush .tl-node .nm{position:absolute;top:12px;left:50%;transform:translateX(-50%);font:600 9px/1 var(--serif);color:var(--soft);white-space:nowrap;letter-spacing:.02em}
+#hbh-brush .tl-node.on .yr,#hbh-brush .tl-node.on .nm{color:var(--accent);font-weight:800}
 
-#hbh-brush .b-cap{flex:0 0 auto;text-align:center;font-size:11px;color:var(--ink-soft);letter-spacing:.04em;padding-top:9px;border-top:1px solid rgba(60,45,32,.22);margin-top:8px}
-#hbh-brush .b-cap b{color:var(--accent)}
-#hbh-brush[data-bmode="read"] .b-body{display:none}
-#hbh-brush[data-bmode="learn"] .b-read{display:none}
+/* 底·资料条 */
+#hbh-brush .sources{grid-column:1 / -1;border-top:1px solid var(--line);display:flex;align-items:center;
+  padding:0 18px;font-size:7.8px;line-height:1;color:var(--soft);letter-spacing:.01em;background:rgba(58,42,28,.05);overflow:hidden;white-space:nowrap}
+#hbh-brush .sources b{color:var(--accent)}
+#hbh-brush .bx-warn{position:absolute;left:240px;top:6px;z-index:9;display:none;background:#e9c84a;color:#3a2c08;
+  font-size:8px;padding:3px 8px;border:1px solid rgba(90,68,12,.5)}
+#hbh-brush .bx-warn.on{display:block}
+
+@media (max-width:1100px){
+  #hbh-brush{overflow:auto}
+  #hbh-brush .bx{position:relative;min-height:100vh;grid-template-columns:26px 156px 1fr 150px 1fr 156px}
+}
 
 /* ===== 序幕 · 卷首 → #hbh-prologue ===== */
 #hbh-prologue{
@@ -560,7 +634,7 @@
     <button class="hbh-tab" data-go="map">生命舆图</button>
     <button class="hbh-tab" data-go="atlas">实景山水</button>
     <button class="hbh-tab" data-go="river">交游长河</button>
-    <button class="hbh-tab" data-go="brush">笔墨课徒</button>
+    <button class="hbh-tab" data-go="brush">五笔七墨</button>
 </nav>
 
 <!-- ============ map_story 所需的本地数据脚本（全局，先于初始化加载）============ -->
@@ -568,7 +642,7 @@
 <script src="hbh_overview_data.js"></script>
 <script src="hbh_custom_labels.js"></script>
 <script src="hbh_river_data.js"></script>
-<script src="hbh_brush_data.js"></script>
+<!-- hbh_brush_data.js 已并入「五笔七墨」引擎，不再依赖 -->
 
 <!-- ============ 各页面（原文件 DOM，CSS 已作用域隔离）============ -->
 <section id="hbh-prologue" class="hbh-page" data-page="prologue">
@@ -680,45 +754,143 @@
 </div>
 </section>
 
-<!-- ============ 第四屏：笔墨课徒（五笔七墨语法谱）============ -->
-<section id="hbh-brush" class="hbh-page" data-page="brush" data-bmode="learn">
+<!-- ============ 第五屏：五笔七墨 · 笔墨分析大报（单屏密集六栏）============ -->
+<section id="hbh-brush" class="hbh-page" data-page="brush">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-    <filter id="bInk" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.022" numOctaves="3" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6.5"/></filter>
-    <filter id="bZhu" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.4"/></filter>
+    <filter id="bInk" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="2" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.5"/></filter>
   </defs></svg>
-  <div class="b-wrap">
-    <header class="b-mast">
-      <div class="seal">笔墨</div>
-      <div class="mt"><div>
-        <div class="b-kicker" id="bKicker"></div>
-        <div class="b-h1" id="bH1"></div>
-      </div></div>
-      <div class="b-quote" id="bQuote"></div>
-      <div class="b-toggle">
-        <button data-bm="learn" class="on">识字</button>
-        <button data-bm="read">读画</button>
+  <div class="bx-warn" id="bxWarn">⚠ 部分图片为占位，待替换为高清原作。</div>
+  <div class="bx">
+
+    <!-- ① 竖排刊名 -->
+    <div class="rail">
+      <div class="stamp">宾虹</div>
+      <div class="vkik">笔墨分析</div>
+      <div class="vtitle">五笔七墨</div>
+      <div class="vsub">黄山汤口</div>
+    </div>
+
+    <!-- ② 左栏：作者 + 五笔 + 尺幅 -->
+    <div class="col">
+      <div class="por">
+        <div class="pim"><img id="bxPor" src="assets/hbh_portrait.png" alt="黄宾虹像"></div>
+        <div class="pm"><b>黄宾虹</b>1865–1955<br>浙江金华｜祖籍歙县<br>画家 · 学者 · 金石家<span class="age">享年 90</span></div>
       </div>
-    </header>
-    <!-- 进一·识字 · 课徒册页 -->
-    <div class="b-body">
-      <div class="kp-plain" id="bPlain"></div>
-      <div class="kp-paper">
-        <div class="kp-spectrum" id="bSpectrum"></div>
-        <div class="kp-demo" id="bDemo"></div>
-        <div class="kp-colophon">
-          <div class="kp-script" id="bScript"></div>
-          <div class="kp-foot" id="bFoot"></div>
+      <p class="tx">早年临摹宋元明诸家，得力弘仁、程邃、李流芳，受<b>新安画派</b>影响，以干笔淡墨、疏淡清逸立面貌，是为「白宾虹」。六十岁后游贵池、坐青城雨、夜行瞿塘，转研北宋积墨，由白入黑。</p>
+      <div class="vh">五笔 · 平圆留重变</div>
+      <div class="wb-mini" id="bxWbMini"></div>
+      <div class="dim">
+        <div class="fig"><i style="height:13px"></i><i style="height:20px"></i><i style="height:11px"></i></div>
+        <div class="dt">尺幅<b>171.5 × 96 cm</b>《黄山汤口》立轴｜纸本设色</div>
+      </div>
+    </div>
+
+    <!-- ③ 白宾虹（画一） -->
+    <div class="pcol col" style="padding:0">
+      <div class="pcap bai"><div class="pt">白宾虹 · 早年山水</div><div class="ps">约 1920s–30s 初｜干笔淡墨，疏淡清逸｜笔线清晰可辨，结构外露</div></div>
+      <div class="bars">
+        <div class="br"><span class="bn">山水</span><span class="bt"><i style="width:80%"></i></span><span class="bp">主体</span></div>
+        <div class="br"><span class="bn">花鸟蔬果</span><span class="bt"><i style="width:30%"></i></span><span class="bp">兼涉</span></div>
+        <div class="br"><span class="bn">书法篆刻</span><span class="bt"><i style="width:42%"></i></span><span class="bp">根柢</span></div>
+        <div class="mut" style="margin-top:2px">题材偏重 · 示意（黄宾虹以山水立身，金石书法为其笔墨之根）</div>
+      </div>
+      <div class="paint">
+        <img id="bxBai" src="assets/works/仿倪云林图册.jpg" alt="白宾虹早年山水">
+        <div class="call tl" style="left:5%;top:7%">以淡墨、破墨为主，<b>留白疏朗</b>，淡墨与纸白占绝对主导。</div>
+        <div class="call bl" style="left:5%;bottom:8%"><b>笔线清晰可辨</b>，看得见每根线如何组织结构 —— 观察「五笔」最清楚的标本。</div>
+        <div class="call tr" style="right:5%;top:30%">干笔淡墨，<b>疏淡清逸</b>，得新安画派之骨。</div>
+      </div>
+    </div>
+
+    <!-- ④ 中栏：七墨 + 积墨 + 墨色构成 -->
+    <div class="col">
+      <div class="vh">七墨 · 浓淡破泼积焦宿</div>
+      <div class="qm-list" id="bxQmList"></div>
+      <div class="vh" style="margin-top:2px">积墨 · 拖动看「黑」如何积成</div>
+      <div class="ji">
+        <div class="ji-stage"><canvas id="bxJiCanvas" width="180" height="180"></canvas></div>
+        <div class="ji-ctrl">
+          <div class="ji-num"><span class="n" id="bxJiNum">3</span><span class="u">第 <span id="bxJiNum2">3</span> 遍</span></div>
+          <input type="range" min="1" max="12" value="3" class="ji-slider" id="bxJiSlider" aria-label="积墨层数">
+          <div class="ji-tx" id="bxJiText"></div>
         </div>
-        <div class="kp-seal">宾虹<br>课徒</div>
+      </div>
+      <div class="vh" style="margin-top:2px">墨色构成 · 占比对照</div>
+      <div class="swatch" id="bxSwatch">
+        <div class="sw-head"><span>留白→积焦宿</span><span>白宾虹 ｜ 黑宾虹</span></div>
       </div>
     </div>
-    <!-- 进二·读画 · 白→黑三联 -->
-    <div class="b-read">
-      <div class="ev-head"><span class="et">读一幅画 · 白宾虹到黑宾虹</span><span class="eh">同是写山，墨色却走了一辈子。点下方一个笔墨字，看它在三阶里的消长。</span></div>
-      <div class="ev-strip" id="bEvStrip"></div>
-      <div class="ev-bar" id="bEvBar"></div>
+
+    <!-- ⑤ 黑宾虹《黄山汤口》（画二） -->
+    <div class="pcol col hei" style="padding:0">
+      <div class="pcap hei"><div class="pt">黑宾虹 ·《黄山汤口》</div><div class="ps">1955 绝笔｜92 岁凭记忆勾出｜171.5×96cm｜故宫博物院藏</div></div>
+      <div class="paint">
+        <img id="bxHei" src="assets/huangshan-tangkou.jpg" alt="黄山汤口">
+        <div class="qhot" style="left:44%;top:15%"><span class="qd">淡</span><span class="ql"><b>淡墨</b>·远峰云烟</span></div>
+        <div class="qhot" style="left:29%;top:31%"><span class="qd">破</span><span class="ql"><b>破墨</b>·明暗渗化</span></div>
+        <div class="qhot l" style="left:64%;top:43%"><span class="qd">浓</span><span class="ql"><b>浓墨</b>·山体阴凹</span></div>
+        <div class="qhot" style="left:27%;top:55%"><span class="qd">泼</span><span class="ql"><b>泼墨</b>·坡脚淋漓</span></div>
+        <div class="qhot" style="left:51%;top:64%"><span class="qd">积</span><span class="ql"><b>积墨</b>·主峰最深</span></div>
+        <div class="qhot" style="left:40%;top:77%"><span class="qd">焦</span><span class="ql"><b>焦墨</b>·干笔点睛</span></div>
+        <div class="qhot l" style="left:63%;top:88%"><span class="qd">宿</span><span class="ql"><b>宿墨</b>·前景苍涩</span></div>
+      </div>
+      <div class="pthumbs">
+        <span class="tl2">晚年积墨<br>同类</span>
+        <img src="assets/hbh_cengluan_feipu.jpg" alt="层峦飞瀑图轴">
+        <img src="assets/hbh_heibinhong_shanshui.jpg" alt="山水图轴">
+        <span class="tl2">「如行夜山，<br>昏黑中层层深厚」</span>
+      </div>
     </div>
-    <div class="b-cap" id="bCap"></div>
+
+    <!-- ⑥ 右栏：引文 + 印 + 深远 + 趋向 + 概览 -->
+    <div class="col">
+      <div class="rquote">「我用积墨，意在墨中求层次，表现山川浑然之气。」<span class="by">—— 黄宾虹</span></div>
+      <div class="seals">
+        <div class="sq fill">浑厚<br>华滋</div><div class="sq">黑墨团中<br>天地宽</div>
+        <div class="st">晚年自题，道出积墨求「黑里透亮」的根本。</div>
+      </div>
+      <div class="vh">章法 · 深远高远平远</div>
+      <div class="depth"><svg viewBox="0 0 180 46" preserveAspectRatio="none">
+        <path d="M4 40 H176" stroke="#3A2E22" stroke-width="1" fill="none"/>
+        <path d="M14 40 C60 26 120 26 166 14" stroke="#9A4A2C" stroke-width="1.2" fill="none" opacity=".8"/>
+        <path d="M14 40 C50 34 120 32 166 24" stroke="#3F5E6E" stroke-width="1.2" fill="none" opacity=".8"/>
+        <text x="6" y="12" font-size="7" fill="#6A5C49">高远</text>
+        <text x="78" y="8" font-size="7" fill="#9A4A2C">深远</text>
+        <text x="140" y="40" font-size="7" fill="#3F5E6E">平远</text>
+      </svg></div>
+      <div class="vh">墨色趋向 · 一生</div>
+      <div class="spark"><svg viewBox="0 0 180 42" preserveAspectRatio="none">
+        <defs><linearGradient id="spg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A2E22" stop-opacity=".55"/><stop offset="1" stop-color="#3A2E22" stop-opacity=".05"/></linearGradient></defs>
+        <path d="M2 36 C50 34 70 30 92 22 C120 12 150 6 178 3 L178 40 L2 40 Z" fill="url(#spg)"/>
+        <path d="M2 36 C50 34 70 30 92 22 C120 12 150 6 178 3" stroke="#9A4A2C" stroke-width="1.3" fill="none"/>
+        <circle cx="92" cy="22" r="2.4" fill="#9A4A2C"/>
+        <text x="60" y="40" font-size="6.6" fill="#6A5C49">六十岁 · 变法起</text>
+        <text x="2" y="10" font-size="6.6" fill="#8C7E68">淡</text><text x="166" y="10" font-size="6.6" fill="#221B12">浓</text>
+      </svg></div>
+      <div class="mut">墨色由淡转浓 · 示意（白宾虹→黑宾虹）</div>
+      <div class="stat">
+        <div class="s1"><b>90</b><span>享年</span></div>
+        <div class="s1"><b>≈60</b><span>变法起</span></div>
+        <div class="s1"><b>1955</b><span>绝笔</span></div>
+      </div>
+    </div>
+
+    <!-- ⑦ 底带：变法时间轴 -->
+    <div class="tband">
+      <div class="tb-head">
+        <span class="th">变法 · 白 → 黑｜一场跨越半世纪的笔墨之变</span>
+        <span class="tb-sub">点节点看各阶段　·　《黄山汤口》1955 绝笔，92 岁凭记忆勾成；黑密厚重三四十年代即定，眼疾是加速器、非起因</span>
+      </div>
+      <div class="tl-read" id="bxTlRead"></div>
+      <div class="tl-axis" id="bxAxis">
+        <span class="tl-cap l">白宾虹</span><span class="tl-cap r">黑宾虹</span>
+        <div class="tl-bar"></div>
+      </div>
+    </div>
+
+    <!-- ⑧ 资料条 -->
+    <div class="sources"><b>资料与图片来源：</b>故宫博物院 · 上海博物馆 · 浙江省博物馆 · 黄宾虹《画法要旨》《虹庐画谈》 · 维基共享资源 · Google Arts &amp; Culture　|　布局借信息图编排，释文为教学比附，五笔示意线与积墨过程为教学图示、非原作逐笔分层。</div>
+
   </div>
 </section>
 
@@ -1687,177 +1859,103 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
   };
 
   // ===== 第四屏：笔墨课徒（五笔七墨语法谱）=====
+  // ===== 第五屏：五笔七墨 · 笔墨分析大报 =====
   HBH.init.brush = function(){
-    var D = window.HBH_BRUSH; if(!D){ console.error('[HBH] HBH_BRUSH 数据缺失'); return; }
-    var root = document.getElementById('hbh-brush');
-    var $ = function(id){ return document.getElementById(id); };
+    var root=document.getElementById('hbh-brush'); if(!root) return;
+    var $=function(id){return document.getElementById(id);};
 
-    $('bKicker').textContent = D.intro.kicker;
-    $('bH1').textContent     = D.intro.title;
-    $('bQuote').innerHTML    = '<b>“'+D.intro.quote+'”</b><span class="qs">—— '+D.intro.quoteSrc+'</span>';
-    $('bPlain').textContent  = D.intro.plain;
-    $('bCap').innerHTML      = '<b>“'+D.intro.capstone+'”</b>　—— 黄宾虹 '+D.intro.capstoneSrc;
-
-    var marks = D.marks, byKey = {};
-    marks.forEach(function(m){ byKey[m.key] = m; });
-    var bi = marks.filter(function(m){ return m.cat==='笔'; });
-    var mo = marks.filter(function(m){ return m.cat==='墨'; });
-
-    // —— 谱列（课徒册页·朱砂圈点）——
-    function colHtml(cls,label,arr){
-      var zhu = (cls==='bi') ? '#3F5E6E' : '#9A4A2C';
-      var ring = '<svg class="ring" viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="50" rx="40" ry="43" fill="none" stroke="'+zhu+'" stroke-width="3.4" stroke-linecap="round" filter="url(#bZhu)" stroke-dasharray="250" stroke-dashoffset="14"/></svg>';
-      var items = arr.map(function(m){
-        return '<div class="kpc" data-k="'+m.key+'">'+ring+'<span class="kc">'+m.char+'</span><span class="km">'+m.metaphor+'</span></div>';
-      }).join('');
-      return '<div class="kp-col '+cls+'"><div class="ch">'+label+'</div>'+items+'</div>';
-    }
-    $('bSpectrum').innerHTML = colHtml('bi','五笔', bi) + colHtml('mo','七墨', mo);
-
-    var curKey = null, animTimers = [];
-    function clearAnim(){ animTimers.forEach(clearTimeout); animTimers = []; }
-
-    function render(key){
-      if(key===curKey) return; curKey = key; clearAnim();
-      var m = byKey[key], isBi = (m.cat==='笔');
-      root.querySelectorAll('.kpc').forEach(function(c){ c.classList.toggle('on', c.dataset.k===key); });
-      // 中央示范
-      var demo = $('bDemo');
-      demo.innerHTML = '<div class="dbig"><div class="bc">'+m.char+'</div><div class="bm">'+m.metaphor+'</div></div>'
-        + '<div class="stage"></div>'
-        + '<div class="dlabel">'+(isBi?'笔法':'墨法')+'示意 · 教学图示（非原作分层）</div>';
-      var stage = demo.querySelector('.stage');
-      if(m.demo.kind==='stroke') drawStroke(stage, m.demo.style);
-      else drawInk(stage, m.demo.style, demo);
-      // 左侧题跋（直书）
-      $('bScript').innerHTML =
-        '<div class="kp-def">'+m.def+'<span class="ds">　—— 黄宾虹 '+m.src+'</span></div>'
-        + '<div class="kp-note">'+m.note+'</div>'
-        + (isBi ? '<div class="kp-jin">金石为骨：'+D.jinshi.text+'</div>' : '');
-      // 真迹 + 金石图（钤贴）
-      var foot = '<figure class="rfig"><img src="'+D.samples[key]+'" alt=""><figcaption>真迹可参</figcaption></figure>';
-      if(isBi){ foot += '<div class="jset">'+D.jinshi.imgs.map(function(g){ return '<img src="'+g.src+'" alt="" title="'+g.cap+'">'; }).join('')+'</div>'; }
-      $('bFoot').innerHTML = foot;
-    }
-
-    // —— 五笔：手绘动态笔触（SVG 描边动画 · 厚墨有浓淡）——
-    function strokeSpec(s){
-      if(s==='ping')  return { paths:[{d:'M40,150 C120,142 280,158 360,150', w:27}] };
-      if(s==='yuan')  return { paths:[{d:'M118,50 C118,178 138,246 200,246 C262,246 282,178 282,54', w:27}] };
-      if(s==='liu')   return { paths:[{d:'M200,30 q-26,36 4,74 q30,40 -6,80 q-26,38 10,82', w:23}] };
-      if(s==='zhong') return { paths:[{d:'M150,98 C150,152 166,216 218,258', w:25}], blobs:[{cx:150,cy:72,r:31}] };
-      return { paths:[ {d:'M58,102 C118,90 152,118 198,100', w:13},{d:'M204,150 C254,136 302,166 344,150', w:27},{d:'M84,216 C144,240 208,200 264,230', w:10} ] };
-    }
-    function drawStroke(box, style){
-      var sp = strokeSpec(style);
-      var blobs = (sp.blobs||[]).map(function(b){ return '<circle cx="'+b.cx+'" cy="'+b.cy+'" r="'+b.r+'" fill="#26201a"/>'; }).join('');
-      var paths = sp.paths.map(function(p){
-        return '<path class="sp" d="'+p.d+'" fill="none" stroke="#26201a" stroke-width="'+p.w+'" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>'
-          + '<path class="sp" d="'+p.d+'" fill="none" stroke="#0d0b08" stroke-width="'+(p.w*0.46)+'" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>';
-      }).join('');
-      box.insertAdjacentHTML('afterbegin','<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"><g filter="url(#bInk)">'+blobs+paths+'</g></svg>');
-      box.querySelectorAll('path.sp').forEach(function(p,i){
-        var len = p.getTotalLength();
-        p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.style.transition = 'none';
-        animTimers.push(setTimeout(function(){
-          p.style.transition = 'stroke-dashoffset 1.0s cubic-bezier(.4,.55,.3,1)'; p.style.strokeDashoffset = 0;
-        }, 80 + Math.floor(i/2)*420));
-      });
-    }
-
-    // —— 七墨：手绘渍墨（canvas）——
-    function blob(ctx,cx,cy,rad,alpha,jit){
-      jit = (jit==null?0.16:jit);
-      var n=30, pts=[];
-      for(var i=0;i<n;i++){ var a=i/n*Math.PI*2; var rr=rad*(1+jit*(Math.sin(a*3+cx*0.03)*0.5+Math.sin(a*5+1.7)*0.3+Math.cos(a*2)*0.2)); pts.push([cx+Math.cos(a)*rr, cy+Math.sin(a)*rr]); }
-      ctx.save(); ctx.fillStyle='rgba(36,29,21,'+alpha+')'; ctx.shadowColor='rgba(36,29,21,'+(alpha*0.45)+')'; ctx.shadowBlur=rad*0.2;
-      ctx.beginPath(); ctx.moveTo((pts[0][0]+pts[n-1][0])/2,(pts[0][1]+pts[n-1][1])/2);
-      for(var j=0;j<n;j++){ var p=pts[j], q=pts[(j+1)%n]; ctx.quadraticCurveTo(p[0],p[1],(p[0]+q[0])/2,(p[1]+q[1])/2); }
-      ctx.closePath(); ctx.fill(); ctx.restore();
-    }
-    function drawInk(box, style, demoEl){
-      var cv=document.createElement('canvas'); box.insertBefore(cv, box.firstChild);
-      var rect=box.getBoundingClientRect(), dpr=Math.min(2, window.devicePixelRatio||1);
-      var W=Math.max(180, rect.width-28), H=Math.max(130, rect.height-28);
-      cv.style.width=W+'px'; cv.style.height=H+'px'; cv.width=W*dpr; cv.height=H*dpr;
-      var ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
-      var cx=W/2, cy=H/2;
-      function clr(){ ctx.clearRect(0,0,W,H); }
-      if(style==='nong'){ blob(ctx,cx,cy,Math.min(W,H)*0.32,0.92); ctx.save();ctx.fillStyle='rgba(255,250,238,.18)';ctx.beginPath();ctx.ellipse(cx-12,cy-14,16,9,-0.5,0,7);ctx.fill();ctx.restore(); }
-      else if(style==='dan'){ blob(ctx,cx,cy,Math.min(W,H)*0.36,0.16,0.22); blob(ctx,cx,cy,Math.min(W,H)*0.24,0.12,0.22); }
-      else if(style==='po'){ blob(ctx,cx-6,cy+4,Math.min(W,H)*0.33,0.22,0.2); animTimers.push(setTimeout(function(){ blob(ctx,cx+10,cy-6,Math.min(W,H)*0.26,0.6,0.26); blob(ctx,cx+34,cy+10,Math.min(W,H)*0.07,0.4,0.5); blob(ctx,cx-20,cy+26,Math.min(W,H)*0.05,0.35,0.5); },560)); }
-      else if(style==='po2'){ blob(ctx,cx,cy,Math.min(W,H)*0.34,0.62,0.34); for(var i=0;i<7;i++){ var a=i/7*6.28; blob(ctx,cx+Math.cos(a)*W*0.26,cy+Math.sin(a)*H*0.26,(3+i%3*4),0.5,0.6); } }
-      else if(style==='jiao'){ ctx.save(); ctx.strokeStyle='rgba(28,22,16,.9)'; ctx.lineWidth=5; ctx.lineCap='round'; for(var k=0;k<22;k++){ var yy=cy-46+k*4.4+(Math.random()*3-1.5); var x0=cx-70+Math.random()*20, x1=cx+70-Math.random()*20; if(Math.random()<0.32) continue; ctx.globalAlpha=0.5+Math.random()*0.5; ctx.beginPath(); ctx.moveTo(x0,yy); ctx.lineTo(x1,yy); ctx.stroke(); } ctx.restore(); }
-      else if(style==='su'){ ctx.save();ctx.strokeStyle='rgba(63,94,110,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.3,0,6.3);ctx.stroke();ctx.restore(); blob(ctx,cx,cy,Math.min(W,H)*0.27,0.85,0.2); ctx.save();ctx.fillStyle='rgba(63,94,110,.16)';ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.34,0,6.3);ctx.fill();ctx.restore(); }
-      else if(style==='ji'){ // 积墨：叠加遍数微动画
-        var cnt=document.createElement('div'); cnt.className='dcount';
-        (demoEl||box).appendChild(cnt);
-        var base=Math.min(W,H)*0.3;
-        function run(){ clr(); var n=0;
-          function step(){ n++; blob(ctx,cx+(Math.random()*8-4),cy+(Math.random()*8-4),base*(0.7+Math.random()*0.35),0.13,0.22); cnt.textContent='第 '+n+' 遍 · 层层染之';
-            if(n<20){ animTimers.push(setTimeout(step, n<6?460:300)); }
-            else { animTimers.push(setTimeout(function(){ cnt.textContent='二十遍 · 浑厚华滋'; },200)); animTimers.push(setTimeout(run, 2400)); } }
-          animTimers.push(setTimeout(step, 360));
-        }
-        run();
-      }
-    }
-
-    // —— 谱列交互 ——
-    var spec = $('bSpectrum');
-    spec.addEventListener('click', function(e){ var t=e.target.closest('.kpc'); if(t) render(t.dataset.k); });
-    spec.addEventListener('mouseover', function(e){ var t=e.target.closest('.kpc'); if(t) render(t.dataset.k); });
-
-    // ===== 进二·读画 · 白→黑三联消长 =====
-    var evBuilt=false, evActive=null;
-    function buildEvolution(){
-      var E=D.evolution;
-      $('bEvStrip').innerHTML = E.stages.map(function(s){
-        return '<div class="ev-stage '+s.key+'" data-st="'+s.key+'">'
-          + '<div class="sl"><b>'+s.label+'</b><span>'+s.sub+'</span></div>'
-          + '<div class="ev-pic"><img src="'+s.work+'" alt="'+s.label+'"><span class="badge"></span></div>'
-          + '<div class="ev-note">'+s.note+(s.noteSrc?'<span class="qs">—— '+s.noteSrc+'</span>':'')+'</div>'
-          + '</div>';
-      }).join('');
-      var tagHtml = marks.map(function(m){ return '<button data-k="'+m.key+'" class="'+(m.cat==='笔'?'bi':'mo')+'" title="'+m.metaphor+'">'+m.char+'</button>'; }).join('');
-      $('bEvBar').innerHTML = '<div class="ev-tags">'+tagHtml+'</div>'
-        + '<div class="ev-read" id="bEvRead"><b>点一个笔墨字</b>　看它从白宾虹到黑宾虹的消长——笔贯穿一生，墨由淡转黑。</div>'
-        + '<div class="ev-honest">'+E.honest+'</div>';
-      $('bEvBar').querySelectorAll('.ev-tags button').forEach(function(b){ b.addEventListener('click', function(){ toggleEv(b.dataset.k); }); });
-    }
-    function toggleEv(k){
-      var same=(evActive===k); evActive = same?null:k;
-      var E=D.evolution, pres=E.presence[k]||[0,0,0], m=byKey[k];
-      $('bEvBar').querySelectorAll('.ev-tags button').forEach(function(x){ x.classList.toggle('on', !same && x.dataset.k===k); });
-      $('bEvStrip').querySelectorAll('.ev-stage').forEach(function(st,i){
-        var pic=st.querySelector('.ev-pic'), badge=st.querySelector('.badge');
-        if(same){ pic.classList.remove('dim'); badge.classList.remove('show'); return; }
-        var lv=pres[i];
-        badge.textContent=E.levelName[lv]; badge.classList.add('show');
-        badge.style.background = lv===0?'rgba(90,79,64,.85)':(lv===1?'rgba(154,74,44,.92)':'rgba(36,29,21,.92)');
-        pic.classList.toggle('dim', lv===0);
-      });
-      var rd=$('bEvRead');
-      if(same){ rd.innerHTML='<b>点一个笔墨字</b>　看它从白宾虹到黑宾虹的消长——笔贯穿一生，墨由淡转黑。'; return; }
-      var story;
-      if(pres[0]===2&&pres[1]===2&&pres[2]===2){ story='此<b>笔</b>贯穿一生、未尝大变——变的是墨，不是笔。'; }
-      else { story='由「'+E.levelName[pres[0]]+'」到「'+E.levelName[pres[2]]+'」：'+(pres[0]===0?'白宾虹时尚无，':'白宾虹已具，')+'入蜀青城后'+(pres[1]>=2?'大盛':'始现')+'，晚岁黑宾虹'+(pres[2]===2?'层层登峰':'仍用')+'。'; }
-      rd.innerHTML='<b>'+m.char+' · '+m.metaphor+'</b>　'+story+'　'+m.note;
-    }
-    function ensureEv(){ if(!evBuilt){ buildEvolution(); evBuilt=true; } }
-
-    // —— 模式切换 ——
-    root.querySelectorAll('.b-toggle button').forEach(function(b){
-      b.addEventListener('click', function(){
-        var mode=b.dataset.bm;
-        root.querySelectorAll('.b-toggle button').forEach(function(x){ x.classList.toggle('on', x===b); });
-        root.setAttribute('data-bmode', mode);
-        if(mode==='read') ensureEv();
-      });
+    /* 缺图兜底 */
+    ['bxPor','bxBai','bxHei'].forEach(function(id){ var img=$(id); if(!img) return;
+      img.addEventListener('error',function(){ var w=img.parentNode; img.style.display='none';
+        if(!w.querySelector('.ph')){ var d=document.createElement('div'); d.className='ph';
+          d.style.cssText='width:100%;height:100%;min-height:60px;display:grid;place-items:center;background:#2b2b2b;color:#cfc6b4;font-size:8px;text-align:center;padding:6px';
+          d.textContent='图待补：'+(img.alt||'原作'); w.appendChild(d);}
+        var wn=$('bxWarn'); if(wn) wn.classList.add('on'); });
     });
 
-    // —— 默认进入 ——
-    render(marks[0].key);
+    /* —— 五笔 mini —— */
+    var WB=[
+      {c:'平',m:'如锥画沙',d:'匀速中锋，力贯始终',svg:'<path d="M2 9 H24" stroke="#3F5E6E" stroke-width="3" stroke-linecap="round" fill="none"/>'},
+      {c:'圆',m:'如折钗股',d:'无往不复，圆浑有弹性',svg:'<path d="M5 15 C1 5 12 1 17 7 C21 12 12 17 9 11" stroke="#3F5E6E" stroke-width="2.4" stroke-linecap="round" fill="none"/>'},
+      {c:'留',m:'如屋漏痕',d:'积点成线，不疾不徐',svg:'<g fill="#3F5E6E">'+[2,6,10,14,18,22].map(function(x,i){return '<circle cx="'+x+'" cy="'+(9+(i%2?1.4:-1.4))+'" r="1.8"/>';}).join('')+'</g>'},
+      {c:'重',m:'如高山坠石',d:'纸薄取厚，毫软取硬',svg:'<path d="M3 5 Q13 7 24 13" stroke="#3F5E6E" stroke-width="5" stroke-linecap="round" fill="none" opacity=".9"/>'},
+      {c:'变',m:'综合混用',d:'前四者于一笔同时成立',va:1,svg:'<path d="M2 12 C7 4 10 16 14 9 C17 4 21 14 24 7" stroke="#9A4A2C" stroke-width="2.4" stroke-linecap="round" fill="none"/>'}
+    ];
+    $('bxWbMini').innerHTML = WB.map(function(w){
+      return '<div class="it'+(w.va?' va':'')+'"><svg viewBox="0 0 26 18">'+w.svg+'</svg>'
+        +'<div class="wm"><span class="wc">'+w.c+'</span> <b>'+w.m+'</b>　'+w.d+'</div></div>';
+    }).join('');
+
+    /* —— 七墨 list —— */
+    var QM=[
+      {c:'浓',t:'掺水少、色度深，表近景阴凹；要<b>浓而活脱</b>，过则板滞。'},
+      {c:'淡',t:'调水分干淡湿淡，<b>别远近虚实</b>；湿淡远山，干淡近石。'},
+      {c:'破',t:'趁湿以浓破淡、以水破墨，得<b>朦胧渗化</b>，可合泼墨。'},
+      {c:'泼',t:'大笔挥洒，<b>水墨淋漓见气魄</b>；用好增势，过则失生气。'},
+      {c:'积',t:'一遍遍叠加，<b>厚实多层</b> ——「积数十百遍而成」，黑之根。'},
+      {c:'焦',t:'极干极浓，干笔提神，密团中<b>提出骨力</b>，画眼所在。'},
+      {c:'宿',t:'隔夜陈墨，落纸有渣、不晕散，得<b>苍茫古拙毛涩</b>，晚年大用。'}
+    ];
+    $('bxQmList').innerHTML = QM.map(function(q){ return '<div class="qi"><span class="qc">'+q.c+'</span><span class="qt">'+q.t+'</span></div>'; }).join('');
+
+    /* —— 墨色构成 swatch（白/黑 同类联动）—— */
+    var SEG=[{k:'blank',n:'留白',c:'#F4F1EA',bai:55,hei:12},{k:'light',n:'淡墨',c:'#9B968C',bai:30,hei:18},
+             {k:'dark',n:'浓墨',c:'#3C3833',bai:12,hei:35},{k:'deep',n:'积焦宿',c:'#181613',bai:3,hei:35}];
+    var sw=$('bxSwatch');
+    SEG.forEach(function(s){
+      var row=document.createElement('div'); row.className='sw-row';
+      function cell(val){ return '<div class="sw-cell" data-seg="'+s.k+'"><span class="chip" style="background:'+s.c+'"></span>'
+        +'<span class="lab"><b>'+val+'%</b>'+s.n+'</span></div>'; }
+      row.innerHTML=cell(s.bai)+cell(s.hei); sw.appendChild(row);
+    });
+    sw.querySelectorAll('.sw-cell').forEach(function(c){
+      c.addEventListener('mouseenter',function(){ var t=c.dataset.seg; sw.querySelectorAll('.sw-cell[data-seg="'+t+'"]').forEach(function(x){x.classList.add('hot');}); });
+      c.addEventListener('mouseleave',function(){ sw.querySelectorAll('.sw-cell.hot').forEach(function(x){x.classList.remove('hot');}); });
+    });
+
+    /* —— 变法时间轴（底带）—— */
+    var TL=[
+      {pos:8, yr:'1880s–1910s', nm:'师古', r:'早年师古，新安一脉，<b>干笔淡墨、疏淡清逸</b> —— 是为白宾虹。'},
+      {pos:29,yr:'1920s', nm:'贵池之游', r:'六十岁后两游贵池，转研吴镇<b>黑密积墨</b>，由白向黑之始。'},
+      {pos:50,yr:'1933', nm:'青城坐雨', r:'青城遇雨坐看山色变幻而大悟，连作《青城烟雨册》，<b>焦泼宿墨</b>反复试验。'},
+      {pos:71,yr:'瞿塘', nm:'瞿塘夜游', r:'瞿塘夜行，证「夜山」之理 ——「<b>昏黑中层层深厚</b>」。'},
+      {pos:91,yr:'1948–55', nm:'晚年眼疾', r:'白内障视力大损，反更放手层层积墨，终成《黄山汤口》<b>浑厚华滋</b>。'}
+    ];
+    var axis=$('bxAxis');
+    TL.forEach(function(d,i){ var b=document.createElement('button'); b.className='tl-node'; b.style.left=d.pos+'%'; b.dataset.i=i;
+      b.setAttribute('aria-label',d.nm); b.innerHTML='<span class="yr">'+d.yr+'</span><span class="dot"></span><span class="nm">'+d.nm+'</span>'; axis.appendChild(b); });
+    var tlNodes=axis.querySelectorAll('.tl-node');
+    function tlShow(i){ tlNodes.forEach(function(n,j){ n.classList.toggle('on', j===i); }); $('bxTlRead').innerHTML=TL[i].r; }
+    axis.addEventListener('click',function(e){ var n=e.target.closest('.tl-node'); if(n) tlShow(+n.dataset.i); });
+    axis.addEventListener('keydown',function(e){ var n=e.target.closest('.tl-node'); if(n&&(e.key==='Enter'||e.key===' ')){e.preventDefault();tlShow(+n.dataset.i);} });
+    tlShow(2);
+
+    /* —— 积墨 canvas + 滑块 —— */
+    var JI=[{max:2,t:'<b>淡墨勾轮廓</b>，分山石脉络，疏朗近「白宾虹」。'},
+            {max:6,t:'层层皴点叠加，<b>山石渐厚</b>，空间拉开。'},
+            {max:10,t:'<b>积墨深厚</b>，墨中求层次，浑然之气渐成。'},
+            {max:12,t:'「如行夜山，昏黑中层层深厚」——<b>黑墨团中天地宽</b>。'}];
+    var cv=$('bxJiCanvas'),ctx=cv.getContext('2d'),im=new Image(),ready=false;
+    im.onload=function(){ready=true;drawJi(+$('bxJiSlider').value);};
+    im.onerror=function(){var wn=$('bxWarn');if(wn)wn.classList.add('on');fb(+$('bxJiSlider').value);};
+    im.src='assets/hbh_heibinhong_shanshui.jpg';
+    function crop(){var w=im.naturalWidth,h=im.naturalHeight,s=Math.min(w*0.9,h*0.40);return [w*0.05,h*0.33,s,s];}
+    function fb(n){ctx.fillStyle='#2b2b2b';ctx.fillRect(0,0,cv.width,cv.height);ctx.fillStyle='#cfc6b4';ctx.font='9px serif';ctx.textAlign='center';ctx.fillText('第 '+n+' 遍',cv.width/2,cv.height/2);}
+    // 单次色调映射：由淡到浓平滑递进，保底不糊死 —— 亮处留白与结构始终保留，黑里透亮
+    function drawJi(n){ if(!ready){fb(n);return;} var c=crop(),W=cv.width,H=cv.height,t=(n-1)/11;
+      ctx.clearRect(0,0,W,H); ctx.globalCompositeOperation='source-over'; ctx.globalAlpha=1;
+      var b=(1.50-t*0.74).toFixed(3),ct=(0.78+t*0.64).toFixed(3),g=(0.08+t*0.32).toFixed(2),sa=(1-t*0.5).toFixed(2);
+      ctx.filter='grayscale('+g+') brightness('+b+') contrast('+ct+') saturate('+sa+')';
+      ctx.drawImage(im,c[0],c[1],c[2],c[3],0,0,W,H);
+      // 高层焦墨干点 · 点睛（疏落，不糊）
+      if(n>=8){ ctx.filter='none'; for(var d=0;d<(n-7)*5;d++){ ctx.globalAlpha=0.12+Math.random()*0.12; ctx.fillStyle='#0f0c08';
+        ctx.beginPath(); ctx.arc(Math.random()*W,Math.random()*H,0.5+Math.random()*1.2,0,6.28); ctx.fill(); } }
+      ctx.globalAlpha=1; ctx.filter='none';
+    }
+    function jiText(n){ for(var i=0;i<JI.length;i++){ if(n<=JI[i].max){ $('bxJiText').innerHTML=JI[i].t; return; } } }
+    var sld=$('bxJiSlider');
+    sld.addEventListener('input',function(){ var n=+sld.value; $('bxJiNum').textContent=n; $('bxJiNum2').textContent=n; drawJi(n); jiText(n); });
+    $('bxJiNum').textContent=sld.value; $('bxJiNum2').textContent=sld.value; jiText(+sld.value);
   };
 
   HBH.init.prologue = function(){
