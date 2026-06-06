@@ -28,3 +28,81 @@ VAST_Challenge_2026_MC2/
 
 # 给老师看的最小可运行交付副本（约190MB，含大量图片复制），不纳入版本库
 提交/
+
+# ============================================================
+# 仓库只保留「最小可运行版」：以下为数据处理中间产物 / 原始素材 /
+# 参考资料 / 调试日志 —— 仍保留在本地，但不入库（详见 README 第九章）
+# ============================================================
+output/
+作品图/
+science-skills/
+docs/superpowers/
+*.crdownload
+
+# 数据处理中间产物（保留 alias_map / hbh_persons / hbh_knowledge_graph / era_timeline / 四个运行期 .js）
+life_journey.json
+echarts.min.js
+capture.js
+hbh_data.js
+hbh_brush_data.js
+hbh_interactions.json
+hbh_events_raw.json
+hbh_topics.json
+hbh_source_layer.json
+hbh_locations.json
+hbh_location_observations.json
+hbh_observations.json
+hbh_creations.json
+hbh_density.json
+hbh_residences.json
+hbh_knowledge_cards.json
+bertopic_results.json
+page_boundaries.json
+paras_with_pages.txt
+huangbinhong_simplified.txt
+*.v2.bak.json
+*.bak1
+*_report*.txt
+*_audit*.txt
+*_verification*.txt
+*_diag*.txt
+debug*.txt
+alias_keys.txt
+
+# 原始素材 / 参考资料
+*.pptx
+*.doc
+*.docx
+*.xlsx
+待查.csv
+hbh_artworks_for_image_search.csv
+设计方案.pdf
+参考图*.png
+河流图.png
+黄宾虹.png
+黄宾虹人物形象.png
+*来自小红书*
+VAST?challenge.md
+数字人文可视化设计.md
+数字黄宾虹_后续幕次设计.md
+交游长河_实现草案.md
+进度对齐.md
+黄宾虹五笔七墨_网页规格_PROMPT.md
+黄宾虹交友圈_河流图设计规范.md
+
+# 一次性 dev 脚本（保留 build_* / extract_* / verify_recall* / graphrag_*）
+audit_*.py
+bert_topic_*.py
+check_*.py
+diag_*.py
+fetch_bert.py
+fix_*.py
+kg_*.py
+make_xlsx.py
+patch_*.py
+process_hbh.py
+rebuild_with_v2_source.py
+survey_data.py
+topic_selfcheck.py
+verify_geo.py
+*.v2.bak.py
