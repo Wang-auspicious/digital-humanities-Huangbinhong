@@ -2082,6 +2082,22 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
 
   function personProse(s){var span=s.last-s.first;var types=Object.keys(s.typeCounts||{}).filter(function(k){return k!=='其他';}).map(function(k){return {k:k,v:s.typeCounts[k]};}).sort(function(a,b){return b.v-a.v;});var t1=types[0]?types[0].k:'往来',t2=types[1]?types[1].k:'';
     return esc(s.person)+'，黄宾虹'+esc(s.layer)+'中的一脉。两人的往来见于 '+s.first+' 至 '+s.last+' 年间'+(span>=40?'，几乎跨越其一生':span>=15?'，前后绵延 '+span+' 年':'')+'，以「<span class="em">'+esc(t1)+'</span>」为主'+(t2?'，间杂「'+esc(t2)+'」':'')+'，至 '+s.peakYear+' 年最密。';}
+  // —— 交游小评：以人文笔触评析两人交情，措辞仅据数据（圈/年限/形态/峰年所属阶段），不杜撰生平 ——
+  function eraOf(y){for(var i=0;i<ERAS.length;i++){if(y>=ERAS[i].start&&y<ERAS[i].end)return ERAS[i].label;}return ERAS.length?ERAS[ERAS.length-1].label:'';}
+  var ERA_DO={'徽州·金华':'植根徽州、研习新安画派','上海':'鬻画海上、编书论艺，正当交游鼎盛之年','北平':'困居北平、闭门治学','杭州':'南归西湖、传薪课徒'};
+  var CIRCLE_OPEN={'书画同道':'与他同操丹青的画友','金石考古':'金石碑版间与他相切磋的同好','诗文师友':'诗文唱和的旧交','出版传媒':'笔墨与编务上的同事同道','教育弟子':'晚岁向他问学的后辈','政商护持':'以收藏、引荐护持其声名生计的友人'};
+  var CIRCLE_CLOSE={'书画同道':'一来一往之间，他的笔墨坐标，也愈发分明。','金石考古':'金石的「<span class="em">分明</span>」与「<span class="em">浑厚</span>」，正从这样的往还里，慢慢沉进他的笔底。','诗文师友':'诗文是他的底色，这一脉潜流虽细，却流得极远。','出版传媒':'编务即交游——他把金石书画的圈子，一并织进了近代文化生产的大网。','教育弟子':'长河流到身后，正经由这样的后学，淌成二十世纪下半叶的中国山水。','政商护持':'这一段不显于画史，却是长河得以奔流的河堤。'};
+  var FORM_PHRASE={'作画赠予':'作画相赠','题跋鉴赏':'题跋品鉴','通信':'鱼雁往还','合作':'联袂合作','见面会谈':'晤谈相过','师生':'传道问学','同游':'连袂出游','引荐':'援引推毂','来访':'登门过访','收藏交易':'鉴藏聚散','其他':'种种往还'};
+  function personCommentary(s){
+    var span=s.last-s.first;
+    var ts=Object.keys(s.typeCounts||{}).filter(function(k){return k!=='其他';}).map(function(k){return {k:k,v:s.typeCounts[k]};}).sort(function(a,b){return b.v-a.v;});
+    var f1=FORM_PHRASE[ts[0]?ts[0].k:'']||'往还',f2=ts[1]?(FORM_PHRASE[ts[1].k]||''):'';
+    var spanClause=span>=40?'几乎与他的一生相始终':span>=22?'前后绵延近 '+span+' 年':span>=8?'断续往还 '+span+' 年':'往来虽不为久';
+    return '在黄宾虹九十年的交游里，<span class="em">'+esc(s.person)+'</span>是'+(CIRCLE_OPEN[s.layer]||'交游中的一脉')
+      +'。两人的往来自 '+s.first+' 年发端，'+spanClause+'，多以「<span class="em">'+f1+'</span>」相系'+(f2?'，间以「'+f2+'」':'')+'。'
+      +'往还最密的 '+s.peakYear+' 年，宾翁正'+(ERA_DO[eraOf(s.peakYear)]||'')+'。'
+      +(CIRCLE_CLOSE[s.layer]||'');
+  }
   function renderPerson(s){
     var note=NOTE[s.person],por=PORTRAITS[s.person];
     var types=Object.keys(s.typeCounts||{}).filter(function(k){return k!=='其他';}).map(function(k){return {k:k,v:s.typeCounts[k]};}).sort(function(a,b){return b.v-a.v;}).slice(0,6);var tmax=types[0]?types[0].v:1;
@@ -2094,6 +2110,8 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
     if(note&&note.a&&note.a.length){
       var paras=note.a.map(function(p){return '<p class="as-anecdote">'+esc(p).replace(/「([^」]+)」/g,'<span class="em">「$1」</span>')+'</p>';}).join('');
       scrollBlock='<div class="as-scroll"><div class="as-h">交游一束</div>'+paras+'<div class="as-fig"><div><div class="l">图 · 待补</div><div class="c">'+esc(note.f||'')+'</div></div></div></div>';
+    }else{
+      scrollBlock='<div class="as-h">交游小评</div><p class="as-essay" style="margin-top:2px">'+personCommentary(s)+'</p>';
     }
     asideEl.innerHTML=
       portrait+
