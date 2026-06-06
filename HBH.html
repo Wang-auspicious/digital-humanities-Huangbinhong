@@ -266,7 +266,7 @@
 #hbh-river .river-cards{position:absolute;inset:0;z-index:7;pointer-events:none}
 
 /* —— 主视图切换：长河 ⇄ 生命线 —— */
-#hbh-river .river-viewtoggle{position:absolute;left:40px;bottom:48px;z-index:12;display:inline-flex;gap:2px;background:rgba(245,238,224,.92);border:1px solid rgba(36,29,21,.22);border-radius:4px;padding:3px;box-shadow:0 5px 14px rgba(36,29,21,.18)}
+#hbh-river .river-viewtoggle{position:fixed;right:24px;bottom:20px;z-index:99990;display:inline-flex;gap:2px;background:rgba(245,238,224,.92);border:1px solid rgba(36,29,21,.22);border-radius:4px;padding:3px;box-shadow:0 5px 14px rgba(36,29,21,.18)}
 #hbh-river .vt-btn{appearance:none;-webkit-appearance:none;border:0;background:transparent;cursor:pointer;font:800 12.5px/1 var(--serif);color:#5A4F40;padding:8px 15px;border-radius:2px;letter-spacing:.06em;transition:background .14s,color .14s}
 #hbh-river .vt-btn:hover{color:var(--accent)}
 #hbh-river .vt-btn.is-on{background:var(--accent);color:#F2E7D2;box-shadow:0 2px 6px rgba(110,45,22,.28)}
@@ -2106,7 +2106,8 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
   var gsvg=document.getElementById('ganttSvg');
   var rootEl=document.getElementById('hbh-river');
   var toggleEl=document.getElementById('riverViewToggle');
-  var GPEOPLE=STREAMS.filter(function(s){return s.total>=30;}).slice()
+  // 主图取往来最稠的 48 人为生命线，再按相识之年排成瀑布
+  var GPEOPLE=STREAMS.slice().sort(function(a,b){return b.total-a.total;}).slice(0,48)
       .sort(function(a,b){return (a.first-b.first)||(b.last-a.last)||(b.total-a.total);});
   // 长河之最：带圈编号引注（学图1的圈点）
   var GMARK={};
@@ -2119,6 +2120,18 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
     if(!GMARK[bySpan.person])GMARK[bySpan.person]={n:'2',t:'相伴最久'};
     if(!GMARK[byNew.person])GMARK[byNew.person]={n:'3',t:'晚岁新声'};
   })();
+  // 圈 × 形态 矩阵（桑基用 · 总计 6587 次往来）
+  var SK=(function(){
+    var mat={},typeTot={},layerTot={},grand=0;
+    STREAMS.forEach(function(s){var c=s.typeCounts||{};for(var t in c){var v=c[t]||0;if(!v)continue;
+      (mat[s.layer]=mat[s.layer]||{})[t]=(mat[s.layer][t]||0)+v;typeTot[t]=(typeTot[t]||0)+v;layerTot[s.layer]=(layerTot[s.layer]||0)+v;grand+=v;}});
+    var types=Object.keys(typeTot).sort(function(a,b){return typeTot[b]-typeTot[a];});
+    var nPeople={};STREAMS.forEach(function(s){nPeople[s.layer]=(nPeople[s.layer]||0)+1;});
+    return {mat:mat,typeTot:typeTot,layerTot:layerTot,grand:grand,types:types,nPeople:nPeople};
+  })();
+  function ribbon(x0,y0a,y0b,x1,y1a,y1b){var xm=(x0+x1)/2;
+    return 'M'+x0.toFixed(1)+' '+y0a.toFixed(1)+'C'+xm.toFixed(1)+' '+y0a.toFixed(1)+' '+xm.toFixed(1)+' '+y1a.toFixed(1)+' '+x1.toFixed(1)+' '+y1a.toFixed(1)
+      +'L'+x1.toFixed(1)+' '+y1b.toFixed(1)+'C'+xm.toFixed(1)+' '+y1b.toFixed(1)+' '+xm.toFixed(1)+' '+y0b.toFixed(1)+' '+x0.toFixed(1)+' '+y0b.toFixed(1)+'Z';}
 
   function buildGantt(){
     if(!gsvg)return;
@@ -2127,28 +2140,28 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
     while(gsvg.firstChild)gsvg.removeChild(gsvg.firstChild);
     ganttRows={};
     var n=GPEOPLE.length||1;
-    var NAME_W=80, PADL=NAME_W+12, PADR=58;
-    var headH=92, axisH=56;
-    var plotTop=headH, plotBot=GH-axisH;
+    var NAME_W=78, PADL=NAME_W+12, PADR=62;
+    var headH=70, axisH=42;
+    var plotTop=headH, plotBot=Math.round(GH*0.56);
     var plotW=Math.max(60,GW-PADL-PADR);
     var gxOf=function(y){return PADL+(clamp(y,YMIN,YMAX)-YMIN)/YSPAN*plotW;};
     var rowH=(plotBot-plotTop)/n;
-    var nameFs=clamp(rowH-1.6,6.2,9.4);
-    var barW=clamp(rowH*0.34,2,3.8);
+    var nameFs=clamp(rowH-2,6.4,9.6);
+    var barW=clamp(rowH*0.5,3,6.5);
     var tint=['#C9B79A','#B79C7A','#9A8568','#84704F'];
 
     // —— 背景：地域纪元竖带 + 关键年份竖线 ——
     var gBg=el('g',{},gsvg);
     ERAS.forEach(function(e,i){var x0=gxOf(Math.max(e.start,YMIN)),x1=gxOf(Math.min(e.end,YMAX));
-      el('rect',{x:x0.toFixed(1),y:plotTop,width:Math.max(1,x1-x0).toFixed(1),height:(plotBot-plotTop).toFixed(1),fill:tint[i%4],opacity:0.13},gBg);
+      el('rect',{x:x0.toFixed(1),y:plotTop,width:Math.max(1,x1-x0).toFixed(1),height:(plotBot-plotTop).toFixed(1),fill:tint[i%4],opacity:0.16},gBg);
       if(i>0)el('line',{x1:x0.toFixed(1),y1:(plotTop-6).toFixed(1),x2:x0.toFixed(1),y2:(plotBot+8).toFixed(1),stroke:'rgba(36,29,21,.18)','stroke-width':1,'stroke-dasharray':'2 5'},gBg);
     });
     ANCHORS.forEach(function(a){var x=gxOf(a.year);
-      el('line',{x1:x.toFixed(1),y1:(plotTop-4).toFixed(1),x2:x.toFixed(1),y2:(plotBot+8).toFixed(1),stroke:'rgba(138,75,47,.26)','stroke-width':1,'stroke-dasharray':'1 5'},gBg);
+      el('line',{x1:x.toFixed(1),y1:(plotTop-2).toFixed(1),x2:x.toFixed(1),y2:(plotBot+8).toFixed(1),stroke:'rgba(138,75,47,.30)','stroke-width':1,'stroke-dasharray':'1 5'},gBg);
       var at=el('text',{x:x.toFixed(1),y:(plotTop-4).toFixed(1),'text-anchor':'middle','font-size':9.5,'font-weight':800,fill:'#8A4B2F'},gBg);at.textContent=a.year;
     });
 
-    // —— 每人一条生命线 ——
+    // —— 每人一条生命线（粗笔色条 + 逐年鼓点）——
     var gRows=el('g',{},gsvg);
     GPEOPLE.forEach(function(s,i){
       var k=LIDX[s.layer];if(k==null)k=0;
@@ -2157,17 +2170,17 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
       var g=el('g',{'data-person':s.person},gRows);g.style.cursor='pointer';
       el('rect',{x:0,y:(yc-rowH/2).toFixed(1),width:GW,height:rowH.toFixed(1),fill:'transparent'},g);
       var x0=gxOf(s.first),x1=gxOf(s.last);
-      var line=el('line',{x1:x0.toFixed(1),y1:yc.toFixed(1),x2:x1.toFixed(1),y2:yc.toFixed(1),stroke:color,'stroke-width':barW.toFixed(1),'stroke-linecap':'round',opacity:0.5},g);
+      var line=el('line',{x1:x0.toFixed(1),y1:yc.toFixed(1),x2:x1.toFixed(1),y2:yc.toFixed(1),stroke:color,'stroke-width':barW.toFixed(1),'stroke-linecap':'round',opacity:0.82},g);
       var by=s.byYear||{};
-      for(var y in by){var v=by[y].total||0;if(!v)continue;var r=clamp(Math.sqrt(v)*0.62,0.9,Math.max(1.7,rowH*0.46));
-        el('circle',{cx:gxOf(+y).toFixed(1),cy:yc.toFixed(1),r:r.toFixed(1),fill:dotc,'fill-opacity':clamp(0.42+Math.sqrt(v)/9,0.42,0.95).toFixed(2)},g);}
-      var nm=el('text',{x:NAME_W.toFixed(1),y:(yc+nameFs*0.34).toFixed(1),'text-anchor':'end','font-size':nameFs.toFixed(1),'font-weight':700,fill:darken(color,0.6)},g);
+      for(var y in by){var v=by[y].total||0;if(!v)continue;var r=clamp(Math.sqrt(v)*0.66,1.1,Math.max(2,rowH*0.5));
+        el('circle',{cx:gxOf(+y).toFixed(1),cy:yc.toFixed(1),r:r.toFixed(1),fill:dotc,stroke:'rgba(36,24,12,.4)','stroke-width':0.4,'fill-opacity':clamp(0.5+Math.sqrt(v)/9,0.5,1).toFixed(2)},g);}
+      var nm=el('text',{x:NAME_W.toFixed(1),y:(yc+nameFs*0.34).toFixed(1),'text-anchor':'end','font-size':nameFs.toFixed(1),'font-weight':700,fill:darken(color,0.58)},g);
       nm.textContent=s.person;
       var mk=GMARK[s.person];
-      if(mk){var mx=x1+10, lw=mk.t.length*9.8, leftSide=(mx+13+lw>GW-6);
-        el('circle',{cx:mx.toFixed(1),cy:yc.toFixed(1),r:6.4,fill:'#8A4B2F'},g);
-        var mt=el('text',{x:mx.toFixed(1),y:(yc+3.2).toFixed(1),'text-anchor':'middle','font-size':8.6,'font-weight':800,fill:'#F2E7D2'},g);mt.textContent=mk.n;
-        var lt=el('text',{x:(leftSide?mx-11:mx+11).toFixed(1),y:(yc+3).toFixed(1),'text-anchor':leftSide?'end':'start','font-size':9.6,'font-weight':800,fill:'#8A4B2F'},g);lt.textContent=mk.t;
+      if(mk){var mx=x1+11, lw=mk.t.length*9.8, leftSide=(mx+14+lw>GW-6);
+        el('circle',{cx:mx.toFixed(1),cy:yc.toFixed(1),r:7,fill:'#8A4B2F',stroke:'#F2E7D2','stroke-width':1},g);
+        var mt=el('text',{x:mx.toFixed(1),y:(yc+3.2).toFixed(1),'text-anchor':'middle','font-size':9,'font-weight':800,fill:'#F2E7D2'},g);mt.textContent=mk.n;
+        var lt=el('text',{x:(leftSide?mx-12:mx+12).toFixed(1),y:(yc+3).toFixed(1),'text-anchor':leftSide?'end':'start','font-size':9.8,'font-weight':800,fill:'#8A4B2F'},g);lt.textContent=mk.t;
       }
       g.addEventListener('click',function(ev){ev.stopPropagation();selectPerson(s.person);});
       g.addEventListener('mouseenter',function(ev){showTip({s:s},ev);});
@@ -2176,28 +2189,64 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
       ganttRows[s.person]={g:g,line:line,name:nm};
     });
 
-    // —— 底轴：地域纪元名 + 年刻度 ——
+    // —— 甘特底轴：地域纪元名 + 年刻度 ——
     var gAx=el('g',{},gsvg);
     ERAS.forEach(function(e,i){var x0=gxOf(Math.max(e.start,YMIN)),x1=gxOf(Math.min(e.end,YMAX));
-      el('rect',{x:x0.toFixed(1),y:(plotBot+6).toFixed(1),width:Math.max(1,x1-x0).toFixed(1),height:16,fill:tint[i%4],opacity:0.55},gAx);
-      var t=el('text',{x:((x0+x1)/2).toFixed(1),y:(plotBot+17.5).toFixed(1),'text-anchor':'middle','font-size':11,'font-weight':800,fill:'#332815'},gAx);t.textContent=e.label;
+      el('rect',{x:x0.toFixed(1),y:(plotBot+5).toFixed(1),width:Math.max(1,x1-x0).toFixed(1),height:15,fill:tint[i%4],opacity:0.6},gAx);
+      var t=el('text',{x:((x0+x1)/2).toFixed(1),y:(plotBot+15.5).toFixed(1),'text-anchor':'middle','font-size':10.5,'font-weight':800,fill:'#332815'},gAx);t.textContent=e.label;
     });
-    var tickY=plotBot+30;
+    var tickY=plotBot+27;
     for(var yr=Math.ceil(YMIN/10)*10;yr<=YMAX;yr+=10){var x=gxOf(yr);
-      el('line',{x1:x.toFixed(1),y1:tickY,x2:x.toFixed(1),y2:tickY+6,stroke:'rgba(36,29,21,.5)','stroke-width':1},gAx);
-      var ty=el('text',{x:x.toFixed(1),y:(tickY+18).toFixed(1),'text-anchor':'middle','font-size':10,'font-weight':700,fill:'#564732'},gAx);ty.textContent=yr;}
+      el('line',{x1:x.toFixed(1),y1:tickY,x2:x.toFixed(1),y2:tickY+5,stroke:'rgba(36,29,21,.5)','stroke-width':1},gAx);
+      var ty=el('text',{x:x.toFixed(1),y:(tickY+15).toFixed(1),'text-anchor':'middle','font-size':9.5,'font-weight':700,fill:'#564732'},gAx);ty.textContent=yr;}
 
-    // —— 报头 + 图例 ——
+    // —— 报头 + 圈层图例 ——
     var gHd=el('g',{},gsvg);
-    var tt=el('text',{x:'40',y:'44','font-size':30,'font-weight':900,fill:'#1E160E','letter-spacing':'2'},gHd);tt.textContent='交游生命线';
-    var sub=el('text',{x:'42',y:'66','font-size':12,'font-weight':700,fill:'#4A3B2A'},gHd);
-    sub.textContent='一人一线，自相识至永诀 · 按相识之年自上而下 · 点径∝当年往来 · 共 '+GPEOPLE.length+' 位往来逾三十次者';
-    var lx=42;
+    var tt=el('text',{x:'40',y:'40','font-size':27,'font-weight':900,fill:'#1E160E','letter-spacing':'2'},gHd);tt.textContent='交游生命线';
+    var sub=el('text',{x:'42',y:'58','font-size':11.5,'font-weight':700,fill:'#4A3B2A'},gHd);
+    sub.textContent='上图 · 一人一线，自相识至永诀，按相识之年铺成瀑布（取往来最密 '+GPEOPLE.length+' 人，粗条∝在场，鼓点∝当年往来）';
+    var lx=Math.max(560,GW-470);
     LAYERS.forEach(function(l){
-      el('rect',{x:lx,y:79,width:14,height:8,rx:1.5,fill:l.color,opacity:0.85},gHd);
-      var t=el('text',{x:lx+18,y:86.5,'font-size':10.5,'font-weight':700,fill:'#3A2D1E'},gHd);t.textContent=l.name;
-      lx+=18+l.name.length*10.6+15;
+      el('rect',{x:lx,y:33,width:13,height:8,rx:1.5,fill:l.color,opacity:0.88},gHd);
+      var t=el('text',{x:lx+17,y:40.5,'font-size':10,'font-weight':700,fill:'#3A2D1E'},gHd);t.textContent=l.name;
+      lx+=17+l.name.length*10+13;
     });
+
+    // ====== 下图 · 桑基：六圈交游 → 往来之形态（总计 6587 次）======
+    var skTop=plotBot+48, skBot=GH-16;
+    var skTitle=el('text',{x:'40',y:(skTop-12).toFixed(1),'font-size':13,'font-weight':900,fill:'#1E160E','letter-spacing':'1'},gsvg);
+    skTitle.textContent='下图 · 六圈交游 ⟶ 往来之形态';
+    var skSub2=el('text',{x:'330',y:(skTop-12).toFixed(1),'font-size':11,'font-weight':700,fill:'#6A5C49'},gsvg);
+    skSub2.textContent='全部 6587 次往来，按其形态归流 · 河面之宽 ∝ 次数';
+    var SKL=146, NODEW=12, SKR=GW-188;
+    var availH=skBot-skTop;
+    var layers6=LAYERS.map(function(l){return l.name;}).filter(function(nm){return SK.layerTot[nm];});
+    var types=SK.types.filter(function(t){return SK.typeTot[t];});
+    var scale=Math.min((availH-(layers6.length-1)*8)/SK.grand,(availH-(types.length-1)*5)/SK.grand);
+    var lGap=(availH-SK.grand*scale)/Math.max(1,layers6.length-1);
+    var rGap=(availH-SK.grand*scale)/Math.max(1,types.length-1);
+    // 节点几何
+    var lNode={},y=skTop;
+    layers6.forEach(function(nm){var h=SK.layerTot[nm]*scale;lNode[nm]={y:y,h:h,off:y};y+=h+lGap;});
+    var rNode={};y=skTop;
+    types.forEach(function(t){var h=SK.typeTot[t]*scale;rNode[t]={y:y,h:h,off:y};y+=h+rGap;});
+    // 飘带（按圈分色）
+    var gFlow=el('g',{},gsvg);
+    layers6.forEach(function(nm){var li=LIDX[nm];var col=LAYERS[li].color;var row=SK.mat[nm]||{};
+      types.forEach(function(t){var c=row[t]||0;if(!c)return;var w=c*scale;
+        var ly0=lNode[nm].off, ry0=rNode[t].off;
+        el('path',{d:ribbon(SKL+NODEW,ly0,ly0+w,SKR,ry0,ry0+w),fill:col,'fill-opacity':0.3},gFlow);
+        lNode[nm].off+=w;rNode[t].off+=w;});});
+    // 左节点 = 六圈
+    var gNodes=el('g',{},gsvg);
+    layers6.forEach(function(nm){var li=LIDX[nm];var col=LAYERS[li].color;var nd=lNode[nm];
+      el('rect',{x:SKL,y:nd.y.toFixed(1),width:NODEW,height:Math.max(1,nd.h).toFixed(1),rx:2,fill:col},gNodes);
+      var tx=el('text',{x:(SKL-8).toFixed(1),y:(nd.y+nd.h/2-2).toFixed(1),'text-anchor':'end','font-size':11.5,'font-weight':800,fill:darken(col,0.58)},gNodes);tx.textContent=nm;
+      var tx2=el('text',{x:(SKL-8).toFixed(1),y:(nd.y+nd.h/2+11).toFixed(1),'text-anchor':'end','font-size':9.5,'font-weight':700,fill:'#7A6C56'},gNodes);tx2.textContent=SK.nPeople[nm]+' 人 · '+SK.layerTot[nm]+' 次';});
+    // 右节点 = 往来形态
+    types.forEach(function(t){var nd=rNode[t];
+      el('rect',{x:SKR,y:nd.y.toFixed(1),width:NODEW,height:Math.max(1,nd.h).toFixed(1),rx:2,fill:'#6E5C42'},gNodes);
+      var tx=el('text',{x:(SKR+NODEW+8).toFixed(1),y:(nd.y+nd.h/2+3.5).toFixed(1),'font-size':11,'font-weight':800,fill:'#3A2D1E'},gNodes);tx.textContent=t+'　'+SK.typeTot[t]+' 次';});
   }
 
   function setView(v){
