@@ -376,16 +376,18 @@
             repeating-linear-gradient(99deg,rgba(255,255,255,.05) 0 1px,transparent 1px 13px);}
 #hbh-brush .bx{position:absolute;top:18px;left:0;right:0;bottom:0;z-index:1;display:grid;
   grid-template-columns:32px 196px minmax(0,1fr) 182px minmax(0,1fr) 206px;
-  grid-template-rows:minmax(0,1fr) 116px 18px;}
+  grid-template-rows:minmax(0,1fr) 134px 18px;}
 #hbh-brush .bx>*{min-width:0;min-height:0}
 /* 列容器 */
 #hbh-brush .col{border-right:1px solid var(--line);padding:8px 11px;display:flex;flex-direction:column;
   gap:6px;overflow:hidden}
-#hbh-brush .vh{font:800 11px/1.15 var(--serif);color:var(--accent);letter-spacing:.2em;
+/* 三个文字列：内容竖向铺满，去掉下方大片留白 */
+#hbh-brush .col:not(.pcol){justify-content:space-between;gap:7px}
+#hbh-brush .vh{font:800 12.5px/1.18 var(--serif);color:var(--accent);letter-spacing:.18em;
   border-bottom:1px solid var(--line);padding-bottom:3px;margin-bottom:1px;flex:0 0 auto}
-#hbh-brush p,#hbh-brush .tx{font-size:10.5px;line-height:1.56;color:var(--ink2);margin:0;text-align:justify}
+#hbh-brush p,#hbh-brush .tx{font-size:12px;line-height:1.68;color:var(--ink2);margin:0;text-align:justify}
 #hbh-brush .tx b,#hbh-brush p b{color:var(--accent);font-weight:700}
-#hbh-brush .mut{font-size:8.6px;line-height:1.46;color:var(--faint);letter-spacing:.01em}
+#hbh-brush .mut{font-size:9.4px;line-height:1.5;color:var(--faint);letter-spacing:.01em}
 
 /* 左·竖排刊名 rail */
 #hbh-brush .rail{position:relative;border-right:1px solid var(--line);display:flex;flex-direction:column;
@@ -404,7 +406,7 @@
   border:1px solid var(--line);background:#cdbf9f;box-shadow:1px 2px 0 rgba(58,42,28,.14)}
 #hbh-brush .por .pim img{width:100%;height:100%;object-fit:cover;object-position:center 14%;
   filter:grayscale(1) sepia(.4) contrast(1.06)}
-#hbh-brush .por .pm{font-size:9px;line-height:1.52;color:var(--ink2)}
+#hbh-brush .por .pm{font-size:10.4px;line-height:1.56;color:var(--ink2)}
 #hbh-brush .por .pm b{display:block;font-size:15px;font-weight:900;color:var(--ink);letter-spacing:.04em;margin-bottom:2px}
 #hbh-brush .por .age{display:inline-block;margin-top:3px;background:var(--accent);color:#F4ECDA;font:800 9px/1 var(--serif);
   padding:2px 6px;letter-spacing:.06em}
@@ -413,9 +415,9 @@
 #hbh-brush .wb-mini svg{width:28px;height:20px;display:block}
 #hbh-brush .wb-mini .wc{font:900 12px/1 var(--serif);color:var(--bi)}
 #hbh-brush .wb-mini .it.va .wc{color:var(--accent)}
-#hbh-brush .wb-mini .wm{font-size:9.4px;line-height:1.32;color:var(--ink2)}
+#hbh-brush .wb-mini .wm{font-size:10.4px;line-height:1.4;color:var(--ink2)}
 #hbh-brush .wb-mini .wm b{color:var(--ink);font-weight:700}
-#hbh-brush .dim{display:flex;align-items:flex-end;gap:8px;flex:0 0 auto;margin-top:auto;border-top:1px dashed var(--line);padding-top:6px}
+#hbh-brush .dim{display:flex;align-items:flex-end;gap:8px;flex:0 0 auto;border-top:1px dashed var(--line);padding-top:6px}
 #hbh-brush .dim .fig{display:flex;align-items:flex-end;gap:1px}
 #hbh-brush .dim .fig i{display:block;width:6px;background:var(--ink2)}
 #hbh-brush .dim .dt{font-size:9px;line-height:1.5;color:var(--soft)}
@@ -461,9 +463,9 @@
 
 /* 中栏 center */
 #hbh-brush .qm-list{display:flex;flex-direction:column;gap:0;flex:0 0 auto}
-#hbh-brush .qm-list .qi{display:grid;grid-template-columns:16px 1fr;gap:6px;align-items:baseline;padding:2px 0;border-bottom:1px dotted var(--line2)}
-#hbh-brush .qm-list .qc{font:900 13px/1 var(--serif);color:var(--accent)}
-#hbh-brush .qm-list .qt{font-size:9px;line-height:1.4;color:var(--ink2)}
+#hbh-brush .qm-list .qi{display:grid;grid-template-columns:18px 1fr;gap:6px;align-items:baseline;padding:3.5px 0;border-bottom:1px dotted var(--line2)}
+#hbh-brush .qm-list .qc{font:900 15px/1 var(--serif);color:var(--accent)}
+#hbh-brush .qm-list .qt{font-size:10.6px;line-height:1.5;color:var(--ink2)}
 #hbh-brush .qm-list .qt b{color:var(--ink);font-weight:700}
 #hbh-brush .ji{display:flex;gap:9px;align-items:center;flex:0 0 auto;background:rgba(58,42,28,.05);padding:7px;border:1px solid var(--line2)}
 #hbh-brush .ji-stage{position:relative;width:92px;height:92px;flex:0 0 auto;border:1px solid var(--line);background:#1a1812;overflow:hidden}
@@ -480,7 +482,7 @@
 #hbh-brush .ji-slider::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:2px solid #F4ECDA;cursor:pointer}
 #hbh-brush .ji-tx{font-size:9px;line-height:1.42;color:var(--ink2)}
 #hbh-brush .ji-tx b{color:var(--accent)}
-#hbh-brush .swatch{flex:1 1 auto;display:flex;flex-direction:column;gap:3px;min-height:0}
+#hbh-brush .swatch{flex:0 0 auto;display:flex;flex-direction:column;gap:5px;min-height:0}
 #hbh-brush .sw-head{display:flex;justify-content:space-between;font-size:8.6px;color:var(--soft);letter-spacing:.03em}
 #hbh-brush .sw-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:stretch}
 #hbh-brush .sw-cell{display:flex;align-items:center;gap:5px;cursor:default;transition:transform .14s}
@@ -490,7 +492,7 @@
 #hbh-brush .sw-cell.hot{transform:translateX(2px)}#hbh-brush .sw-cell.hot .chip{box-shadow:0 0 0 1.5px var(--accent)}
 
 /* 右栏 rcol */
-#hbh-brush .rquote{font-size:10.5px;line-height:1.6;color:var(--ink2);font-weight:300;border-left:2px solid var(--accent);
+#hbh-brush .rquote{font-size:12.5px;line-height:1.72;color:var(--ink2);font-weight:300;border-left:2px solid var(--accent);
   padding-left:8px;flex:0 0 auto}
 #hbh-brush .rquote b{color:var(--accent);font-weight:700}#hbh-brush .rquote .by{display:block;font-size:8.6px;color:var(--soft);margin-top:2px;letter-spacing:.08em}
 #hbh-brush .seals{display:flex;gap:6px;flex:0 0 auto;align-items:center}
@@ -501,10 +503,10 @@
 #hbh-brush .depth svg{width:100%;height:50px;display:block}
 #hbh-brush .spark{flex:0 0 auto}
 #hbh-brush .spark svg{width:100%;height:46px;display:block}
-#hbh-brush .stat{display:flex;gap:9px;flex:0 0 auto;border-top:1px dashed var(--line);padding-top:6px;margin-top:auto}
+#hbh-brush .stat{display:flex;gap:9px;flex:0 0 auto;border-top:1px dashed var(--line);padding-top:6px}
 #hbh-brush .stat .s1{text-align:center}
-#hbh-brush .stat .s1 b{display:block;font:900 19px/1 Georgia,serif;color:var(--accent)}
-#hbh-brush .stat .s1 span{font-size:8px;color:var(--soft);letter-spacing:.04em}
+#hbh-brush .stat .s1 b{display:block;font:900 22px/1 Georgia,serif;color:var(--accent)}
+#hbh-brush .stat .s1 span{font-size:9px;color:var(--soft);letter-spacing:.04em}
 
 /* 底·变法时间轴带 */
 #hbh-brush .tband{grid-column:1 / -1;border-top:1px solid var(--line);position:relative;padding:6px 18px 8px;
@@ -512,16 +514,16 @@
 #hbh-brush .tband .tb-head{display:flex;align-items:baseline;gap:14px;flex:0 0 auto}
 #hbh-brush .tband .th{font:800 11px/1 var(--serif);color:var(--accent);letter-spacing:.16em}
 #hbh-brush .tband .tb-sub{font-size:9px;color:var(--soft);letter-spacing:.02em}
-#hbh-brush .tl-read{margin:4px 0 0 auto;max-width:64%;text-align:right;font-size:10px;line-height:1.5;color:var(--ink2);flex:0 0 auto}
-#hbh-brush .tl-read b{color:var(--accent);font-weight:700}
-#hbh-brush .tl-axis{position:relative;height:30px;margin:6px 40px 2px 62px;flex:0 0 auto}
+#hbh-brush .tl-read{margin:9px auto 2px;max-width:82%;text-align:center;font-size:15px;line-height:1.55;color:#241D15;font-weight:600;letter-spacing:.01em;flex:1 1 auto;display:flex;align-items:center;justify-content:center}
+#hbh-brush .tl-read b{color:var(--accent);font-weight:800}
+#hbh-brush .tl-axis{position:relative;height:26px;margin:6px 44px 2px 66px;flex:0 0 auto}
 #hbh-brush .tl-bar{position:absolute;left:0;right:0;top:13px;height:8px;border-radius:5px;
   background:linear-gradient(90deg,var(--paperWhite) 0%,#cdbf9f 30%,#7a6f5b 60%,#3a352c 84%,var(--deep) 100%);
   box-shadow:inset 0 1px 2px rgba(255,255,255,.3)}
 #hbh-brush .tl-cap{position:absolute;font:800 9px/1 var(--serif);letter-spacing:.1em;color:var(--soft)}
 #hbh-brush .tl-cap.l{left:-54px;top:13px}#hbh-brush .tl-cap.r{right:-34px;top:13px;color:#5a5040}
 #hbh-brush .tl-node{position:absolute;top:17px;transform:translate(-50%,-50%);background:none;border:0;padding:0;cursor:pointer;z-index:2}
-#hbh-brush .tl-node .dot{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--ink2);box-shadow:0 1px 3px rgba(40,28,14,.3);transition:all .18s}
+#hbh-brush .tl-node .dot{width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--ink2);box-shadow:0 1px 3px rgba(40,28,14,.3);transition:all .18s}
 #hbh-brush .tl-node:hover .dot{transform:scale(1.14)}
 #hbh-brush .tl-node.on .dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(154,74,44,.22)}
 #hbh-brush .tl-node .yr{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font:800 9px/1 Georgia,serif;color:var(--ink2);white-space:nowrap}
@@ -713,12 +715,12 @@
 #hbh-atlas .journeyLayer{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:6; overflow:visible; transition:opacity .5s ease; }
 #hbh-atlas .journeyLayer.dimmed{ opacity:.22; }
 #hbh-atlas .journey-trail{
-  stroke:rgba(30,24,18,.30); stroke-width:.5; stroke-linecap:round; stroke-linejoin:round;
+  stroke:url(#journeyGrad); stroke-width:.6; stroke-linecap:round; stroke-linejoin:round;
   filter:url(#journeyInk);
 }
 #hbh-atlas .journey-head{
-  stroke:rgba(20,15,10,.92); stroke-width:.92; stroke-linecap:round; stroke-linejoin:round;
-  filter:url(#journeyInk) drop-shadow(0 0 1.1px rgba(15,11,7,.55));
+  stroke:url(#journeyGrad); stroke-width:1; stroke-linecap:round; stroke-linejoin:round;
+  filter:url(#journeyInk) drop-shadow(0 0 1.1px rgba(15,11,7,.4));
 }
 #hbh-atlas .journeyDot{
   position:absolute; width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%;
@@ -798,6 +800,13 @@
             <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/>
             <feDisplacementMap in="SourceGraphic" in2="n" scale="1.1"/>
           </filter>
+          <!-- 游迹墨线：由淡入浓的水墨渐变，不作纯黑 -->
+          <linearGradient id="journeyGrad" gradientUnits="userSpaceOnUse" x1="14" y1="6" x2="82" y2="96">
+            <stop offset="0"    stop-color="#8a7f6c" stop-opacity=".30"/>
+            <stop offset="0.34" stop-color="#564a3a" stop-opacity=".58"/>
+            <stop offset="0.68" stop-color="#2a2016" stop-opacity=".78"/>
+            <stop offset="1"    stop-color="#100b07" stop-opacity=".9"/>
+          </linearGradient>
         </defs>
         <path class="journey-trail" id="journeyTrail" fill="none"></path>
         <path class="journey-head" id="journeyHead" fill="none"></path>
@@ -895,20 +904,20 @@
       </div>
     </div>
 
-    <!-- ③ 白宾虹（画一） -->
+    <!-- ③ 白宾虹（画一）—— 画在上，统计条形在下，与黑宾虹画作水平对齐 -->
     <div class="pcol col" style="padding:0">
       <div class="pcap bai"><div class="pt">白宾虹 · 早年山水</div><div class="ps">约 1920s–30s 初｜干笔淡墨，疏淡清逸｜笔线清晰可辨，结构外露</div></div>
-      <div class="bars">
-        <div class="br"><span class="bn">山水</span><span class="bt"><i style="width:80%"></i></span><span class="bp">主体</span></div>
-        <div class="br"><span class="bn">花鸟蔬果</span><span class="bt"><i style="width:30%"></i></span><span class="bp">兼涉</span></div>
-        <div class="br"><span class="bn">书法篆刻</span><span class="bt"><i style="width:42%"></i></span><span class="bp">根柢</span></div>
-        <div class="mut" style="margin-top:2px">题材偏重 · 示意（黄宾虹以山水立身，金石书法为其笔墨之根）</div>
-      </div>
       <div class="paint">
         <img id="bxBai" src="assets/works/仿倪云林图册.jpg" alt="白宾虹早年山水">
         <div class="call tl" style="left:5%;top:7%">以淡墨、破墨为主，<b>留白疏朗</b>，淡墨与纸白占绝对主导。</div>
         <div class="call bl" style="left:5%;bottom:8%"><b>笔线清晰可辨</b>，看得见每根线如何组织结构 —— 观察「五笔」最清楚的标本。</div>
         <div class="call tr" style="right:5%;top:30%">干笔淡墨，<b>疏淡清逸</b>，得新安画派之骨。</div>
+      </div>
+      <div class="bars">
+        <div class="br"><span class="bn">山水</span><span class="bt"><i style="width:80%"></i></span><span class="bp">主体</span></div>
+        <div class="br"><span class="bn">花鸟蔬果</span><span class="bt"><i style="width:30%"></i></span><span class="bp">兼涉</span></div>
+        <div class="br"><span class="bn">书法篆刻</span><span class="bt"><i style="width:42%"></i></span><span class="bp">根柢</span></div>
+        <div class="mut" style="margin-top:2px">题材偏重 · 示意（黄宾虹以山水立身，金石书法为其笔墨之根）</div>
       </div>
     </div>
 
@@ -2241,8 +2250,8 @@ for(var y=1899;y<=1953;y+=3){var t=document.createElement('div');t.className='ti
     var gNodes=el('g',{},gsvg);
     layers6.forEach(function(nm){var li=LIDX[nm];var col=LAYERS[li].color;var nd=lNode[nm];
       el('rect',{x:SKL,y:nd.y.toFixed(1),width:NODEW,height:Math.max(1,nd.h).toFixed(1),rx:2,fill:col},gNodes);
-      var tx=el('text',{x:(SKL-8).toFixed(1),y:(nd.y+nd.h/2-2).toFixed(1),'text-anchor':'end','font-size':11.5,'font-weight':800,fill:darken(col,0.58)},gNodes);tx.textContent=nm;
-      var tx2=el('text',{x:(SKL-8).toFixed(1),y:(nd.y+nd.h/2+11).toFixed(1),'text-anchor':'end','font-size':9.5,'font-weight':700,fill:'#7A6C56'},gNodes);tx2.textContent=SK.nPeople[nm]+' 人 · '+SK.layerTot[nm]+' 次';});
+      var tx=el('text',{x:(SKL-9).toFixed(1),y:(nd.y+nd.h/2+3.6).toFixed(1),'text-anchor':'end','font-size':11,'font-weight':800,fill:darken(col,0.56)},gNodes);
+      tx.textContent=SK.nPeople[nm]+'人 '+SK.layerTot[nm]+'次 '+nm;});
     // 右节点 = 往来形态
     types.forEach(function(t){var nd=rNode[t];
       el('rect',{x:SKR,y:nd.y.toFixed(1),width:NODEW,height:Math.max(1,nd.h).toFixed(1),rx:2,fill:'#6E5C42'},gNodes);
